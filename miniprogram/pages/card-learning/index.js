@@ -38,6 +38,7 @@ Page({
 
   onLoad() {
     this.loadCards();
+    // loadUserProgress 必须在 loadCards 之后，因为需要正确的 totalCount
     this.loadUserProgress();
   },
 
@@ -59,33 +60,36 @@ Page({
     cardsData.forEach(card => {
       const record = learningRecords[card.id];
       if (!record) {
+        // 没有学习记录，是新卡片
         newCards.push(card);
       } else if (record.status === 'mastered') {
+        // 已掌握
         masteredCards.push(card);
       } else if (record.status === 'reviewing') {
+        // 待复习
         reviewingCards.push(card);
       }
     });
     
-    // 构建今日学习队列：待复习卡片 + 新卡片
-    const todayQueue = [...this.getReviewCards(reviewingCards, learningRecords), ...newCards.slice(0, 10)];
+    // 构建今日学习队列：需要复习的卡片 + 新卡片（最多10张）
+    const needReviewCards = this.getReviewCards(reviewingCards, learningRecords);
+    const todayQueue = [...needReviewCards, ...newCards.slice(0, Math.max(0, 10 - needReviewCards.length))];
     
-    // 计算正确的统计数据
-    const totalCards = cardsData.length;
+    // 计算统计数据
     const masteredCount = masteredCards.length;
     const reviewingCount = reviewingCards.length;
-    const remainingCount = Math.max(0, totalCards - masteredCount - reviewingCount);
+    const newCount = newCards.length;
     
     this.setData({
       cardQueue: todayQueue,
       currentCard: todayQueue[0] || null,
       nextCard: todayQueue[1] || null,
-      totalCount: todayQueue.length,
+      totalCount: todayQueue.length || 10,
       isLoading: false,
       stats: {
         mastered: masteredCount,
         reviewing: reviewingCount,
-        remaining: remainingCount
+        remaining: newCount
       }
     });
   },
@@ -104,9 +108,17 @@ Page({
     const todayKey = new Date().toISOString().split('T')[0];
     const todayProgress = wx.getStorageSync(`progress_${todayKey}`) || { count: 0 };
     
+    // 确保 totalCount 不为0，避免除以0
+    const totalCount = this.data.totalCount || 10;
+    const todayCount = todayProgress.count;
+    
+    // 如果今日已完成的数量超过队列长度，说明已经完成了
+    const actualCount = Math.min(todayCount, totalCount);
+    const percent = totalCount > 0 ? Math.round((actualCount / totalCount) * 100) : 0;
+    
     this.setData({
-      todayCount: todayProgress.count,
-      progressPercent: Math.round((todayProgress.count / this.data.totalCount) * 100)
+      todayCount: actualCount,
+      progressPercent: percent
     });
   },
 
@@ -231,7 +243,8 @@ Page({
       swipeX: 0,
       swipeRotate: 0,
       swipeDirection: '',
-      swiping: false
+      swiping: false,
+      totalCount: newQueue.length || this.data.totalCount
     });
     
     // 更新今日进度
@@ -337,9 +350,14 @@ Page({
     todayProgress.count++;
     wx.setStorageSync(`progress_${todayKey}`, todayProgress);
     
+    // 计算进度百分比，确保不超过100%
+    const totalCount = this.data.totalCount || 10;
+    const currentCount = Math.min(todayProgress.count, totalCount);
+    const percent = Math.min(100, Math.round((currentCount / totalCount) * 100));
+    
     this.setData({
-      todayCount: todayProgress.count,
-      progressPercent: Math.round((todayProgress.count / this.data.totalCount) * 100)
+      todayCount: currentCount,
+      progressPercent: percent
     });
   },
 
@@ -367,7 +385,10 @@ Page({
 
   // 开始复习
   startReview() {
+    // 重新加载卡片
     this.loadCards();
+    // 重新加载进度
+    this.loadUserProgress();
   },
 
   // AI详解
