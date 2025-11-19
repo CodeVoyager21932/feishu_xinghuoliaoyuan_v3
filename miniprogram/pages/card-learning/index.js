@@ -164,12 +164,12 @@ Page({
     if (deltaX < -threshold) {
       // 左滑：待复习
       this.animateCardOut('left', () => {
-        this.markAsReview();
+        this.saveReviewRecord(this.data.currentCard);
       });
     } else if (deltaX > threshold) {
       // 右滑：已掌握
       this.animateCardOut('right', () => {
-        this.markAsMastered();
+        this.saveMasteredRecord(this.data.currentCard);
       });
     } else {
       // 回弹
@@ -232,19 +232,27 @@ Page({
     this.updateTodayProgress();
   },
 
-  // 标记为待复习
+  // 标记为待复习（按钮点击）
   markAsReview() {
     const { currentCard } = this.data;
     if (!currentCard) return;
     
+    // 先执行动画
+    this.animateCardOut('left', () => {
+      this.saveReviewRecord(currentCard);
+    });
+  },
+
+  // 保存待复习记录
+  saveReviewRecord(card) {
     const learningRecords = wx.getStorageSync('learning_records') || {};
-    const record = learningRecords[currentCard.id] || { review_count: 0 };
+    const record = learningRecords[card.id] || { review_count: 0 };
     
     // 计算下次复习时间
     const nextReviewTime = this.calculateNextReviewTime(record.review_count);
     
-    learningRecords[currentCard.id] = {
-      card_id: currentCard.id,
+    learningRecords[card.id] = {
+      card_id: card.id,
       status: 'reviewing',
       review_count: record.review_count + 1,
       next_review_time: nextReviewTime,
@@ -263,20 +271,25 @@ Page({
     
     // 更新统计
     this.updateStats();
-    
-    // 切换到下一张卡片
-    this.nextCard();
   },
 
-  // 标记为已掌握
+  // 标记为已掌握（按钮点击）
   markAsMastered() {
     const { currentCard } = this.data;
     if (!currentCard) return;
     
+    // 先执行动画
+    this.animateCardOut('right', () => {
+      this.saveMasteredRecord(currentCard);
+    });
+  },
+
+  // 保存已掌握记录
+  saveMasteredRecord(card) {
     const learningRecords = wx.getStorageSync('learning_records') || {};
     
-    learningRecords[currentCard.id] = {
-      card_id: currentCard.id,
+    learningRecords[card.id] = {
+      card_id: card.id,
       status: 'mastered',
       mastered_time: new Date().toISOString()
     };
@@ -288,9 +301,6 @@ Page({
     
     // 更新统计
     this.updateStats();
-    
-    // 切换到下一张卡片
-    this.nextCard();
   },
 
   // 计算下次复习时间
