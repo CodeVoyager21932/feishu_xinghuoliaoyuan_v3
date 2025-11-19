@@ -12,7 +12,17 @@
   <!-- 今日英雄卡片 -->
   <view class="today-hero-card card" bindtap="goToHeroDetail">
     <view class="hero-badge">今日英雄</view>
-    <image class="hero-avatar" src="{{todayHero.avatar}}" mode="aspectFill" />
+    <view class="hero-avatar-container">
+      <image 
+        class="hero-avatar" 
+        src="{{todayHero.avatar}}" 
+        mode="aspectFill"
+        binderror="onImageError"
+      />
+      <view class="hero-placeholder" wx:if="{{!todayHero.avatarLoaded}}">
+        <text class="placeholder-text">{{todayHero.name}}</text>
+      </view>
+    </view>
     <view class="hero-info">
       <text class="hero-name">{{todayHero.name}}</text>
       <text class="hero-desc">{{todayHero.brief}}</text>

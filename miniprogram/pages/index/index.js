@@ -89,7 +89,19 @@ Page({
     const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
     const todayHero = heroesData[dayOfYear % heroesData.length];
     
+    // 默认图片未加载
+    todayHero.avatarLoaded = false;
+    
     this.setData({ todayHero });
+  },
+
+  // 图片加载错误处理
+  onImageError(e) {
+    console.log('图片加载失败', e);
+    // 图片加载失败，显示占位符
+    this.setData({
+      'todayHero.avatarLoaded': false
+    });
   },
 
   // 加载用户统计数据
