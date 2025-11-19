@@ -75,21 +75,28 @@ Page({
     const needReviewCards = this.getReviewCards(reviewingCards, learningRecords);
     const todayQueue = [...needReviewCards, ...newCards.slice(0, Math.max(0, 10 - needReviewCards.length))];
     
-    // 计算统计数据
-    const masteredCount = masteredCards.length;
-    const reviewingCount = reviewingCards.length;
-    const newCount = newCards.length;
+    // 获取今日学习记录
+    const todayKey = new Date().toISOString().split('T')[0];
+    const todayRecords = wx.getStorageSync(`today_records_${todayKey}`) || {
+      mastered: [],
+      reviewing: []
+    };
+    
+    // 计算今日统计：只统计今天学习的卡片
+    const todayMastered = todayRecords.mastered.length;
+    const todayReviewing = todayRecords.reviewing.length;
+    const todayRemaining = Math.max(0, todayQueue.length - todayMastered - todayReviewing);
     
     this.setData({
       cardQueue: todayQueue,
       currentCard: todayQueue[0] || null,
       nextCard: todayQueue[1] || null,
-      totalCount: todayQueue.length || 10,
+      totalCount: todayQueue.length > 0 ? todayQueue.length : 10,
       isLoading: false,
       stats: {
-        mastered: masteredCount,
-        reviewing: reviewingCount,
-        remaining: newCount
+        mastered: todayMastered,
+        reviewing: todayReviewing,
+        remaining: todayRemaining
       }
     });
   },
@@ -280,6 +287,18 @@ Page({
     
     wx.setStorageSync('learning_records', learningRecords);
     
+    // 记录到今日统计
+    const todayKey = new Date().toISOString().split('T')[0];
+    const todayRecords = wx.getStorageSync(`today_records_${todayKey}`) || {
+      mastered: [],
+      reviewing: []
+    };
+    
+    if (!todayRecords.reviewing.includes(card.id)) {
+      todayRecords.reviewing.push(card.id);
+      wx.setStorageSync(`today_records_${todayKey}`, todayRecords);
+    }
+    
     // 显示提示
     const minutes = Math.round(REVIEW_INTERVALS[record.review_count] / 60000);
     wx.showToast({
@@ -314,6 +333,18 @@ Page({
     };
     
     wx.setStorageSync('learning_records', learningRecords);
+    
+    // 记录到今日统计
+    const todayKey = new Date().toISOString().split('T')[0];
+    const todayRecords = wx.getStorageSync(`today_records_${todayKey}`) || {
+      mastered: [],
+      reviewing: []
+    };
+    
+    if (!todayRecords.mastered.includes(card.id)) {
+      todayRecords.mastered.push(card.id);
+      wx.setStorageSync(`today_records_${todayKey}`, todayRecords);
+    }
     
     // 显示星火动画
     this.showSparkAnimation();
@@ -363,23 +394,24 @@ Page({
 
   // 更新统计
   updateStats() {
-    const learningRecords = wx.getStorageSync('learning_records') || {};
-    let mastered = 0;
-    let reviewing = 0;
+    // 获取今日学习记录
+    const todayKey = new Date().toISOString().split('T')[0];
+    const todayRecords = wx.getStorageSync(`today_records_${todayKey}`) || {
+      mastered: [],
+      reviewing: []
+    };
     
-    Object.values(learningRecords).forEach(record => {
-      if (record.status === 'mastered') {
-        mastered++;
-      } else if (record.status === 'reviewing') {
-        reviewing++;
-      }
-    });
-    
-    // 未学习 = 总卡片数 - 已掌握 - 待复习
-    const remaining = Math.max(0, cardsData.length - mastered - reviewing);
+    // 计算今日统计
+    const todayMastered = todayRecords.mastered.length;
+    const todayReviewing = todayRecords.reviewing.length;
+    const todayRemaining = Math.max(0, this.data.totalCount - todayMastered - todayReviewing);
     
     this.setData({
-      stats: { mastered, reviewing, remaining }
+      stats: {
+        mastered: todayMastered,
+        reviewing: todayReviewing,
+        remaining: todayRemaining
+      }
     });
   },
 
