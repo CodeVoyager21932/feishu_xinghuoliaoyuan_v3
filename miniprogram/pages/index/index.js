@@ -186,8 +186,8 @@ Page({
 
   // 跳转到卡片学习
   goToCards() {
-    wx.switchTab({
-      url: '/pages/card-learning/card-learning'
+    wx.navigateTo({
+      url: '/pages/card-learning/index'
     });
   },
 

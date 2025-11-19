@@ -3,7 +3,7 @@
     "pages/index/index",
     "pages/ai-chat/index",
     "pages/knowledge-graph/index",
-    "pages/card-learning/card-learning",
+    "pages/card-learning/index",
     "pages/hero-gallery/hero-gallery",
     "pages/hero-detail/hero-detail",
     "pages/profile/profile"
