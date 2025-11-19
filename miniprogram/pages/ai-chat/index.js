@@ -128,11 +128,51 @@ Page({
       this.updateUserStats();
       
     } catch (error) {
-      handleError(error, 'AI对话');
+      console.error('AI对话失败', error);
+      
+      // 如果云函数调用失败，使用模拟回复（用于测试）
+      const mockReply = this.getMockReply(userMessage.content);
+      const aiMessage = {
+        role: 'assistant',
+        content: mockReply,
+        time: this.formatTime(new Date())
+      };
+      
       this.setData({
+        messages: [...this.data.messages, aiMessage],
         isLoading: false
       });
+      
+      this.scrollToBottom();
+      this.saveChatHistory();
+      
+      // 显示提示
+      wx.showToast({
+        title: '使用模拟回复（API未配置）',
+        icon: 'none',
+        duration: 2000
+      });
     }
+  },
+
+  // 获取模拟回复（用于测试）
+  getMockReply(question) {
+    const replies = {
+      '你好': '你好！我是星火同志，一位深耕中共党史五十年的资深研究员。有什么关于红色历史的问题，尽管问我吧！',
+      '南昌起义': '南昌起义发生在1927年8月1日，由周恩来、贺龙、叶挺、朱德、刘伯承等领导。这次起义打响了武装反抗国民党反动派的第一枪，标志着中国共产党独立领导武装斗争的开始，是创建人民军队的开端。',
+      '长征': '长征是1934年10月至1936年10月间，中国工农红军主力从长江南北各苏区向陕甘革命根据地的战略转移。红军长征历时两年，行程二万五千里，跨越11个省，翻越18座大山，渡过24条大河，经历了无数艰难险阻，最终胜利会师陕北。',
+      '遵义会议': '遵义会议是1935年1月15日至17日在贵州遵义召开的中共中央政治局扩大会议。这次会议确立了毛泽东同志在党中央和红军的领导地位，在极其危急的历史关头挽救了党、挽救了红军、挽救了中国革命。'
+    };
+    
+    // 查找匹配的回复
+    for (const key in replies) {
+      if (question.includes(key)) {
+        return replies[key];
+      }
+    }
+    
+    // 默认回复
+    return `感谢你的提问："${question}"。\n\n这是一个很好的问题！由于当前AI服务未配置，我暂时无法给出详细回答。\n\n你可以尝试问我：\n• 南昌起义\n• 长征\n• 遵义会议\n\n或者配置讯飞星火API后，我就能回答更多问题了！`;
   },
 
   // 显示英雄选择弹窗

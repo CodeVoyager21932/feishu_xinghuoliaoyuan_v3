@@ -199,6 +199,8 @@
   padding: 16rpx 24rpx;
   font-size: 28rpx;
   margin-right: 16rpx;
+  min-height: 80rpx;
+  box-sizing: border-box;
 }
 
 .send-btn {
