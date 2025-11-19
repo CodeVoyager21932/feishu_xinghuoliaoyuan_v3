@@ -70,6 +70,12 @@ Page({
     // 构建今日学习队列：待复习卡片 + 新卡片
     const todayQueue = [...this.getReviewCards(reviewingCards, learningRecords), ...newCards.slice(0, 10)];
     
+    // 计算正确的统计数据
+    const totalCards = cardsData.length;
+    const masteredCount = masteredCards.length;
+    const reviewingCount = reviewingCards.length;
+    const remainingCount = Math.max(0, totalCards - masteredCount - reviewingCount);
+    
     this.setData({
       cardQueue: todayQueue,
       currentCard: todayQueue[0] || null,
@@ -77,9 +83,9 @@ Page({
       totalCount: todayQueue.length,
       isLoading: false,
       stats: {
-        mastered: masteredCards.length,
-        reviewing: reviewingCards.length,
-        remaining: newCards.length
+        mastered: masteredCount,
+        reviewing: reviewingCount,
+        remaining: remainingCount
       }
     });
   },
@@ -351,7 +357,8 @@ Page({
       }
     });
     
-    const remaining = cardsData.length - mastered - reviewing;
+    // 未学习 = 总卡片数 - 已掌握 - 待复习
+    const remaining = Math.max(0, cardsData.length - mastered - reviewing);
     
     this.setData({
       stats: { mastered, reviewing, remaining }
