@@ -1,0 +1,89 @@
+<!-- 知识图谱页面 -->
+<view class="graph-page">
+  <!-- 顶部筛选栏 -->
+  <view class="filter-bar">
+    <view 
+      class="filter-btn {{filter === 'all' ? 'active' : ''}}"
+      bindtap="onFilterChange"
+      data-filter="all"
+    >
+      全部
+    </view>
+    <view 
+      class="filter-btn {{filter === 'revolution' ? 'active' : ''}}"
+      bindtap="onFilterChange"
+      data-filter="revolution"
+    >
+      革命时期
+    </view>
+    <view 
+      class="filter-btn {{filter === 'construction' ? 'active' : ''}}"
+      bindtap="onFilterChange"
+      data-filter="construction"
+    >
+      建设时期
+    </view>
+    <view 
+      class="filter-btn {{filter === 'reform' ? 'active' : ''}}"
+      bindtap="onFilterChange"
+      data-filter="reform"
+    >
+      改革时期
+    </view>
+  </view>
+
+  <!-- 图谱画布 -->
+  <canvas 
+    type="2d" 
+    id="graph-canvas"
+    class="graph-canvas"
+    bindtouchstart="onTouchStart"
+    bindtouchmove="onTouchMove"
+    bindtouchend="onTouchEnd"
+    bindtap="onCanvasTap"
+  ></canvas>
+
+  <!-- 操作提示 -->
+  <view class="tips">
+    <text>💡 点击节点查看详情 · 拖动查看更多</text>
+  </view>
+
+  <!-- 详情卡片（底部弹出） -->
+  <view class="detail-card {{showDetail ? 'show' : ''}}" catchtap="hideDetail">
+    <view class="card-content" catchtap="stopPropagation">
+      <view class="card-header">
+        <text class="card-title">{{selectedNode.label}}</text>
+        <text class="card-close" bindtap="hideDetail">×</text>
+      </view>
+      
+      <view class="card-body">
+        <view class="info-row" wx:if="{{selectedNode.date}}">
+          <text class="info-label">时间：</text>
+          <text class="info-value">{{selectedNode.date}}</text>
+        </view>
+        
+        <view class="info-row" wx:if="{{selectedNode.location}}">
+          <text class="info-label">地点：</text>
+          <text class="info-value">{{selectedNode.location}}</text>
+        </view>
+        
+        <view class="info-row" wx:if="{{selectedNode.description}}">
+          <text class="info-label">简介：</text>
+          <text class="info-value">{{selectedNode.description}}</text>
+        </view>
+      </view>
+      
+      <view class="card-footer">
+        <button class="ai-btn" bindtap="askAI">
+          <text>🤖 AI详解</text>
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载提示 -->
+  <view class="loading" wx:if="{{isLoading}}">
+    <view class="loading-spinner"></view>
+    <text>加载中...</text>
+  </view>
+</view>

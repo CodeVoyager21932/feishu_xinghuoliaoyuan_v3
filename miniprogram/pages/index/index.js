@@ -179,8 +179,8 @@ Page({
 
   // 跳转到知识图谱
   goToGraph() {
-    wx.switchTab({
-      url: '/pages/knowledge-graph/knowledge-graph'
+    wx.navigateTo({
+      url: '/pages/knowledge-graph/index'
     });
   },
 
