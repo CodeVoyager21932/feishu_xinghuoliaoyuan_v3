@@ -73,10 +73,45 @@ function clearAllCache() {
   }
 }
 
+/**
+ * 获取缓存大小
+ * @returns {Promise<number>} 缓存大小（KB）
+ */
+function getCacheSize() {
+  return new Promise((resolve) => {
+    wx.getStorageInfo({
+      success: (res) => {
+        resolve(res.currentSize);
+      },
+      fail: () => {
+        resolve(0);
+      }
+    });
+  });
+}
+
+/**
+ * 检查缓存是否过期
+ * @param {string} key 缓存键
+ * @returns {boolean} 是否过期
+ */
+function isCacheExpired(key) {
+  try {
+    const cache = wx.getStorageSync(key);
+    if (!cache) return true;
+    return Date.now() - cache.timestamp > CACHE_DURATION;
+  } catch (error) {
+    return true;
+  }
+}
+
 module.exports = {
   CACHE_KEYS,
+  CACHE_DURATION,
   setCache,
   getCache,
   clearCache,
-  clearAllCache
+  clearAllCache,
+  getCacheSize,
+  isCacheExpired
 };
