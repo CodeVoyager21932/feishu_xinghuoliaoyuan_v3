@@ -1,0 +1,33 @@
+# 微信小程序
+miniprogram_npm/
+node_modules/
+.DS_Store
+
+# 云开发
+cloud/functions/*/node_modules/
+
+# 日志文件
+*.log
+npm-debug.log*
+
+# 编辑器
+.vscode/
+.idea/
+
+# 临时文件
+*.tmp
+*.temp
+
+# 环境变量
+.env
+.env.local
+
+# 构建产物
+dist/
+build/
+
+# 测试覆盖率
+coverage/
+
+# 系统文件
+Thumbs.db
