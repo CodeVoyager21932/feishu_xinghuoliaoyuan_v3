@@ -1,5 +1,5 @@
 // pages/knowledge-graph/index.js
-const graphData = require('../../data/graph.json');
+const graphData = require('../../data/graph.js');
 
 Page({
   data: {

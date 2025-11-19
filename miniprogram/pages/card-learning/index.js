@@ -1,5 +1,5 @@
 // pages/card-learning/index.js
-const cardsData = require('../../data/cards.json');
+const cardsData = require('../../data/cards.js');
 
 // 艾宾浩斯遗忘曲线复习间隔（毫秒）
 const REVIEW_INTERVALS = [

@@ -1,0 +1,538 @@
+module.exports = {
+  "nodes": [
+    {
+      "id": "event_001",
+      "type": "event",
+      "label": "中共一大",
+      "year": 1921,
+      "date": "1921-07-23",
+      "era": "revolution",
+      "description": "中国共产党第一次全国代表大会，宣告中国共产党成立",
+      "location": "上海、嘉兴",
+      "importance": 5
+    },
+    {
+      "id": "event_002",
+      "type": "event",
+      "label": "南昌起义",
+      "year": 1927,
+      "date": "1927-08-01",
+      "era": "revolution",
+      "description": "打响武装反抗国民党反动派的第一枪",
+      "location": "江西南昌",
+      "importance": 5
+    },
+    {
+      "id": "event_003",
+      "type": "event",
+      "label": "秋收起义",
+      "year": 1927,
+      "date": "1927-09-09",
+      "era": "revolution",
+      "description": "毛泽东领导的工农革命军起义",
+      "location": "湖南、江西边界",
+      "importance": 4
+    },
+    {
+      "id": "event_004",
+      "type": "event",
+      "label": "井冈山会师",
+      "year": 1928,
+      "date": "1928-04-28",
+      "era": "revolution",
+      "description": "朱德、毛泽东两支部队在井冈山会师",
+      "location": "江西井冈山",
+      "importance": 4
+    },
+    {
+      "id": "event_005",
+      "type": "event",
+      "label": "遵义会议",
+      "year": 1935,
+      "date": "1935-01-15",
+      "era": "revolution",
+      "description": "确立毛泽东在党中央和红军的领导地位",
+      "location": "贵州遵义",
+      "importance": 5
+    },
+    {
+      "id": "event_006",
+      "type": "event",
+      "label": "长征胜利",
+      "year": 1936,
+      "date": "1936-10-22",
+      "era": "revolution",
+      "description": "红军三大主力在甘肃会宁会师，长征胜利结束",
+      "location": "甘肃会宁",
+      "importance": 5
+    },
+    {
+      "id": "event_007",
+      "type": "event",
+      "label": "西安事变",
+      "year": 1936,
+      "date": "1936-12-12",
+      "era": "revolution",
+      "description": "张学良、杨虎城发动兵谏，促成国共第二次合作",
+      "location": "陕西西安",
+      "importance": 4
+    },
+    {
+      "id": "event_008",
+      "type": "event",
+      "label": "七七事变",
+      "year": 1937,
+      "date": "1937-07-07",
+      "era": "revolution",
+      "description": "日本全面侵华战争爆发",
+      "location": "北京卢沟桥",
+      "importance": 5
+    },
+    {
+      "id": "event_009",
+      "type": "event",
+      "label": "平型关大捷",
+      "year": 1937,
+      "date": "1937-09-25",
+      "era": "revolution",
+      "description": "八路军首战告捷",
+      "location": "山西平型关",
+      "importance": 3
+    },
+    {
+      "id": "event_010",
+      "type": "event",
+      "label": "百团大战",
+      "year": 1940,
+      "date": "1940-08-20",
+      "era": "revolution",
+      "description": "八路军在华北发动大规模进攻战役",
+      "location": "华北地区",
+      "importance": 4
+    },
+    {
+      "id": "event_011",
+      "type": "event",
+      "label": "延安整风",
+      "year": 1942,
+      "date": "1942-02-01",
+      "era": "revolution",
+      "description": "全党范围的马克思主义教育运动",
+      "location": "陕西延安",
+      "importance": 4
+    },
+    {
+      "id": "event_012",
+      "type": "event",
+      "label": "中共七大",
+      "year": 1945,
+      "date": "1945-04-23",
+      "era": "revolution",
+      "description": "确立毛泽东思想为党的指导思想",
+      "location": "陕西延安",
+      "importance": 5
+    },
+    {
+      "id": "event_013",
+      "type": "event",
+      "label": "抗战胜利",
+      "year": 1945,
+      "date": "1945-08-15",
+      "era": "revolution",
+      "description": "日本宣布无条件投降",
+      "location": "全国",
+      "importance": 5
+    },
+    {
+      "id": "event_014",
+      "type": "event",
+      "label": "重庆谈判",
+      "year": 1945,
+      "date": "1945-08-29",
+      "era": "revolution",
+      "description": "国共两党就和平建国问题进行谈判",
+      "location": "重庆",
+      "importance": 3
+    },
+    {
+      "id": "event_015",
+      "type": "event",
+      "label": "辽沈战役",
+      "year": 1948,
+      "date": "1948-09-12",
+      "era": "revolution",
+      "description": "解放战争三大战役之一",
+      "location": "东北地区",
+      "importance": 4
+    },
+    {
+      "id": "event_016",
+      "type": "event",
+      "label": "淮海战役",
+      "year": 1948,
+      "date": "1948-11-06",
+      "era": "revolution",
+      "description": "解放战争三大战役之一",
+      "location": "华东地区",
+      "importance": 4
+    },
+    {
+      "id": "event_017",
+      "type": "event",
+      "label": "平津战役",
+      "year": 1948,
+      "date": "1948-11-29",
+      "era": "revolution",
+      "description": "解放战争三大战役之一",
+      "location": "华北地区",
+      "importance": 4
+    },
+    {
+      "id": "event_018",
+      "type": "event",
+      "label": "开国大典",
+      "year": 1949,
+      "date": "1949-10-01",
+      "era": "construction",
+      "description": "中华人民共和国成立",
+      "location": "北京天安门",
+      "importance": 5
+    },
+    {
+      "id": "event_019",
+      "type": "event",
+      "label": "抗美援朝",
+      "year": 1950,
+      "date": "1950-10-19",
+      "era": "construction",
+      "description": "中国人民志愿军赴朝作战",
+      "location": "朝鲜半岛",
+      "importance": 5
+    },
+    {
+      "id": "event_020",
+      "type": "event",
+      "label": "土地改革",
+      "year": 1950,
+      "date": "1950-06-30",
+      "era": "construction",
+      "description": "《中华人民共和国土地改革法》颁布",
+      "location": "全国",
+      "importance": 4
+    },
+    {
+      "id": "person_001",
+      "type": "person",
+      "label": "毛泽东",
+      "year": 1893,
+      "era": "revolution",
+      "description": "中国共产党、中华人民共和国主要缔造者",
+      "importance": 5
+    },
+    {
+      "id": "person_002",
+      "type": "person",
+      "label": "周恩来",
+      "year": 1898,
+      "era": "revolution",
+      "description": "中国共产党和国家主要领导人之一",
+      "importance": 5
+    },
+    {
+      "id": "person_003",
+      "type": "person",
+      "label": "朱德",
+      "year": 1886,
+      "era": "revolution",
+      "description": "中国人民解放军主要缔造者之一",
+      "importance": 5
+    },
+    {
+      "id": "person_004",
+      "type": "person",
+      "label": "刘少奇",
+      "year": 1898,
+      "era": "revolution",
+      "description": "中国共产党和国家主要领导人之一",
+      "importance": 4
+    },
+    {
+      "id": "person_005",
+      "type": "person",
+      "label": "邓小平",
+      "year": 1904,
+      "era": "reform",
+      "description": "改革开放的总设计师",
+      "importance": 5
+    },
+    {
+      "id": "person_006",
+      "type": "person",
+      "label": "彭德怀",
+      "year": 1898,
+      "era": "revolution",
+      "description": "中国人民解放军杰出将领",
+      "importance": 4
+    },
+    {
+      "id": "person_007",
+      "type": "person",
+      "label": "雷锋",
+      "year": 1940,
+      "era": "construction",
+      "description": "伟大的共产主义战士",
+      "importance": 4
+    },
+    {
+      "id": "person_008",
+      "type": "person",
+      "label": "焦裕禄",
+      "year": 1922,
+      "era": "construction",
+      "description": "县委书记的榜样",
+      "importance": 4
+    },
+    {
+      "id": "person_009",
+      "type": "person",
+      "label": "黄继光",
+      "year": 1931,
+      "era": "construction",
+      "description": "特级战斗英雄",
+      "importance": 4
+    },
+    {
+      "id": "person_010",
+      "type": "person",
+      "label": "邱少云",
+      "year": 1926,
+      "era": "construction",
+      "description": "一级战斗英雄",
+      "importance": 4
+    }
+  ],
+  "edges": [
+    {
+      "source": "person_001",
+      "target": "event_001",
+      "type": "participate",
+      "label": "参加"
+    },
+    {
+      "source": "person_002",
+      "target": "event_001",
+      "type": "participate",
+      "label": "参加"
+    },
+    {
+      "source": "event_001",
+      "target": "event_002",
+      "type": "lead_to",
+      "label": "促进"
+    },
+    {
+      "source": "person_002",
+      "target": "event_002",
+      "type": "lead",
+      "label": "领导"
+    },
+    {
+      "source": "person_003",
+      "target": "event_002",
+      "type": "participate",
+      "label": "参加"
+    },
+    {
+      "source": "person_001",
+      "target": "event_003",
+      "type": "lead",
+      "label": "领导"
+    },
+    {
+      "source": "event_002",
+      "target": "event_003",
+      "type": "parallel",
+      "label": "同期"
+    },
+    {
+      "source": "person_001",
+      "target": "event_004",
+      "type": "participate",
+      "label": "参加"
+    },
+    {
+      "source": "person_003",
+      "target": "event_004",
+      "type": "participate",
+      "label": "参加"
+    },
+    {
+      "source": "event_003",
+      "target": "event_004",
+      "type": "lead_to",
+      "label": "促成"
+    },
+    {
+      "source": "person_001",
+      "target": "event_005",
+      "type": "key_role",
+      "label": "确立地位"
+    },
+    {
+      "source": "person_002",
+      "target": "event_005",
+      "type": "participate",
+      "label": "参加"
+    },
+    {
+      "source": "event_005",
+      "target": "event_006",
+      "type": "lead_to",
+      "label": "指导"
+    },
+    {
+      "source": "person_001",
+      "target": "event_006",
+      "type": "lead",
+      "label": "领导"
+    },
+    {
+      "source": "event_007",
+      "target": "event_008",
+      "type": "lead_to",
+      "label": "促成抗日"
+    },
+    {
+      "source": "event_008",
+      "target": "event_009",
+      "type": "lead_to",
+      "label": "引发"
+    },
+    {
+      "source": "event_009",
+      "target": "event_010",
+      "type": "lead_to",
+      "label": "延续"
+    },
+    {
+      "source": "person_006",
+      "target": "event_010",
+      "type": "lead",
+      "label": "指挥"
+    },
+    {
+      "source": "event_011",
+      "target": "event_012",
+      "type": "lead_to",
+      "label": "准备"
+    },
+    {
+      "source": "person_001",
+      "target": "event_012",
+      "type": "key_role",
+      "label": "确立思想"
+    },
+    {
+      "source": "event_012",
+      "target": "event_013",
+      "type": "lead_to",
+      "label": "促进"
+    },
+    {
+      "source": "event_013",
+      "target": "event_014",
+      "type": "lead_to",
+      "label": "引发"
+    },
+    {
+      "source": "person_001",
+      "target": "event_014",
+      "type": "participate",
+      "label": "参加"
+    },
+    {
+      "source": "event_014",
+      "target": "event_015",
+      "type": "lead_to",
+      "label": "破裂后"
+    },
+    {
+      "source": "event_015",
+      "target": "event_016",
+      "type": "parallel",
+      "label": "同期"
+    },
+    {
+      "source": "event_016",
+      "target": "event_017",
+      "type": "parallel",
+      "label": "同期"
+    },
+    {
+      "source": "event_015",
+      "target": "event_018",
+      "type": "lead_to",
+      "label": "促成"
+    },
+    {
+      "source": "event_016",
+      "target": "event_018",
+      "type": "lead_to",
+      "label": "促成"
+    },
+    {
+      "source": "event_017",
+      "target": "event_018",
+      "type": "lead_to",
+      "label": "促成"
+    },
+    {
+      "source": "person_001",
+      "target": "event_018",
+      "type": "key_role",
+      "label": "宣告成立"
+    },
+    {
+      "source": "person_002",
+      "target": "event_018",
+      "type": "participate",
+      "label": "参加"
+    },
+    {
+      "source": "person_003",
+      "target": "event_018",
+      "type": "participate",
+      "label": "参加"
+    },
+    {
+      "source": "event_018",
+      "target": "event_019",
+      "type": "lead_to",
+      "label": "引发"
+    },
+    {
+      "source": "person_006",
+      "target": "event_019",
+      "type": "lead",
+      "label": "指挥"
+    },
+    {
+      "source": "person_009",
+      "target": "event_019",
+      "type": "participate",
+      "label": "参战牺牲"
+    },
+    {
+      "source": "person_010",
+      "target": "event_019",
+      "type": "participate",
+      "label": "参战牺牲"
+    },
+    {
+      "source": "event_018",
+      "target": "event_020",
+      "type": "lead_to",
+      "label": "推动"
+    }
+  ]
+}

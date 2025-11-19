@@ -1,5 +1,5 @@
 // 英雄长廊页面
-const heroesData = require('../../data/heroes.json');
+const heroesData = require('../../data/heroes.js');
 
 Page({
   data: {

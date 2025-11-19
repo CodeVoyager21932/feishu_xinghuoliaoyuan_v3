@@ -1,6 +1,6 @@
 // pages/index/index.js
 const app = getApp();
-const heroesData = require('../../data/heroes.json');
+const heroesData = require('../../data/heroes.js');
 
 Page({
   data: {
