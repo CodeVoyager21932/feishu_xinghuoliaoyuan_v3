@@ -22,6 +22,14 @@ npm-debug.log*
 .env
 .env.local
 
+# 微信小程序上传密钥（重要！不要提交）
+private.key
+*.key
+
+# CI 生成的文件
+preview-qrcode.jpg
+preview-qrcode.png
+
 # 构建产物
 dist/
 build/
