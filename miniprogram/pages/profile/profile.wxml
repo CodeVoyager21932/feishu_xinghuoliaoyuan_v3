@@ -1,2 +1,91 @@
-<!--pages/profile/profile.wxml-->
-<text>pages/profile/profile.wxml</text>
+<!-- 个人中心页面 -->
+<view class="profile-page">
+  <!-- 顶部用户信息卡片 -->
+  <view class="user-card">
+    <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
+    <view class="user-info">
+      <text class="user-name">{{userInfo.nickName}}</text>
+      <text class="user-id">学号：{{userInfo.studentId || '未设置'}}</text>
+    </view>
+  </view>
+
+  <!-- 学习统计 -->
+  <view class="stats-section">
+    <view class="section-title">
+      <text>📊 学习统计</text>
+    </view>
+    <view class="stats-grid">
+      <view class="stat-item">
+        <text class="stat-value">{{stats.continuous_days}}</text>
+        <text class="stat-label">连续打卡</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{stats.total_days}}</text>
+        <text class="stat-label">累计天数</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{stats.mastered_cards}}</text>
+        <text class="stat-label">掌握卡片</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{stats.ai_chat_count}}</text>
+        <text class="stat-label">AI问答</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 成就徽章 -->
+  <view class="achievements-section">
+    <view class="section-title">
+      <text>🏆 成就徽章</text>
+      <text class="achievement-count">{{unlockedCount}}/{{totalCount}}</text>
+    </view>
+    <view class="achievements-grid">
+      <view 
+        class="achievement-item {{item.unlocked ? 'unlocked' : 'locked'}}"
+        wx:for="{{achievements}}"
+        wx:key="id"
+        bindtap="onAchievementClick"
+        data-achievement="{{item}}"
+      >
+        <view class="achievement-icon">{{item.icon}}</view>
+        <text class="achievement-name">{{item.name}}</text>
+        <view class="achievement-progress" wx:if="{{!item.unlocked}}">
+          <text>{{item.progress}}/{{item.target}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 学习记录 -->
+  <view class="records-section">
+    <view class="section-title">
+      <text>📅 打卡日历</text>
+    </view>
+    <view class="calendar-grid">
+      <view 
+        class="calendar-day {{item.checked ? 'checked' : ''}}"
+        wx:for="{{calendarDays}}"
+        wx:key="date"
+      >
+        <text class="day-number">{{item.day}}</text>
+        <view class="check-mark" wx:if="{{item.checked}}">✓</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 设置选项 -->
+  <view class="settings-section">
+    <view class="section-title">
+      <text>⚙️ 设置</text>
+    </view>
+    <view class="setting-item" bindtap="onClearCache">
+      <text>清除缓存</text>
+      <text class="arrow">›</text>
+    </view>
+    <view class="setting-item" bindtap="onAbout">
+      <text>关于我们</text>
+      <text class="arrow">›</text>
+    </view>
+  </view>
+</view>

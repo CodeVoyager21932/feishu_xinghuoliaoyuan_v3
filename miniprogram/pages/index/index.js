@@ -111,10 +111,10 @@ Page({
 
   // 检查今日是否已打卡
   checkTodayCheckIn() {
-    const today = new Date().toISOString().split('T')[0];
-    const lastCheckIn = wx.getStorageSync('lastCheckIn');
+    const today = this.formatDate(new Date());
+    const checkInRecords = wx.getStorageSync('checkInRecords') || [];
     
-    if (lastCheckIn === today) {
+    if (checkInRecords.includes(today)) {
       this.setData({ hasCheckedIn: true });
     }
   },
@@ -122,33 +122,72 @@ Page({
   // 打卡
   onCheckIn() {
     if (this.data.hasCheckedIn) {
+      wx.showToast({
+        title: '今日已打卡',
+        icon: 'none'
+      });
       return;
     }
 
-    wx.cloud.callFunction({
-      name: 'check-in',
-      success: (res) => {
-        const today = new Date().toISOString().split('T')[0];
-        wx.setStorageSync('lastCheckIn', today);
-        
-        this.setData({ hasCheckedIn: true });
-        
-        wx.showToast({
-          title: `打卡成功！连续${res.result.continuous_days}天`,
-          icon: 'success'
-        });
-        
-        // 刷新统计数据
-        this.loadUserStats();
-      },
-      fail: (err) => {
-        console.error('打卡失败', err);
-        wx.showToast({
-          title: '打卡失败，请重试',
-          icon: 'none'
-        });
-      }
+    const today = this.formatDate(new Date());
+    let checkInRecords = wx.getStorageSync('checkInRecords') || [];
+    
+    // 添加今日打卡记录
+    if (!checkInRecords.includes(today)) {
+      checkInRecords.push(today);
+      wx.setStorageSync('checkInRecords', checkInRecords);
+    }
+    
+    // 计算连续天数
+    const continuousDays = this.calculateContinuousDays(checkInRecords);
+    
+    this.setData({ hasCheckedIn: true });
+    
+    // 显示打卡成功动画
+    wx.showToast({
+      title: `打卡成功！连续${continuousDays}天`,
+      icon: 'success',
+      duration: 2000
     });
+    
+    // 更新统计数据
+    let stats = wx.getStorageSync('userStats') || {};
+    stats.continuous_days = continuousDays;
+    stats.total_days = checkInRecords.length;
+    wx.setStorageSync('userStats', stats);
+    
+    this.loadUserStats();
+  },
+
+  // 计算连续打卡天数
+  calculateContinuousDays(records) {
+    if (records.length === 0) return 0;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    let continuous = 0;
+    let currentDate = new Date(today);
+
+    for (let i = 0; i < 365; i++) {
+      const dateStr = this.formatDate(currentDate);
+      if (records.includes(dateStr)) {
+        continuous++;
+        currentDate.setDate(currentDate.getDate() - 1);
+      } else {
+        break;
+      }
+    }
+
+    return continuous;
+  },
+
+  // 格式化日期
+  formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   },
 
   // 跳转到英雄详情
