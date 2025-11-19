@@ -34,11 +34,71 @@
   font-weight: 600;
 }
 
-/* 图谱画布 */
-.graph-canvas {
+/* 时间轴列表视图 */
+.timeline-view {
   flex: 1;
   width: 100%;
   background: #FFFFFF;
+}
+
+.timeline-container {
+  padding: 32rpx 24rpx;
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 60rpx;
+  padding-bottom: 48rpx;
+  border-left: 4rpx solid #FFE5E5;
+  margin-left: 24rpx;
+}
+
+.timeline-item:last-child {
+  border-left-color: transparent;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -14rpx;
+  top: 8rpx;
+  width: 24rpx;
+  height: 24rpx;
+  background: #D32F2F;
+  border-radius: 50%;
+  border: 4rpx solid #FFFFFF;
+  box-shadow: 0 0 0 4rpx #FFE5E5;
+}
+
+.timeline-content {
+  background: #FAFAFA;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  transition: all 0.3s;
+}
+
+.timeline-item:active .timeline-content {
+  background: #F5F5F5;
+  transform: scale(0.98);
+}
+
+.node-year {
+  font-size: 24rpx;
+  color: #D32F2F;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.node-label {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #212121;
+  margin-bottom: 12rpx;
+}
+
+.node-desc {
+  font-size: 26rpx;
+  color: #757575;
+  line-height: 1.6;
 }
 
 /* 操作提示 */

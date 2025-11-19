@@ -32,20 +32,29 @@
     </view>
   </view>
 
-  <!-- 图谱画布 -->
-  <canvas 
-    type="2d" 
-    id="graph-canvas"
-    class="graph-canvas"
-    bindtouchstart="onTouchStart"
-    bindtouchmove="onTouchMove"
-    bindtouchend="onTouchEnd"
-    bindtap="onCanvasTap"
-  ></canvas>
+  <!-- 时间轴列表视图（临时替代Canvas） -->
+  <scroll-view class="timeline-view" scroll-y>
+    <view class="timeline-container">
+      <view 
+        class="timeline-item"
+        wx:for="{{filteredNodes}}"
+        wx:key="id"
+        bindtap="onNodeClick"
+        data-node="{{item}}"
+      >
+        <view class="timeline-dot"></view>
+        <view class="timeline-content">
+          <view class="node-year">{{item.year}}年</view>
+          <view class="node-label">{{item.label}}</view>
+          <view class="node-desc">{{item.description}}</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
 
   <!-- 操作提示 -->
   <view class="tips">
-    <text>💡 点击节点查看详情 · 拖动查看更多</text>
+    <text>💡 点击事件查看详情</text>
   </view>
 
   <!-- 详情卡片（底部弹出） -->

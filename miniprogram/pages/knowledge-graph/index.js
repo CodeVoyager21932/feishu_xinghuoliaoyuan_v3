@@ -229,8 +229,15 @@ Page({
         filteredEdges
       });
     }
-    
-    this.drawGraph();
+  },
+
+  // 节点点击事件
+  onNodeClick(e) {
+    const node = e.currentTarget.dataset.node;
+    this.setData({
+      selectedNode: node,
+      showDetail: true
+    });
   },
 
   // 触摸开始
