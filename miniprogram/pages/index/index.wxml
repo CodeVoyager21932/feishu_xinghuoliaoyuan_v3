@@ -1,0 +1,60 @@
+<!--index.wxml-->
+<view class="home-page">
+  <!-- 顶部用户信息 -->
+  <view class="header">
+    <image class="avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" />
+    <text class="nickname">{{userInfo.nickName || '未登录'}}</text>
+    <button class="check-in-btn" bindtap="onCheckIn" disabled="{{hasCheckedIn}}">
+      <text>{{hasCheckedIn ? '已打卡' : '打卡'}}</text>
+    </button>
+  </view>
+
+  <!-- 今日英雄卡片 -->
+  <view class="today-hero-card card" bindtap="goToHeroDetail">
+    <view class="hero-badge">今日英雄</view>
+    <image class="hero-avatar" src="{{todayHero.avatar}}" mode="aspectFill" />
+    <view class="hero-info">
+      <text class="hero-name">{{todayHero.name}}</text>
+      <text class="hero-desc">{{todayHero.brief}}</text>
+    </view>
+  </view>
+
+  <!-- 功能入口 -->
+  <view class="function-grid">
+    <view class="grid-item" bindtap="goToAIChat">
+      <image src="/images/icon-ai.png" mode="aspectFit" />
+      <text>AI讲解员</text>
+    </view>
+    <view class="grid-item" bindtap="goToGraph">
+      <image src="/images/icon-graph.png" mode="aspectFit" />
+      <text>知识图谱</text>
+    </view>
+    <view class="grid-item" bindtap="goToCards">
+      <image src="/images/icon-card.png" mode="aspectFit" />
+      <text>卡片学习</text>
+    </view>
+    <view class="grid-item" bindtap="goToHeroes">
+      <image src="/images/icon-hero.png" mode="aspectFit" />
+      <text>英雄长廊</text>
+    </view>
+  </view>
+
+  <!-- 学习统计 -->
+  <view class="stats-card card">
+    <text class="stats-title">我的学习</text>
+    <view class="stats-row">
+      <view class="stat-item">
+        <text class="stat-value">{{stats.continuous_days}}</text>
+        <text class="stat-label">连续打卡</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{stats.mastered_cards}}</text>
+        <text class="stat-label">掌握卡片</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{stats.ai_chat_count}}</text>
+        <text class="stat-label">AI问答</text>
+      </view>
+    </view>
+  </view>
+</view>

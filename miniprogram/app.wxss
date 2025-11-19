@@ -1,0 +1,125 @@
+/**app.wxss**/
+/* 全局样式 */
+
+page {
+  background-color: #FAFAFA;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 
+               'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* 色彩系统 */
+:root {
+  --primary-red: #D32F2F;
+  --primary-red-light: #EF5350;
+  --primary-red-dark: #C62828;
+  --gold: #FFD700;
+  --gold-light: #FFE57F;
+  --text-primary: #212121;
+  --text-secondary: #757575;
+  --text-hint: #BDBDBD;
+  --divider: #E0E0E0;
+  --background: #FAFAFA;
+  --card-bg: #FFFFFF;
+}
+
+/* 通用卡片样式 */
+.card {
+  background: var(--card-bg);
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  padding: 32rpx;
+  margin: 24rpx;
+}
+
+/* 按钮样式 */
+.btn-primary {
+  background: var(--primary-red);
+  color: #FFFFFF;
+  border-radius: 48rpx;
+  padding: 24rpx 48rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  border: none;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--primary-red);
+  border: 2rpx solid var(--primary-red);
+  border-radius: 48rpx;
+  padding: 24rpx 48rpx;
+  font-size: 28rpx;
+}
+
+/* 标题样式 */
+.title-large {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.title-medium {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.title-small {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* 正文样式 */
+.body-large {
+  font-size: 32rpx;
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+.body-medium {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+.body-small {
+  font-size: 24rpx;
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+/* 辅助文字 */
+.caption {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+}
+
+/* 容器 */
+.container {
+  padding: 32rpx;
+}
+
+/* Flex布局 */
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

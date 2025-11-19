@@ -1,0 +1,53 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/ai-chat/ai-chat",
+    "pages/knowledge-graph/knowledge-graph",
+    "pages/card-learning/card-learning",
+    "pages/hero-gallery/hero-gallery",
+    "pages/hero-detail/hero-detail",
+    "pages/profile/profile"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#D32F2F",
+    "navigationBarTitleText": "星火",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#FAFAFA"
+  },
+  "tabBar": {
+    "color": "#757575",
+    "selectedColor": "#D32F2F",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab-home.png",
+        "selectedIconPath": "images/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/knowledge-graph/knowledge-graph",
+        "text": "知识图谱",
+        "iconPath": "images/tab-graph.png",
+        "selectedIconPath": "images/tab-graph-active.png"
+      },
+      {
+        "pagePath": "pages/card-learning/card-learning",
+        "text": "卡片学习",
+        "iconPath": "images/tab-card.png",
+        "selectedIconPath": "images/tab-card-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/tab-profile.png",
+        "selectedIconPath": "images/tab-profile-active.png"
+      }
+    ]
+  },
+  "cloud": true,
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
