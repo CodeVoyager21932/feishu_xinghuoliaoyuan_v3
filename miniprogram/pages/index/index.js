@@ -1,5 +1,6 @@
 // pages/index/index.js
 const app = getApp();
+const heroesData = require('../../data/heroes.json');
 
 Page({
   data: {
@@ -8,12 +9,7 @@ Page({
       avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
     },
     hasCheckedIn: false,
-    todayHero: {
-      id: 'hero_001',
-      name: '雷锋',
-      brief: '伟大的共产主义战士',
-      avatar: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
-    },
+    todayHero: {},
     stats: {
       continuous_days: 7,
       mastered_cards: 25,
@@ -89,17 +85,9 @@ Page({
 
   // 加载今日英雄
   loadTodayHero() {
-    // TODO: 从云端获取今日英雄数据
-    // 暂时使用模拟数据
-    const heroes = [
-      { id: 'hero_001', name: '雷锋', brief: '伟大的共产主义战士', avatar: '/images/heroes/leifeng.jpg' },
-      { id: 'hero_002', name: '焦裕禄', brief: '县委书记的榜样', avatar: '/images/heroes/jiaoyulu.jpg' },
-      { id: 'hero_003', name: '冷云', brief: '八女投江英雄', avatar: '/images/heroes/lengyun.jpg' }
-    ];
-    
-    // 根据日期选择英雄
+    // 根据日期选择英雄（每天不同）
     const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-    const todayHero = heroes[dayOfYear % heroes.length];
+    const todayHero = heroesData[dayOfYear % heroesData.length];
     
     this.setData({ todayHero });
   },
@@ -165,8 +153,18 @@ Page({
 
   // 跳转到英雄详情
   goToHeroDetail() {
+    const heroId = this.data.todayHero.id;
+    if (heroId) {
+      wx.navigateTo({
+        url: `/pages/hero-detail/hero-detail?heroId=${heroId}`
+      });
+    }
+  },
+
+  // 跳转到英雄长廊
+  goToHeroes() {
     wx.navigateTo({
-      url: `/pages/hero-detail/hero-detail?id=${this.data.todayHero.id}`
+      url: '/pages/hero-gallery/hero-gallery'
     });
   },
 

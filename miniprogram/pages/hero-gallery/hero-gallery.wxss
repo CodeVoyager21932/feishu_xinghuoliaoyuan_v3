@@ -1,0 +1,131 @@
+/* 英雄长廊页面样式 */
+.hero-gallery-page {
+  min-height: 100vh;
+  background: #FAFAFA;
+}
+
+/* 筛选栏 */
+.filter-bar {
+  display: flex;
+  background: #FFFFFF;
+  padding: 20rpx 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.filter-item {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  font-size: 28rpx;
+  color: #757575;
+  border-radius: 8rpx;
+  transition: all 0.3s;
+}
+
+.filter-item.active {
+  background: #D32F2F;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+/* 英雄列表 */
+.hero-list {
+  height: calc(100vh - 120rpx);
+  padding: 24rpx;
+}
+
+.hero-card {
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
+}
+
+.hero-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 英雄头像 */
+.hero-avatar {
+  position: relative;
+  width: 120rpx;
+  height: 120rpx;
+  margin-right: 24rpx;
+  flex-shrink: 0;
+}
+
+.hero-avatar image {
+  width: 100%;
+  height: 100%;
+  border-radius: 12rpx;
+  background: #E0E0E0;
+}
+
+.era-tag {
+  position: absolute;
+  bottom: -8rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #D32F2F;
+  color: #FFFFFF;
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  white-space: nowrap;
+}
+
+/* 英雄信息 */
+.hero-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #212121;
+  margin-bottom: 8rpx;
+}
+
+.hero-title {
+  font-size: 24rpx;
+  color: #D32F2F;
+  margin-bottom: 12rpx;
+}
+
+.hero-brief {
+  font-size: 26rpx;
+  color: #757575;
+  margin-bottom: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hero-years {
+  font-size: 22rpx;
+  color: #BDBDBD;
+}
+
+/* 右箭头 */
+.arrow-icon {
+  font-size: 48rpx;
+  color: #BDBDBD;
+  margin-left: 16rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 120rpx 0;
+  color: #BDBDBD;
+  font-size: 28rpx;
+}

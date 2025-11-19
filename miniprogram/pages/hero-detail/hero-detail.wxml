@@ -1,2 +1,73 @@
-<!--pages/hero-detail/hero-detail.wxml-->
-<text>pages/hero-detail/hero-detail.wxml</text>
+<!-- 英雄详情页面 -->
+<view class="hero-detail-page">
+  <!-- 顶部英雄卡片 -->
+  <view class="hero-header">
+    <view class="hero-avatar-large">
+      <image src="{{hero.avatar}}" mode="aspectFill" />
+    </view>
+    <view class="hero-basic-info">
+      <view class="hero-name">{{hero.name}}</view>
+      <view class="hero-title">{{hero.title}}</view>
+      <view class="hero-years">
+        {{hero.birth_year}} - {{hero.death_year || '至今'}}
+      </view>
+      <view class="era-badge">{{hero.era}}</view>
+    </view>
+  </view>
+
+  <!-- 生平事迹 -->
+  <view class="section">
+    <view class="section-title">
+      <view class="title-icon">📖</view>
+      <text>生平事迹</text>
+    </view>
+    <view class="biography-text">{{hero.biography}}</view>
+  </view>
+
+  <!-- 主要贡献 -->
+  <view class="section">
+    <view class="section-title">
+      <view class="title-icon">⭐</view>
+      <text>主要贡献</text>
+    </view>
+    <view class="deeds-list">
+      <view 
+        class="deed-item"
+        wx:for="{{hero.main_deeds}}"
+        wx:key="index"
+      >
+        <view class="deed-dot"></view>
+        <text>{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 名言警句 -->
+  <view class="section" wx:if="{{hero.famous_quotes && hero.famous_quotes.length > 0}}">
+    <view class="section-title">
+      <view class="title-icon">💬</view>
+      <text>名言警句</text>
+    </view>
+    <view class="quotes-list">
+      <view 
+        class="quote-item"
+        wx:for="{{hero.famous_quotes}}"
+        wx:key="index"
+      >
+        <view class="quote-mark">"</view>
+        <text class="quote-text">{{item}}</text>
+        <view class="quote-mark">"</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作按钮 -->
+  <view class="action-buttons">
+    <view class="action-btn secondary" bindtap="onShare">
+      <text>分享英雄</text>
+    </view>
+    <view class="action-btn primary" bindtap="onChatWithHero">
+      <text>与英雄对话</text>
+    </view>
+  </view>
+</view>
