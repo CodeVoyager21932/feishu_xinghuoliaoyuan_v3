@@ -263,6 +263,9 @@ Page({
     
     // 更新统计
     this.updateStats();
+    
+    // 切换到下一张卡片
+    this.nextCard();
   },
 
   // 标记为已掌握
@@ -285,6 +288,9 @@ Page({
     
     // 更新统计
     this.updateStats();
+    
+    // 切换到下一张卡片
+    this.nextCard();
   },
 
   // 计算下次复习时间
