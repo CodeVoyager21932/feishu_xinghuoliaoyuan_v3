@@ -123,6 +123,11 @@
   margin-bottom: 12rpx;
 }
 
+.icon-emoji {
+  font-size: 64rpx;
+  margin-bottom: 12rpx;
+}
+
 .grid-item text {
   font-size: 24rpx;
   color: #212121;

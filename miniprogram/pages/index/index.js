@@ -3,18 +3,21 @@ const app = getApp();
 
 Page({
   data: {
-    userInfo: {},
+    userInfo: {
+      nickName: '星火学习者',
+      avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
+    },
     hasCheckedIn: false,
     todayHero: {
       id: 'hero_001',
       name: '雷锋',
       brief: '伟大的共产主义战士',
-      avatar: '/images/heroes/leifeng.jpg'
+      avatar: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
     },
     stats: {
-      continuous_days: 0,
-      mastered_cards: 0,
-      ai_chat_count: 0
+      continuous_days: 7,
+      mastered_cards: 25,
+      ai_chat_count: 50
     }
   },
 

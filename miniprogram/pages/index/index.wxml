@@ -22,19 +22,19 @@
   <!-- 功能入口 -->
   <view class="function-grid">
     <view class="grid-item" bindtap="goToAIChat">
-      <image src="/images/icon-ai.png" mode="aspectFit" />
+      <text class="icon-emoji">🤖</text>
       <text>AI讲解员</text>
     </view>
     <view class="grid-item" bindtap="goToGraph">
-      <image src="/images/icon-graph.png" mode="aspectFit" />
+      <text class="icon-emoji">🕸️</text>
       <text>知识图谱</text>
     </view>
     <view class="grid-item" bindtap="goToCards">
-      <image src="/images/icon-card.png" mode="aspectFit" />
+      <text class="icon-emoji">🎴</text>
       <text>卡片学习</text>
     </view>
     <view class="grid-item" bindtap="goToHeroes">
-      <image src="/images/icon-hero.png" mode="aspectFit" />
+      <text class="icon-emoji">🦸</text>
       <text>英雄长廊</text>
     </view>
   </view>
