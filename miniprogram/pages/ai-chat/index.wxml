@@ -1,0 +1,90 @@
+<!-- AI对话页面 -->
+<view class="chat-page">
+  <!-- 顶部导航 -->
+  <view class="chat-header">
+    <image class="ai-avatar" src="{{aiAvatar}}" />
+    <view class="header-info">
+      <text class="ai-name">{{aiName}}</text>
+      <text class="ai-desc">{{aiDesc}}</text>
+    </view>
+    <button class="switch-mode-btn" bindtap="showHeroSelect">
+      <text>{{mode === 'default' ? '切换英雄' : '普通模式'}}</text>
+    </button>
+  </view>
+  
+  <!-- 消息列表 -->
+  <scroll-view 
+    class="message-list" 
+    scroll-y 
+    scroll-into-view="{{scrollToId}}"
+    scroll-with-animation
+  >
+    <view class="message-welcome">
+      <text>你好！我是星火同志，一位深耕中共党史五十年的资深研究员。有什么关于红色历史的问题，尽管问我吧！</text>
+    </view>
+    
+    <block wx:for="{{messages}}" wx:key="index">
+      <view class="message-item {{item.role}}" id="msg-{{index}}">
+        <image 
+          class="avatar" 
+          src="{{item.role === 'user' ? userAvatar : aiAvatar}}" 
+        />
+        <view class="bubble">
+          <text class="content">{{item.content}}</text>
+          <text class="time">{{item.time}}</text>
+        </view>
+      </view>
+    </block>
+    
+    <!-- 加载中提示 -->
+    <view class="loading-wrapper" wx:if="{{isLoading}}">
+      <view class="loading">
+        <view class="dot"></view>
+        <view class="dot"></view>
+        <view class="dot"></view>
+      </view>
+      <text class="loading-text">思考中...</text>
+    </view>
+  </scroll-view>
+  
+  <!-- 输入框 -->
+  <view class="input-bar">
+    <input 
+      class="input" 
+      placeholder="向星火同志提问..." 
+      value="{{inputText}}"
+      bindinput="onInput"
+      confirm-type="send"
+      bindconfirm="onSend"
+    />
+    <button 
+      class="send-btn {{inputText ? 'active' : ''}}" 
+      bindtap="onSend"
+      disabled="{{isLoading || !inputText}}"
+    >
+      发送
+    </button>
+  </view>
+</view>
+
+<!-- 英雄选择弹窗 -->
+<view class="hero-modal {{showHeroModal ? 'show' : ''}}" bindtap="hideHeroModal">
+  <view class="modal-content" catchtap="stopPropagation">
+    <view class="modal-header">
+      <text class="modal-title">选择对话英雄</text>
+      <text class="modal-close" bindtap="hideHeroModal">×</text>
+    </view>
+    <view class="hero-list">
+      <view 
+        class="hero-item" 
+        wx:for="{{heroList}}" 
+        wx:key="id"
+        bindtap="selectHero"
+        data-hero="{{item}}"
+      >
+        <image class="hero-avatar" src="{{item.avatar}}" />
+        <text class="hero-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+</view>

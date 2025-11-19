@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "openapi": [
+      "storage.downloadFile"
+    ]
+  },
+  "env": {
+    "SPARK_APP_ID": "",
+    "SPARK_API_KEY": "",
+    "SPARK_API_SECRET": ""
+  }
+}

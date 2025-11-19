@@ -170,7 +170,7 @@ Page({
   // 跳转到AI对话
   goToAIChat() {
     wx.navigateTo({
-      url: '/pages/ai-chat/ai-chat'
+      url: '/pages/ai-chat/index'
     });
   },
 

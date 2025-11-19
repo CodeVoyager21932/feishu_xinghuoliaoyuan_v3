@@ -1,7 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/ai-chat/ai-chat",
+    "pages/ai-chat/index",
     "pages/knowledge-graph/knowledge-graph",
     "pages/card-learning/card-learning",
     "pages/hero-gallery/hero-gallery",
