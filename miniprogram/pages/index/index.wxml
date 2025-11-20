@@ -1,69 +1,113 @@
 <!--index.wxml-->
 <view class="home-page">
-  <!-- 顶部用户信息 -->
-  <view class="header">
-    <image class="avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" />
-    <text class="nickname">{{userInfo.nickName || '未登录'}}</text>
-    <button class="check-in-btn" bindtap="onCheckIn" disabled="{{hasCheckedIn}}">
-      <text>{{hasCheckedIn ? '已打卡' : '打卡'}}</text>
-    </button>
-  </view>
+  <!-- 顶部背景装饰 -->
+  <view class="bg-decoration"></view>
 
-  <!-- 今日英雄卡片 -->
-  <view class="today-hero-card card" bindtap="goToHeroDetail">
-    <view class="hero-badge">今日英雄</view>
-    <view class="hero-avatar-container">
-      <image 
-        class="hero-avatar" 
-        src="{{todayHero.avatar}}" 
-        mode="aspectFill"
-        binderror="onImageError"
-      />
-      <view class="hero-placeholder" wx:if="{{!todayHero.avatarLoaded}}">
-        <text class="placeholder-text">{{todayHero.name}}</text>
+  <!-- 顶部用户信息 (Glassmorphism) -->
+  <view class="header animate-fade-in">
+    <view class="user-info-glass">
+      <image class="avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" />
+      <view class="user-text">
+        <text class="greeting">早安，同志</text>
+        <text class="nickname">{{userInfo.nickName || '未登录'}}</text>
       </view>
-    </view>
-    <view class="hero-info">
-      <text class="hero-name">{{todayHero.name}}</text>
-      <text class="hero-desc">{{todayHero.brief}}</text>
+      <button class="check-in-btn {{hasCheckedIn ? 'checked' : ''}}" bindtap="onCheckIn" disabled="{{hasCheckedIn}}">
+        <text class="icon-check">✓</text>
+        <text>{{hasCheckedIn ? '已打卡' : '签到'}}</text>
+      </button>
     </view>
   </view>
 
-  <!-- 功能入口 -->
-  <view class="function-grid">
-    <view class="grid-item" bindtap="goToAIChat">
-      <text class="icon-emoji">🤖</text>
-      <text>AI讲解员</text>
-    </view>
-    <view class="grid-item" bindtap="goToGraph">
-      <text class="icon-emoji">🕸️</text>
-      <text>知识图谱</text>
-    </view>
-    <view class="grid-item" bindtap="goToCards">
-      <text class="icon-emoji">🎴</text>
-      <text>卡片学习</text>
-    </view>
-    <view class="grid-item" bindtap="goToHeroes">
-      <text class="icon-emoji">🦸</text>
-      <text>英雄长廊</text>
+  <!-- 今日英雄卡片 (Premium Card) -->
+  <view class="section-title animate-fade-in" style="animation-delay: 0.1s;">
+    <text class="font-serif">今日英雄</text>
+    <text class="date-badge">{{todayDate}}</text>
+  </view>
+  
+  <view class="today-hero-card card-hover animate-fade-in" style="animation-delay: 0.2s;" bindtap="goToHeroDetail">
+    <view class="hero-bg-gradient"></view>
+    <view class="hero-content">
+      <view class="hero-badge">
+        <text>⭐ 每日推荐</text>
+      </view>
+      <view class="hero-main">
+        <view class="hero-avatar-wrapper">
+          <image 
+            class="hero-avatar" 
+            src="{{todayHero.avatar}}" 
+            mode="aspectFill"
+            binderror="onImageError"
+          />
+          <view class="hero-placeholder" wx:if="{{!todayHero.avatarLoaded}}">
+            <text class="placeholder-text">{{todayHero.name[0]}}</text>
+          </view>
+        </view>
+        <view class="hero-text-group">
+          <text class="hero-name font-serif">{{todayHero.name}}</text>
+          <text class="hero-title">{{todayHero.title || '革命英雄'}}</text>
+          <text class="hero-desc">{{todayHero.brief}}</text>
+        </view>
+      </view>
+      <view class="hero-footer">
+        <text class="tap-hint">点击查看生平 ></text>
+      </view>
     </view>
   </view>
 
-  <!-- 学习统计 -->
-  <view class="stats-card card">
-    <text class="stats-title">我的学习</text>
-    <view class="stats-row">
-      <view class="stat-item">
-        <text class="stat-value">{{stats.continuous_days}}</text>
-        <text class="stat-label">连续打卡</text>
+  <!-- 功能入口 (Floating Grid) -->
+  <view class="function-grid animate-fade-in" style="animation-delay: 0.3s;">
+    <view class="grid-item card-hover" bindtap="goToAIChat">
+      <view class="icon-wrapper gradient-red">
+        <text class="icon-emoji">🤖</text>
       </view>
-      <view class="stat-item">
-        <text class="stat-value">{{stats.mastered_cards}}</text>
-        <text class="stat-label">掌握卡片</text>
+      <text class="grid-label">AI讲解员</text>
+      <text class="grid-desc">跨时空对话</text>
+    </view>
+    <view class="grid-item card-hover" bindtap="goToGraph">
+      <view class="icon-wrapper gradient-blue">
+        <text class="icon-emoji">🕸️</text>
       </view>
-      <view class="stat-item">
-        <text class="stat-value">{{stats.ai_chat_count}}</text>
-        <text class="stat-label">AI问答</text>
+      <text class="grid-label">知识图谱</text>
+      <text class="grid-desc">历史脉络</text>
+    </view>
+    <view class="grid-item card-hover" bindtap="goToCards">
+      <view class="icon-wrapper gradient-gold">
+        <text class="icon-emoji">🎴</text>
+      </view>
+      <text class="grid-label">卡片学习</text>
+      <text class="grid-desc">记忆碎片</text>
+    </view>
+    <view class="grid-item card-hover" bindtap="goToHeroes">
+      <view class="icon-wrapper gradient-purple">
+        <text class="icon-emoji">🦸</text>
+      </view>
+      <text class="grid-label">英雄长廊</text>
+      <text class="grid-desc">群英荟萃</text>
+    </view>
+  </view>
+
+  <!-- 学习统计 (Dashboard Widget) -->
+  <view class="stats-section animate-fade-in" style="animation-delay: 0.4s;">
+    <view class="stats-card card-hover">
+      <view class="stats-header">
+        <text class="font-serif title-medium">学习成就</text>
+        <view class="level-badge">Lv.{{userLevel || 1}} 星火燎原</view>
+      </view>
+      <view class="stats-row">
+        <view class="stat-item">
+          <text class="stat-num">{{stats.continuous_days}}<text class="stat-unit">天</text></text>
+          <text class="stat-label">连续打卡</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-num">{{stats.mastered_cards}}<text class="stat-unit">张</text></text>
+          <text class="stat-label">掌握卡片</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-num">{{stats.ai_chat_count}}<text class="stat-unit">次</text></text>
+          <text class="stat-label">AI互动</text>
+        </view>
       </view>
     </view>
   </view>

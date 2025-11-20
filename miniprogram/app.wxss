@@ -2,124 +2,116 @@
 /* 全局样式 */
 
 page {
-  background-color: #FAFAFA;
+  /* 极淡的暖色调纹理背景 */
+  background-color: #FDFBF7; 
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(255, 215, 0, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(211, 47, 47, 0.05) 0px, transparent 50%);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 
                'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --safe-area-inset-bottom: env(safe-area-inset-bottom);
 }
 
-/* 色彩系统 */
+/* 色彩系统 (Design Language: Spark & Sunrise) */
 :root {
+  /* 主色调：流体渐变 */
+  --gradient-primary: linear-gradient(135deg, #FF512F 0%, #DD2476 100%); /* 热烈红 -> 深紫红 */
+  --gradient-gold: linear-gradient(135deg, #F09819 0%, #EDDE5D 100%); /* 流光金 */
+  --gradient-ocean: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%); /* 科技蓝 (用于图谱) */
+  
+  /* 单色 */
   --primary-red: #D32F2F;
-  --primary-red-light: #EF5350;
-  --primary-red-dark: #C62828;
-  --gold: #FFD700;
-  --gold-light: #FFE57F;
-  --text-primary: #212121;
-  --text-secondary: #757575;
-  --text-hint: #BDBDBD;
-  --divider: #E0E0E0;
-  --background: #FAFAFA;
-  --card-bg: #FFFFFF;
+  --primary-gold: #FFD700;
+  --text-primary: #1A1A1A; /* 接近纯黑但更柔和 */
+  --text-secondary: #585858;
+  --text-hint: #9E9E9E;
+  --white: #FFFFFF;
+  
+  /* 玻璃拟态背景 */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 8rpx 32rpx 0 rgba(31, 38, 135, 0.07);
 }
 
-/* 通用卡片样式 */
+/* 字体系统 */
+.font-serif {
+  font-family: 'Songti SC', 'Noto Serif SC', serif; /* 衬线体，体现历史厚重感 */
+}
+
+/* 通用卡片样式 (Glassmorphism + Floating) */
 .card {
-  background: var(--card-bg);
-  border-radius: 16rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px); /* 毛玻璃效果 */
+  -webkit-backdrop-filter: blur(20px);
+  border: 1rpx solid var(--glass-border);
+  border-radius: 32rpx; /* 超椭圆大圆角 */
+  box-shadow: var(--glass-shadow);
   padding: 32rpx;
   margin: 24rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 悬浮效果 (Z-axis) */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.card-hover:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
 }
 
 /* 按钮样式 */
 .btn-primary {
-  background: var(--primary-red);
+  background: var(--gradient-primary);
   color: #FFFFFF;
   border-radius: 48rpx;
   padding: 24rpx 48rpx;
   font-size: 28rpx;
-  font-weight: 500;
+  font-weight: 600;
   border: none;
+  box-shadow: 0 8rpx 20rpx rgba(221, 36, 118, 0.3); /* 红色投影 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-secondary {
-  background: transparent;
-  color: var(--primary-red);
-  border: 2rpx solid var(--primary-red);
+  background: rgba(255, 255, 255, 0.8);
+  color: #DD2476;
+  border: 2rpx solid rgba(221, 36, 118, 0.2);
   border-radius: 48rpx;
   padding: 24rpx 48rpx;
   font-size: 28rpx;
+  font-weight: 600;
 }
 
 /* 标题样式 */
 .title-large {
-  font-size: 36rpx;
-  font-weight: 600;
+  font-size: 40rpx;
+  font-weight: 700;
   color: var(--text-primary);
+  letter-spacing: 1rpx;
 }
 
 .title-medium {
-  font-size: 32rpx;
+  font-size: 34rpx;
   font-weight: 600;
   color: var(--text-primary);
 }
 
-.title-small {
-  font-size: 28rpx;
-  font-weight: 500;
-  color: var(--text-primary);
+/* Flex布局工具类 */
+.flex-row { display: flex; flex-direction: row; align-items: center; }
+.flex-col { display: flex; flex-direction: column; }
+.flex-center { display: flex; justify-content: center; align-items: center; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+
+/* 动画 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* 正文样式 */
-.body-large {
-  font-size: 32rpx;
-  font-weight: 400;
-  color: var(--text-primary);
-}
-
-.body-medium {
-  font-size: 28rpx;
-  font-weight: 400;
-  color: var(--text-primary);
-}
-
-.body-small {
-  font-size: 24rpx;
-  font-weight: 400;
-  color: var(--text-primary);
-}
-
-/* 辅助文字 */
-.caption {
-  font-size: 22rpx;
-  color: var(--text-secondary);
-}
-
-/* 容器 */
-.container {
-  padding: 32rpx;
-}
-
-/* Flex布局 */
-.flex-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.flex-column {
-  display: flex;
-  flex-direction: column;
-}
-
-.flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.flex-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
 }

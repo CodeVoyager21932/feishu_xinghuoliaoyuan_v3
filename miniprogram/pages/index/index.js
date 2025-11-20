@@ -10,6 +10,8 @@ Page({
     },
     hasCheckedIn: false,
     todayHero: {},
+    todayDate: '',
+    userLevel: 1,
     stats: {
       continuous_days: 7,
       mastered_cards: 25,
@@ -22,6 +24,8 @@ Page({
     this.loadTodayHero();
     this.loadUserStats();
     this.checkTodayCheckIn();
+    this.setTodayDate();
+    this.calculateLevel();
   },
 
   onShow() {
@@ -51,7 +55,7 @@ Page({
         this.setData({ userInfo });
         app.globalData.userInfo = userInfo;
         wx.setStorageSync('userInfo', userInfo);
-        
+
         // 调用云函数创建用户记录
         this.createUserRecord(userInfo);
       },
@@ -88,10 +92,10 @@ Page({
     // 根据日期选择英雄（每天不同）
     const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
     const todayHero = heroesData[dayOfYear % heroesData.length];
-    
+
     // 默认图片未加载
     todayHero.avatarLoaded = false;
-    
+
     this.setData({ todayHero });
   },
 
@@ -113,6 +117,7 @@ Page({
           this.setData({
             stats: res.result.stats
           });
+          this.calculateLevel(); // Recalculate level when stats update
         }
       },
       fail: (err) => {
@@ -125,7 +130,7 @@ Page({
   checkTodayCheckIn() {
     const today = this.formatDate(new Date());
     const checkInRecords = wx.getStorageSync('checkInRecords') || [];
-    
+
     if (checkInRecords.includes(today)) {
       this.setData({ hasCheckedIn: true });
     }
@@ -143,31 +148,31 @@ Page({
 
     const today = this.formatDate(new Date());
     let checkInRecords = wx.getStorageSync('checkInRecords') || [];
-    
+
     // 添加今日打卡记录
     if (!checkInRecords.includes(today)) {
       checkInRecords.push(today);
       wx.setStorageSync('checkInRecords', checkInRecords);
     }
-    
+
     // 计算连续天数
     const continuousDays = this.calculateContinuousDays(checkInRecords);
-    
+
     this.setData({ hasCheckedIn: true });
-    
+
     // 显示打卡成功动画
     wx.showToast({
       title: `打卡成功！连续${continuousDays}天`,
       icon: 'success',
       duration: 2000
     });
-    
+
     // 更新统计数据
     let stats = wx.getStorageSync('userStats') || {};
     stats.continuous_days = continuousDays;
     stats.total_days = checkInRecords.length;
     wx.setStorageSync('userStats', stats);
-    
+
     this.loadUserStats();
   },
 
@@ -177,7 +182,7 @@ Page({
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
+
     let continuous = 0;
     let currentDate = new Date(today);
 
@@ -202,6 +207,25 @@ Page({
     return `${year}-${month}-${day}`;
   },
 
+  // 设置今日日期
+  setTodayDate() {
+    const date = new Date();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const weekDay = ['日', '一', '二', '三', '四', '五', '六'][date.getDay()];
+    this.setData({
+      todayDate: `${month}月${day}日 周${weekDay}`
+    });
+  },
+
+  // 计算用户等级
+  calculateLevel() {
+    // 简单逻辑：每掌握10张卡片升1级，或者每打卡7天升1级
+    const { mastered_cards, continuous_days } = this.data.stats;
+    const level = 1 + Math.floor(mastered_cards / 10) + Math.floor(continuous_days / 7);
+    this.setData({ userLevel: level });
+  },
+
   // 跳转到英雄详情
   goToHeroDetail() {
     const heroId = this.data.todayHero.id;
@@ -210,13 +234,6 @@ Page({
         url: `/pages/hero-detail/hero-detail?heroId=${heroId}`
       });
     }
-  },
-
-  // 跳转到英雄长廊
-  goToHeroes() {
-    wx.navigateTo({
-      url: '/pages/hero-gallery/hero-gallery'
-    });
   },
 
   // 跳转到AI对话
