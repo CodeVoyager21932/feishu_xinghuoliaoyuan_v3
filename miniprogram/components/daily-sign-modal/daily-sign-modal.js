@@ -17,7 +17,20 @@ Component({
     canvasWidth: 750,
     canvasHeight: 1334,
     posterPath: '',
-    isGenerating: false
+    isGenerating: false,
+    posterReady: false,
+    showPreview: true,
+    currentMonth: new Date().getMonth() + 1,
+    currentDay: new Date().getDate()
+  },
+
+  observers: {
+    'visible': function(visible) {
+      if (visible && !this.data.posterReady) {
+        // 弹窗打开时，后台静默生成海报
+        this.generatePosterInBackground();
+      }
+    }
   },
 
   lifetimes: {
@@ -37,17 +50,42 @@ Component({
       this.triggerEvent('close');
     },
 
-    // 生成海报
-    async generatePoster() {
-      if (this.data.isGenerating) return;
+    // 后台静默生成海报（不阻塞UI）
+    async generatePosterInBackground() {
+      if (this.data.isGenerating || this.data.posterReady) return;
       
       this.setData({ isGenerating: true });
+
+      try {
+        const posterPath = await this.drawPoster();
+        this.setData({ 
+          posterPath,
+          posterReady: true,
+          showPreview: false
+        });
+        console.log('海报生成完成（后台）');
+      } catch (err) {
+        console.error('后台生成海报失败', err);
+        this.setData({ posterReady: false });
+      } finally {
+        this.setData({ isGenerating: false });
+      }
+    },
+
+    // 生成海报（带Loading，用于保存时强制生成）
+    async generatePosterWithLoading() {
+      if (this.data.posterReady) return;
       
+      this.setData({ isGenerating: true });
       wx.showLoading({ title: '生成中...', mask: true });
 
       try {
         const posterPath = await this.drawPoster();
-        this.setData({ posterPath });
+        this.setData({ 
+          posterPath,
+          posterReady: true,
+          showPreview: false
+        });
         wx.hideLoading();
       } catch (err) {
         wx.hideLoading();
@@ -56,6 +94,7 @@ Component({
           icon: 'none'
         });
         console.error('生成海报失败', err);
+        throw err;
       } finally {
         this.setData({ isGenerating: false });
       }
@@ -267,9 +306,9 @@ Component({
     // 保存到相册
     async onSaveToAlbum() {
       try {
-        // 如果还没生成海报，先生成
-        if (!this.data.posterPath) {
-          await this.generatePoster();
+        // 如果海报还没生成完成，显示Loading等待
+        if (!this.data.posterReady) {
+          await this.generatePosterWithLoading();
         }
 
         // 请求授权
@@ -314,14 +353,15 @@ Component({
 
     // 分享给好友
     async onShareToFriend() {
-      // 如果还没生成海报，先生成
-      if (!this.data.posterPath) {
-        await this.generatePoster();
+      // 如果海报还没生成完成，显示Loading等待
+      if (!this.data.posterReady) {
+        await this.generatePosterWithLoading();
       }
 
       wx.showToast({
         title: '长按图片分享',
-        icon: 'none'
+        icon: 'none',
+        duration: 2000
       });
     },
 

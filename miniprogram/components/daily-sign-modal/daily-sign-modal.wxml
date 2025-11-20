@@ -12,6 +12,7 @@
 
     <!-- 海报预览区 -->
     <view class="poster-preview">
+      <!-- 隐藏的Canvas，用于离屏渲染 -->
       <canvas 
         type="2d" 
         id="posterCanvas" 
@@ -19,7 +20,35 @@
         style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;"
       ></canvas>
       
-      <!-- 生成后显示的图片 -->
+      <!-- 预览图（WXML布局，优先显示） -->
+      <view class="preview-layout" wx:if="{{showPreview && !posterPath}}">
+        <image 
+          class="preview-bg" 
+          src="{{todayQuote.image_url || '/images/default-bg.jpg'}}" 
+          mode="aspectFill"
+        />
+        <view class="preview-mask"></view>
+        
+        <!-- 日期印章 -->
+        <view class="preview-stamp">
+          <text class="stamp-month">{{currentMonth}}月</text>
+          <text class="stamp-day">{{currentDay}}</text>
+        </view>
+        
+        <!-- 诗词内容 -->
+        <view class="preview-quote">
+          <text class="quote-text">{{todayQuote.quote_content}}</text>
+          <text class="quote-author" wx:if="{{todayQuote.author}}">— {{todayQuote.author}}</text>
+        </view>
+        
+        <!-- 生成中提示 -->
+        <view class="generating-hint" wx:if="{{isGenerating}}">
+          <view class="hint-dot"></view>
+          <text>海报生成中...</text>
+        </view>
+      </view>
+      
+      <!-- 生成后显示的真实海报 -->
       <image 
         wx:if="{{posterPath}}" 
         src="{{posterPath}}" 
