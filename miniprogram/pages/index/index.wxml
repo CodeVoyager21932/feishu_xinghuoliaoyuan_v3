@@ -1,4 +1,5 @@
 <!--index.wxml-->
+<navigation-bar title="星火" backgroundClass="transparent" fixed="{{true}}"></navigation-bar>
 <view class="home-page">
   <!-- 顶部背景装饰 -->
   <view class="bg-decoration"></view>

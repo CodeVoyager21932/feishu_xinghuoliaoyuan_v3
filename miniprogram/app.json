@@ -13,7 +13,8 @@
     "navigationBarBackgroundColor": "#F7F8FA",
     "navigationBarTitleText": "星火",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#F7F8FA"
+    "backgroundColor": "#F7F8FA",
+    "navigationStyle": "custom"
   },
   "cloud": true,
   "style": "v2",
