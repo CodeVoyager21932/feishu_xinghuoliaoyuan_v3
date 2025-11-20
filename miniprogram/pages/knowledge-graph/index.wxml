@@ -1,98 +1,155 @@
 <!-- 知识图谱页面 -->
 <view class="graph-page">
-  <!-- 顶部筛选栏 -->
-  <view class="filter-bar">
-    <view 
-      class="filter-btn {{filter === 'all' ? 'active' : ''}}"
-      bindtap="onFilterChange"
-      data-filter="all"
-    >
-      全部
-    </view>
-    <view 
-      class="filter-btn {{filter === 'revolution' ? 'active' : ''}}"
-      bindtap="onFilterChange"
-      data-filter="revolution"
-    >
-      革命时期
-    </view>
-    <view 
-      class="filter-btn {{filter === 'construction' ? 'active' : ''}}"
-      bindtap="onFilterChange"
-      data-filter="construction"
-    >
-      建设时期
-    </view>
-    <view 
-      class="filter-btn {{filter === 'reform' ? 'active' : ''}}"
-      bindtap="onFilterChange"
-      data-filter="reform"
-    >
-      改革时期
+  <!-- 背景装饰 -->
+  <view class="bg-decoration"></view>
+
+  <!-- 顶部控制栏 (Glassmorphism) -->
+  <view class="control-bar-glass animate-fade-in">
+    <!-- 筛选器 -->
+    <scroll-view class="filter-scroll" scroll-x enable-flex>
+      <view class="filter-list">
+        <view 
+          class="filter-pill {{filter === 'all' ? 'active' : ''}}"
+          bindtap="onFilterChange"
+          data-filter="all"
+        >
+          全部
+        </view>
+        <view 
+          class="filter-pill {{filter === 'revolution' ? 'active' : ''}}"
+          bindtap="onFilterChange"
+          data-filter="revolution"
+        >
+          革命时期
+        </view>
+        <view 
+          class="filter-pill {{filter === 'construction' ? 'active' : ''}}"
+          bindtap="onFilterChange"
+          data-filter="construction"
+        >
+          建设时期
+        </view>
+        <view 
+          class="filter-pill {{filter === 'reform' ? 'active' : ''}}"
+          bindtap="onFilterChange"
+          data-filter="reform"
+        >
+          改革时期
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 视图切换 -->
+    <view class="view-toggle">
+      <view 
+        class="toggle-btn {{viewMode === 'timeline' ? 'active' : ''}}"
+        bindtap="switchView"
+        data-mode="timeline"
+      >
+        <text class="icon-view">≡</text>
+      </view>
+      <view 
+        class="toggle-btn {{viewMode === 'graph' ? 'active' : ''}}"
+        bindtap="switchView"
+        data-mode="graph"
+      >
+        <text class="icon-view">🕸️</text>
+      </view>
     </view>
   </view>
 
-  <!-- 时间轴列表视图（临时替代Canvas） -->
-  <scroll-view class="timeline-view" scroll-y>
-    <view class="timeline-container">
-      <view 
-        class="timeline-item"
-        wx:for="{{filteredNodes}}"
-        wx:key="id"
-        bindtap="onNodeClick"
-        data-node="{{item}}"
-      >
-        <view class="timeline-dot"></view>
-        <view class="timeline-content">
-          <view class="node-year">{{item.year}}年</view>
-          <view class="node-label">{{item.label}}</view>
-          <view class="node-desc">{{item.description}}</view>
+  <!-- 内容区域 -->
+  <view class="content-area">
+    <!-- 1. 时间轴视图 -->
+    <scroll-view 
+      class="timeline-view animate-fade-in" 
+      scroll-y 
+      wx:if="{{viewMode === 'timeline'}}"
+    >
+      <view class="timeline-container">
+        <view class="timeline-line"></view>
+        
+        <view 
+          class="timeline-item animate-slide-up"
+          wx:for="{{filteredNodes}}"
+          wx:key="id"
+          bindtap="onNodeClick"
+          data-node="{{item}}"
+          style="animation-delay: {{index * 0.05}}s;"
+        >
+          <view class="timeline-dot-wrapper">
+            <view class="timeline-dot {{item.type}}"></view>
+          </view>
+          <view class="timeline-card card-hover">
+            <view class="card-header">
+              <text class="node-year">{{item.year}}</text>
+              <view class="node-type-badge {{item.type}}">{{item.type === 'event' ? '事件' : '人物'}}</view>
+            </view>
+            <text class="node-label font-serif">{{item.label}}</text>
+            <text class="node-desc">{{item.description}}</text>
+          </view>
+        </view>
+        
+        <!-- 底部留白 -->
+        <view style="height: 100rpx;"></view>
+      </view>
+    </scroll-view>
+
+    <!-- 2. 知识图谱视图 (Canvas) -->
+    <view 
+      class="graph-view animate-fade-in" 
+      wx:if="{{viewMode === 'graph'}}"
+    >
+      <canvas 
+        type="2d" 
+        id="graph-canvas" 
+        class="graph-canvas"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+      ></canvas>
+      
+      <!-- 图谱操作提示 -->
+      <view class="graph-controls">
+        <view class="control-btn" bindtap="resetGraph">
+          <text>↺ 复位</text>
         </view>
       </view>
     </view>
-  </scroll-view>
-
-  <!-- 操作提示 -->
-  <view class="tips">
-    <text>💡 点击事件查看详情</text>
   </view>
 
-  <!-- 详情卡片（底部弹出） -->
+  <!-- 详情卡片 (Bottom Sheet) -->
   <view class="detail-card {{showDetail ? 'show' : ''}}" catchtap="hideDetail">
     <view class="card-content" catchtap="stopPropagation">
-      <view class="card-header">
-        <text class="card-title">{{selectedNode.label}}</text>
-        <text class="card-close" bindtap="hideDetail">×</text>
+      <view class="card-header-glass">
+        <text class="card-title font-serif">{{selectedNode.label}}</text>
+        <view class="card-close" bindtap="hideDetail">×</view>
       </view>
       
-      <view class="card-body">
-        <view class="info-row" wx:if="{{selectedNode.date}}">
-          <text class="info-label">时间：</text>
-          <text class="info-value">{{selectedNode.date}}</text>
+      <scroll-view scroll-y class="card-body">
+        <view class="info-grid">
+          <view class="info-item" wx:if="{{selectedNode.year}}">
+            <text class="info-label">时间</text>
+            <text class="info-value">{{selectedNode.year}}年</text>
+          </view>
+          <view class="info-item" wx:if="{{selectedNode.location}}">
+            <text class="info-label">地点</text>
+            <text class="info-value">{{selectedNode.location}}</text>
+          </view>
         </view>
         
-        <view class="info-row" wx:if="{{selectedNode.location}}">
-          <text class="info-label">地点：</text>
-          <text class="info-value">{{selectedNode.location}}</text>
+        <view class="desc-section">
+          <text class="section-title">简介</text>
+          <text class="desc-text">{{selectedNode.description}}</text>
         </view>
-        
-        <view class="info-row" wx:if="{{selectedNode.description}}">
-          <text class="info-label">简介：</text>
-          <text class="info-value">{{selectedNode.description}}</text>
-        </view>
-      </view>
+      </scroll-view>
       
       <view class="card-footer">
-        <button class="ai-btn" bindtap="askAI">
-          <text>🤖 AI详解</text>
+        <button class="ai-btn-large" bindtap="askAI">
+          <text class="icon-ai">🤖</text>
+          <text>AI 深度解析</text>
         </button>
       </view>
     </view>
-  </view>
-
-  <!-- 加载提示 -->
-  <view class="loading" wx:if="{{isLoading}}">
-    <view class="loading-spinner"></view>
-    <text>加载中...</text>
   </view>
 </view>
