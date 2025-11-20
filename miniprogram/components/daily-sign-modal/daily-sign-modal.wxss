@@ -1,0 +1,180 @@
+/* components/daily-sign-modal/daily-sign-modal.wxss */
+
+/* 模态框容器 */
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 遮罩层 */
+.modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+/* 内容区 */
+.modal-content {
+  position: relative;
+  z-index: 2;
+  width: 90%;
+  max-width: 600rpx;
+  background: #FFFFFF;
+  border-radius: 40rpx;
+  padding: 48rpx 32rpx 32rpx;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 关闭按钮 */
+.close-btn {
+  position: absolute;
+  top: 24rpx;
+  right: 24rpx;
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.icon-close {
+  font-size: 36rpx;
+  color: #666666;
+  font-weight: 300;
+}
+
+/* 海报预览区 */
+.poster-preview {
+  width: 100%;
+  height: 800rpx;
+  background: #F5F5F5;
+  border-radius: 24rpx;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 32rpx;
+}
+
+.poster-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.poster-image {
+  width: 100%;
+  height: 100%;
+}
+
+/* 今日宜忌 */
+.lucky-tips {
+  padding: 24rpx;
+  background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+  border-radius: 16rpx;
+  margin-bottom: 32rpx;
+  display: flex;
+  align-items: center;
+  border-left: 6rpx solid #FFA726;
+}
+
+.tips-label {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #E65100;
+  margin-right: 16rpx;
+}
+
+.tips-content {
+  font-size: 26rpx;
+  color: #F57C00;
+  flex: 1;
+}
+
+/* 操作按钮 */
+.action-buttons {
+  display: flex;
+  gap: 24rpx;
+}
+
+.action-buttons button {
+  flex: 1;
+  height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  transition: all 0.2s;
+}
+
+.action-buttons button::after {
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #FF4D4F 0%, #D32F2F 100%);
+  color: #FFFFFF;
+  box-shadow: 0 8rpx 20rpx rgba(211, 47, 47, 0.3);
+}
+
+.btn-primary:active {
+  transform: scale(0.96);
+  box-shadow: 0 4rpx 12rpx rgba(211, 47, 47, 0.2);
+}
+
+.btn-primary[disabled] {
+  opacity: 0.6;
+  transform: none;
+}
+
+.btn-secondary {
+  background: #FFFFFF;
+  color: #D32F2F;
+  border: 2rpx solid #D32F2F;
+}
+
+.btn-secondary:active {
+  transform: scale(0.96);
+  background: #FFF5F5;
+}
+
+.btn-secondary[disabled] {
+  opacity: 0.6;
+  transform: none;
+}
+
+.btn-icon {
+  margin-right: 12rpx;
+  font-size: 32rpx;
+}
