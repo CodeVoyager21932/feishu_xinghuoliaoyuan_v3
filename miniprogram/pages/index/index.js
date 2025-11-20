@@ -278,6 +278,20 @@ Page({
     });
   },
 
+  // 跳转到机密档案
+  goToMysteryBox() {
+    wx.navigateTo({
+      url: '/pages/mystery-box/mystery-box'
+    });
+  },
+
+  // 跳转到珍藏馆
+  goToMuseum() {
+    wx.navigateTo({
+      url: '/pages/museum/museum'
+    });
+  },
+
   // --- 3D Card Tilt Effect ---
   onReady() {
     this.updateHeroCardRect();

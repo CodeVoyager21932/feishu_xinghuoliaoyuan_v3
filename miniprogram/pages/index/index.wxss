@@ -440,3 +440,11 @@
   height: 60rpx;
   background: #E0E0E0;
 }
+
+/* 新增渐变色 */
+.gradient-orange { background: linear-gradient(135deg, #FFB74D 0%, #FF9800 100%); }
+.gradient-cyan { background: linear-gradient(135deg, #4DD0E1 0%, #00BCD4 100%); }
+
+/* 新增入口样式 */
+.grid-item:nth-child(5) .icon-wrapper { background: linear-gradient(135deg, #FFE5CC 0%, #FFCC99 100%); }
+.grid-item:nth-child(6) .icon-wrapper { background: linear-gradient(135deg, #E0F7FA 0%, #B2EBF2 100%); }
