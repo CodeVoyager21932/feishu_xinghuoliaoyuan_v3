@@ -331,7 +331,7 @@ Component({
         this.updateCheckInRecord();
         
       } catch (err) {
-        if (err.errMsg && err.errMsg.includes('auth deny')) {
+        if (err.errMsg && String(err.errMsg).includes('auth deny')) {
           wx.showModal({
             title: '需要授权',
             content: '请允许保存图片到相册',
@@ -369,6 +369,11 @@ Component({
     updateCheckInRecord() {
       const today = this.formatDate(new Date());
       let checkInRecords = wx.getStorageSync('checkInRecords') || [];
+      
+      // 确保是数组
+      if (!Array.isArray(checkInRecords)) {
+        checkInRecords = [];
+      }
       
       if (!checkInRecords.includes(today)) {
         checkInRecords.push(today);

@@ -1,5 +1,4 @@
 <!-- 卡片学习页面 -->
-<wxs module="touch" src="./touch.wxs"></wxs>
 <view class="card-learning-page">
   <!-- 背景装饰 -->
   <view class="bg-decoration"></view>
@@ -27,9 +26,9 @@
         style="transform: {{cardTransform}}; transition: {{cardTransition}};"
         wx:if="{{currentCard}}"
         data-card-id="{{currentCard.id}}"
-        bindtouchstart="{{touch.touchStart}}"
-        bindtouchmove="{{touch.touchMove}}"
-        bindtouchend="{{touch.touchEnd}}"
+        bindtouchstart="handleTouchStart"
+        bindtouchmove="handleTouchMove"
+        bindtouchend="handleTouchEnd"
         bindtap="onCardTap"
       >
         <!-- 正面 -->

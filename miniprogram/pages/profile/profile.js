@@ -68,7 +68,7 @@ Page({
 
   // 计算连续打卡天数
   calculateContinuousDays(records) {
-    if (records.length === 0) return 0;
+    if (!records || !Array.isArray(records) || records.length === 0) return 0;
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -186,7 +186,9 @@ Page({
     const lastUnlocked = wx.getStorageSync('lastUnlockedAchievements') || [];
     const currentUnlocked = achievements.filter(a => a.unlocked).map(a => a.id);
     
-    const newUnlocked = currentUnlocked.filter(id => !lastUnlocked.includes(id));
+    // 确保是数组
+    const lastUnlockedArray = Array.isArray(lastUnlocked) ? lastUnlocked : [];
+    const newUnlocked = currentUnlocked.filter(id => !lastUnlockedArray.includes(id));
     
     if (newUnlocked.length > 0) {
       const newAchievement = achievements.find(a => a.id === newUnlocked[0]);
@@ -215,6 +217,9 @@ Page({
     // 获取当月天数
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     
+    // 确保是数组
+    const recordsArray = Array.isArray(checkInRecords) ? checkInRecords : [];
+    
     const calendarDays = [];
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(year, month, i);
@@ -222,7 +227,7 @@ Page({
       calendarDays.push({
         day: i,
         date: dateStr,
-        checked: checkInRecords.includes(dateStr)
+        checked: recordsArray.includes(dateStr)
       });
     }
     

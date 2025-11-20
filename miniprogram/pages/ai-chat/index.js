@@ -245,7 +245,7 @@ Page({
     
     // 查找匹配的回复
     for (const key in replies) {
-      if (question.includes(key)) {
+      if (question && String(question).includes(key)) {
         return replies[key];
       }
     }

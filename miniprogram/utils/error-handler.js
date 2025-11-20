@@ -30,15 +30,15 @@ function getUserFriendlyMessage(error) {
   if (!error) return '操作失败，请重试';
   
   const errorCode = error.code || error.errCode;
-  const errorMsg = error.message || error.errMsg || '';
+  const errorMsg = String(error.message || error.errMsg || '');
   
   // 网络错误
-  if (errorCode === 'NETWORK_ERROR' || errorMsg.includes('network')) {
+  if (errorCode === 'NETWORK_ERROR' || (errorMsg && errorMsg.includes('network'))) {
     return '网络连接失败，请检查网络';
   }
   
   // API限流
-  if (errorCode === 'API_LIMIT' || errorMsg.includes('limit')) {
+  if (errorCode === 'API_LIMIT' || (errorMsg && errorMsg.includes('limit'))) {
     return 'AI服务繁忙，请稍后再试';
   }
   
@@ -48,7 +48,7 @@ function getUserFriendlyMessage(error) {
   }
   
   // 权限错误
-  if (errorMsg.includes('permission') || errorMsg.includes('auth')) {
+  if (errorMsg && (errorMsg.includes('permission') || errorMsg.includes('auth'))) {
     return '权限不足，请重新授权';
   }
   
@@ -120,7 +120,7 @@ function handleCloudError(error, functionName) {
   
   if (error.errCode === -1) {
     message = '网络连接失败';
-  } else if (error.errMsg && error.errMsg.includes('timeout')) {
+  } else if (error.errMsg && String(error.errMsg).includes('timeout')) {
     message = '请求超时，请重试';
   }
   

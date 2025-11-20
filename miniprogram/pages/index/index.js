@@ -170,7 +170,7 @@ Page({
     const today = this.formatDate(new Date());
     const checkInRecords = wx.getStorageSync('checkInRecords') || [];
 
-    if (checkInRecords.includes(today)) {
+    if (Array.isArray(checkInRecords) && checkInRecords.includes(today)) {
       this.setData({ hasCheckedIn: true });
     }
   },
@@ -187,6 +187,11 @@ Page({
 
     const today = this.formatDate(new Date());
     let checkInRecords = wx.getStorageSync('checkInRecords') || [];
+    
+    // 确保是数组
+    if (!Array.isArray(checkInRecords)) {
+      checkInRecords = [];
+    }
 
     // 添加今日打卡记录
     if (!checkInRecords.includes(today)) {
@@ -217,7 +222,7 @@ Page({
 
   // 计算连续打卡天数
   calculateContinuousDays(records) {
-    if (records.length === 0) return 0;
+    if (!records || !Array.isArray(records) || records.length === 0) return 0;
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);

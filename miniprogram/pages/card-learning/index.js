@@ -34,7 +34,12 @@ Page({
       mastered: 0,
       reviewing: 0,
       remaining: 0
-    }
+    },
+    
+    // 触摸状态
+    touchStartX: 0,
+    touchStartY: 0,
+    isSwiping: false
   },
 
   onLoad() {
@@ -82,6 +87,10 @@ Page({
       mastered: [],
       reviewing: []
     };
+    
+    // 确保数组存在
+    if (!todayRecords.mastered) todayRecords.mastered = [];
+    if (!todayRecords.reviewing) todayRecords.reviewing = [];
     
     // 计算今日统计：只统计今天学习的卡片
     const todayMastered = todayRecords.mastered.length;
@@ -151,18 +160,68 @@ Page({
     }
   },
 
-  // WXS 回调：更新卡片变换
-  updateCardTransform(e) {
-    const { transform, deltaX } = e;
-    
-    // 更新卡片样式
+  // 触摸开始
+  handleTouchStart(e) {
+    const touch = e.touches[0];
     this.setData({
-      cardTransform: transform,
-      swipeDirection: deltaX < -50 ? 'left' : deltaX > 50 ? 'right' : ''
+      touchStartX: touch.pageX,
+      touchStartY: touch.pageY,
+      isSwiping: false
     });
   },
 
-  // WXS 回调：处理左滑
+  // 触摸移动
+  handleTouchMove(e) {
+    const touch = e.touches[0];
+    const deltaX = touch.pageX - this.data.touchStartX;
+    const deltaY = touch.pageY - this.data.touchStartY;
+    
+    // 判断是否为水平滑动
+    if (Math.abs(deltaX) > 10 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      this.setData({
+        isSwiping: true
+      });
+      
+      // 计算旋转角度
+      let rotate = deltaX * 0.08;
+      if (rotate > 30) rotate = 30;
+      if (rotate < -30) rotate = -30;
+      
+      // 更新卡片样式
+      this.setData({
+        cardTransform: `translateX(${deltaX}px) rotate(${rotate}deg)`,
+        swipeDirection: deltaX < -50 ? 'left' : deltaX > 50 ? 'right' : ''
+      });
+    }
+  },
+
+  // 触摸结束
+  handleTouchEnd(e) {
+    if (!this.data.isSwiping) {
+      return;
+    }
+    
+    const touch = e.changedTouches[0];
+    const deltaX = touch.pageX - this.data.touchStartX;
+    const SWIPE_THRESHOLD = 100;
+    
+    if (deltaX < -SWIPE_THRESHOLD) {
+      // 左滑：待复习
+      this.handleSwipeLeft();
+    } else if (deltaX > SWIPE_THRESHOLD) {
+      // 右滑：已掌握
+      this.handleSwipeRight();
+    } else {
+      // 回弹
+      this.handleSwipeCancel();
+    }
+    
+    this.setData({
+      isSwiping: false
+    });
+  },
+
+  // 处理左滑
   handleSwipeLeft() {
     const { currentCard } = this.data;
     if (!currentCard) return;
@@ -180,7 +239,7 @@ Page({
     }, 300);
   },
 
-  // WXS 回调：处理右滑
+  // 处理右滑
   handleSwipeRight() {
     const { currentCard } = this.data;
     if (!currentCard) return;
@@ -198,7 +257,7 @@ Page({
     }, 300);
   },
 
-  // WXS 回调：处理取消滑动
+  // 处理取消滑动
   handleSwipeCancel() {
     // 回弹动画
     this.setData({
@@ -274,6 +333,14 @@ Page({
       reviewing: []
     };
     
+    // 确保数组存在
+    if (!todayRecords.reviewing) {
+      todayRecords.reviewing = [];
+    }
+    if (!todayRecords.mastered) {
+      todayRecords.mastered = [];
+    }
+    
     if (!todayRecords.reviewing.includes(card.id)) {
       todayRecords.reviewing.push(card.id);
       wx.setStorageSync(`today_records_${todayKey}`, todayRecords);
@@ -318,6 +385,14 @@ Page({
       mastered: [],
       reviewing: []
     };
+    
+    // 确保数组存在
+    if (!todayRecords.reviewing) {
+      todayRecords.reviewing = [];
+    }
+    if (!todayRecords.mastered) {
+      todayRecords.mastered = [];
+    }
     
     if (!todayRecords.mastered.includes(card.id)) {
       todayRecords.mastered.push(card.id);
@@ -378,6 +453,10 @@ Page({
       mastered: [],
       reviewing: []
     };
+    
+    // 确保数组存在
+    if (!todayRecords.mastered) todayRecords.mastered = [];
+    if (!todayRecords.reviewing) todayRecords.reviewing = [];
     
     // 计算今日统计
     const todayMastered = todayRecords.mastered.length;
