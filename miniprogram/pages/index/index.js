@@ -336,7 +336,21 @@ Page({
 
   // 打开日签弹窗
   onOpenDailySign() {
+    console.log('点击日签按钮');
+    console.log('todayQuote:', this.data.todayQuote);
+    
+    if (!this.data.todayQuote || !this.data.todayQuote.quote_content) {
+      wx.showToast({
+        title: '数据加载中...',
+        icon: 'none'
+      });
+      // 重新加载数据
+      this.loadTodayQuote();
+      return;
+    }
+    
     this.setData({ showDailySign: true });
+    console.log('弹窗已打开，showDailySign:', this.data.showDailySign);
   },
 
   // 关闭日签弹窗
