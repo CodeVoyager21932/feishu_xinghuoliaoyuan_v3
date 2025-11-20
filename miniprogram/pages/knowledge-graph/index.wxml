@@ -1,179 +1,88 @@
-<!-- 知识图谱页面 -->
-<navigation-bar title="知识图谱" showBack="{{true}}"></navigation-bar>
-<view class="graph-page">
-  <!-- 背景装饰 -->
-  <view class="bg-decoration"></view>
+<!--pages/knowledge-graph/index.wxml-->
+<navigation-bar title="历史长河" showBack="{{true}}" background="transparent"></navigation-bar>
 
+<view class="graph-page">
   <!-- 顶部控制栏 (Glassmorphism) -->
   <view class="control-bar-glass animate-fade-in">
-    <!-- 筛选器 -->
-    <scroll-view class="filter-scroll" scroll-x enable-flex>
-      <view class="filter-list">
-        <view 
-          class="filter-pill {{filter === 'all' ? 'active' : ''}}"
-          bindtap="onFilterChange"
-          data-filter="all"
-        >
-          全部
-        </view>
-        <view 
-          class="filter-pill {{filter === 'revolution' ? 'active' : ''}}"
-          bindtap="onFilterChange"
-          data-filter="revolution"
-        >
-          革命时期
-        </view>
-        <view 
-          class="filter-pill {{filter === 'construction' ? 'active' : ''}}"
-          bindtap="onFilterChange"
-          data-filter="construction"
-        >
-          建设时期
-        </view>
-        <view 
-          class="filter-pill {{filter === 'reform' ? 'active' : ''}}"
-          bindtap="onFilterChange"
-          data-filter="reform"
-        >
-          改革时期
-        </view>
-      </view>
-    </scroll-view>
-
-    <!-- 视图切换 -->
+    <view class="search-bar">
+      <text class="icon-search">🔍</text>
+      <input class="search-input" placeholder="搜索历史事件/人物" placeholder-class="search-placeholder" />
+    </view>
     <view class="view-toggle">
-      <view 
-        class="toggle-btn {{viewMode === 'timeline' ? 'active' : ''}}"
-        bindtap="switchView"
-        data-mode="timeline"
-      >
-        <text class="icon-view">≡</text>
+      <view class="toggle-item {{currentView === 'timeline' ? 'active' : ''}}" bindtap="switchView" data-view="timeline">
+        <text>时间轴</text>
       </view>
-      <view 
-        class="toggle-btn {{viewMode === 'graph' ? 'active' : ''}}"
-        bindtap="switchView"
-        data-mode="graph"
-      >
-        <text class="icon-view">🕸️</text>
+      <view class="toggle-item {{currentView === 'graph' ? 'active' : ''}}" bindtap="switchView" data-view="graph">
+        <text>星系图</text>
       </view>
     </view>
   </view>
 
-  <!-- 内容区域 -->
-  <view class="content-area">
-    <!-- 1. 时间轴视图 -->
+  <!-- 视图内容区域 -->
+  <view class="view-container">
+    
+    <!-- 1. 时间轴视图 (Timeline View) -->
     <scroll-view 
-      class="timeline-view animate-fade-in" 
+      wx:if="{{currentView === 'timeline'}}" 
       scroll-y 
-      wx:if="{{viewMode === 'timeline'}}"
+      class="timeline-scroll animate-fade-in"
+      enable-back-to-top
     >
-      <!-- 加载状态 -->
-      <view class="timeline-container" wx:if="{{isLoading}}">
-        <view class="timeline-line"></view>
-        <view class="timeline-item" wx:for="{{[1,2,3]}}" wx:key="*this">
-          <view class="timeline-dot-wrapper">
-            <view class="timeline-dot skeleton"></view>
-          </view>
-          <view class="timeline-card skeleton-card">
-            <view class="skeleton-line short"></view>
-            <view class="skeleton-line"></view>
-            <view class="skeleton-line long"></view>
-          </view>
-        </view>
-      </view>
-
-      <!-- 内容 -->
-      <view class="timeline-container" wx:else>
+      <view class="timeline-container">
         <view class="timeline-line"></view>
         
-        <!-- 空状态 -->
-        <view class="empty-state" wx:if="{{filteredNodes.length === 0}}">
-          <text class="empty-emoji">🔍</text>
-          <text class="empty-text">暂无相关内容</text>
-        </view>
-
-        <!-- 时间轴列表 -->
-        <view 
-          class="timeline-item animate-slide-up"
-          wx:for="{{filteredNodes}}"
-          wx:key="id"
-          bindtap="onNodeClick"
-          data-node="{{item}}"
-          style="animation-delay: {{index * 0.05}}s;"
-        >
-          <view class="timeline-dot-wrapper">
-            <view class="timeline-dot {{item.type}}"></view>
-          </view>
-          <view class="timeline-card card-hover">
-            <view class="card-header">
-              <text class="node-year">{{item.year}}</text>
-              <view class="node-type-badge {{item.type}}">{{item.type === 'event' ? '事件' : '人物'}}</view>
+        <block wx:for="{{timelineData}}" wx:key="id">
+          <view class="timeline-item {{index % 2 === 0 ? 'left' : 'right'}} animate-slide-up" style="animation-delay: {{index * 0.1}}s">
+            <view class="timeline-dot">
+              <view class="dot-core"></view>
+              <view class="dot-ripple"></view>
             </view>
-            <text class="node-label font-serif">{{item.label}}</text>
-            <text class="node-desc">{{item.description}}</text>
+            <view class="timeline-content card-hover" bindtap="onEventTap" data-id="{{item.id}}">
+              <view class="event-year font-serif">{{item.year}}</view>
+              <view class="event-card">
+                <image class="event-img" src="{{item.image}}" mode="aspectFill" lazy-load />
+                <view class="event-info">
+                  <text class="event-title">{{item.title}}</text>
+                  <text class="event-desc">{{item.description}}</text>
+                </view>
+              </view>
+            </view>
           </view>
-        </view>
+        </block>
         
         <!-- 底部留白 -->
-        <view style="height: 100rpx;"></view>
+        <view style="height: 120rpx;"></view>
       </view>
     </scroll-view>
 
-    <!-- 2. 知识图谱视图 (Canvas) -->
-    <view 
-      class="graph-view animate-fade-in" 
-      wx:if="{{viewMode === 'graph'}}"
-    >
-      <canvas 
-        type="2d" 
-        id="graph-canvas" 
-        class="graph-canvas"
+    <!-- 2. 知识图谱视图 (Graph View) -->
+    <view wx:if="{{currentView === 'graph'}}" class="graph-container animate-fade-in">
+      <!-- 星空背景 -->
+      <view class="starry-bg"></view>
+      
+      <!-- Canvas 区域 -->
+      <canvas type="2d" id="knowledgeGraph" class="graph-canvas"
         bindtouchstart="onTouchStart"
         bindtouchmove="onTouchMove"
         bindtouchend="onTouchEnd"
       ></canvas>
       
-      <!-- 图谱操作提示 -->
-      <view class="graph-controls">
-        <view class="control-btn" bindtap="resetGraph">
-          <text>↺ 复位</text>
+      <!-- 底部图例 -->
+      <view class="legend-panel glass-panel">
+        <view class="legend-item">
+          <view class="dot event"></view>
+          <text>事件</text>
+        </view>
+        <view class="legend-item">
+          <view class="dot person"></view>
+          <text>人物</text>
+        </view>
+        <view class="legend-item">
+          <view class="dot location"></view>
+          <text>地点</text>
         </view>
       </view>
     </view>
-  </view>
 
-  <!-- 详情卡片 (Bottom Sheet) -->
-  <view class="detail-card {{showDetail ? 'show' : ''}}" catchtap="hideDetail">
-    <view class="card-content" catchtap="stopPropagation">
-      <view class="card-header-glass">
-        <text class="card-title font-serif">{{selectedNode.label}}</text>
-        <view class="card-close" bindtap="hideDetail">×</view>
-      </view>
-      
-      <scroll-view scroll-y class="card-body">
-        <view class="info-grid">
-          <view class="info-item" wx:if="{{selectedNode.year}}">
-            <text class="info-label">时间</text>
-            <text class="info-value">{{selectedNode.year}}年</text>
-          </view>
-          <view class="info-item" wx:if="{{selectedNode.location}}">
-            <text class="info-label">地点</text>
-            <text class="info-value">{{selectedNode.location}}</text>
-          </view>
-        </view>
-        
-        <view class="desc-section">
-          <text class="section-title">简介</text>
-          <text class="desc-text">{{selectedNode.description}}</text>
-        </view>
-      </scroll-view>
-      
-      <view class="card-footer">
-        <button class="ai-btn-large" bindtap="askAI">
-          <text class="icon-ai">🤖</text>
-          <text>AI 深度解析</text>
-        </button>
-      </view>
-    </view>
   </view>
 </view>
