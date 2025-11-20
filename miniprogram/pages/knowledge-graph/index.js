@@ -25,6 +25,20 @@ Page({
 
   onLoad() {
     this.loadGraphData();
+    this.showFirstTimeHint();
+  },
+
+  // 首次使用提示
+  showFirstTimeHint() {
+    const hasShownHint = wx.getStorageSync('graph_hint_shown');
+    if (!hasShownHint) {
+      wx.showToast({
+        title: '点击节点查看详情，可切换图谱视图',
+        icon: 'none',
+        duration: 3000
+      });
+      wx.setStorageSync('graph_hint_shown', true);
+    }
   },
 
   // 切换视图
@@ -35,6 +49,13 @@ Page({
     this.setData({ viewMode: mode });
 
     if (mode === 'graph') {
+      // 显示图谱操作提示
+      wx.showToast({
+        title: '拖动查看，点击节点详情',
+        icon: 'none',
+        duration: 2000
+      });
+      
       // 延迟初始化 Canvas，等待视图渲染
       setTimeout(() => {
         this.initCanvas();

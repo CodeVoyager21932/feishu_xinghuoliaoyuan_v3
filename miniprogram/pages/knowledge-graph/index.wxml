@@ -66,9 +66,32 @@
       scroll-y 
       wx:if="{{viewMode === 'timeline'}}"
     >
-      <view class="timeline-container">
+      <!-- 加载状态 -->
+      <view class="timeline-container" wx:if="{{isLoading}}">
+        <view class="timeline-line"></view>
+        <view class="timeline-item" wx:for="{{[1,2,3]}}" wx:key="*this">
+          <view class="timeline-dot-wrapper">
+            <view class="timeline-dot skeleton"></view>
+          </view>
+          <view class="timeline-card skeleton-card">
+            <view class="skeleton-line short"></view>
+            <view class="skeleton-line"></view>
+            <view class="skeleton-line long"></view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 内容 -->
+      <view class="timeline-container" wx:else>
         <view class="timeline-line"></view>
         
+        <!-- 空状态 -->
+        <view class="empty-state" wx:if="{{filteredNodes.length === 0}}">
+          <text class="empty-emoji">🔍</text>
+          <text class="empty-text">暂无相关内容</text>
+        </view>
+
+        <!-- 时间轴列表 -->
         <view 
           class="timeline-item animate-slide-up"
           wx:for="{{filteredNodes}}"
