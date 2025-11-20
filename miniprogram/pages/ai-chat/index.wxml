@@ -1,15 +1,28 @@
 <!-- AI对话页面 -->
 <view class="chat-page">
-  <!-- 顶部导航 -->
-  <view class="chat-header">
-    <image class="ai-avatar" src="{{aiAvatar}}" />
-    <view class="header-info">
-      <text class="ai-name">{{aiName}}</text>
-      <text class="ai-desc">{{aiDesc}}</text>
+  <!-- 顶部背景装饰 -->
+  <view class="bg-decoration"></view>
+
+  <!-- 顶部导航 (Glassmorphism Header) -->
+  <view class="chat-header-glass animate-fade-in">
+    <view class="header-content">
+      <view class="ai-info">
+        <view class="avatar-ring {{mode === 'hero' ? 'hero-ring' : ''}}">
+          <image class="ai-avatar" src="{{aiAvatar}}" mode="aspectFill" />
+        </view>
+        <view class="header-text">
+          <text class="ai-name font-serif">{{aiName}}</text>
+          <view class="status-badge">
+            <view class="status-dot"></view>
+            <text class="ai-desc">{{aiDesc}}</text>
+          </view>
+        </view>
+      </view>
+      <button class="switch-mode-btn {{mode === 'hero' ? 'active' : ''}}" bindtap="showHeroSelect">
+        <text class="icon-switch">⇄</text>
+        <text>{{mode === 'default' ? '切换英雄' : '退出扮演'}}</text>
+      </button>
     </view>
-    <button class="switch-mode-btn" bindtap="showHeroSelect">
-      <text>{{mode === 'default' ? '切换英雄' : '普通模式'}}</text>
-    </button>
   </view>
   
   <!-- 消息列表 -->
@@ -18,73 +31,90 @@
     scroll-y 
     scroll-into-view="{{scrollToId}}"
     scroll-with-animation
+    enable-flex
   >
-    <view class="message-welcome">
-      <text>你好！我是星火同志，一位深耕中共党史五十年的资深研究员。有什么关于红色历史的问题，尽管问我吧！</text>
-    </view>
-    
-    <block wx:for="{{messages}}" wx:key="index">
-      <view class="message-item {{item.role}}" id="msg-{{index}}">
-        <image 
-          class="avatar" 
-          src="{{item.role === 'user' ? userAvatar : aiAvatar}}" 
-        />
-        <view class="bubble">
-          <text class="content">{{item.content}}</text>
-          <text class="time">{{item.time}}</text>
+    <view class="message-padding">
+      <view class="message-welcome animate-fade-in">
+        <text>你好！我是星火同志，一位深耕中共党史五十年的资深研究员。有什么关于红色历史的问题，尽管问我吧！</text>
+      </view>
+      
+      <block wx:for="{{messages}}" wx:key="index">
+        <view class="message-item {{item.role}} animate-slide-up" id="msg-{{index}}">
+          <image 
+            class="avatar" 
+            src="{{item.role === 'user' ? userAvatar : aiAvatar}}" 
+            mode="aspectFill"
+          />
+          <view class="bubble-wrapper">
+            <view class="bubble {{item.role}}">
+              <text class="content" user-select>{{item.content}}</text>
+            </view>
+            <text class="time">{{item.time}}</text>
+          </view>
+        </view>
+      </block>
+      
+      <!-- 加载中提示 -->
+      <view class="loading-wrapper" wx:if="{{isLoading}}">
+        <view class="loading-bubble">
+          <view class="dot"></view>
+          <view class="dot"></view>
+          <view class="dot"></view>
         </view>
       </view>
-    </block>
-    
-    <!-- 加载中提示 -->
-    <view class="loading-wrapper" wx:if="{{isLoading}}">
-      <view class="loading">
-        <view class="dot"></view>
-        <view class="dot"></view>
-        <view class="dot"></view>
-      </view>
-      <text class="loading-text">思考中...</text>
+      
+      <!-- 底部占位，防止被输入框遮挡 -->
+      <view style="height: 120rpx;"></view>
     </view>
   </scroll-view>
   
-  <!-- 输入框 -->
-  <view class="input-bar">
-    <input 
-      class="input" 
-      placeholder="向星火同志提问..." 
-      value="{{inputText}}"
-      bindinput="onInput"
-      confirm-type="send"
-      bindconfirm="onSend"
-    />
-    <button 
-      class="send-btn {{inputText ? 'active' : ''}}" 
-      bindtap="onSend"
-      disabled="{{isLoading || !inputText}}"
-    >
-      发送
-    </button>
+  <!-- 输入框 (Floating Input Bar) -->
+  <view class="input-container">
+    <view class="input-glass">
+      <input 
+        class="input" 
+        placeholder="向{{aiName}}提问..." 
+        placeholder-class="input-placeholder"
+        value="{{inputText}}"
+        bindinput="onInput"
+        confirm-type="send"
+        bindconfirm="onSend"
+        adjust-position="{{false}}"
+      />
+      <button 
+        class="send-btn {{inputText ? 'active' : ''}}" 
+        bindtap="onSend"
+        disabled="{{isLoading || !inputText}}"
+      >
+        <text class="icon-send">↑</text>
+      </button>
+    </view>
   </view>
 </view>
 
-<!-- 英雄选择弹窗 -->
+<!-- 英雄选择弹窗 (Bottom Sheet) -->
 <view class="hero-modal {{showHeroModal ? 'show' : ''}}" bindtap="hideHeroModal">
   <view class="modal-content" catchtap="stopPropagation">
     <view class="modal-header">
-      <text class="modal-title">选择对话英雄</text>
-      <text class="modal-close" bindtap="hideHeroModal">×</text>
+      <text class="modal-title font-serif">选择对话英雄</text>
+      <view class="modal-close" bindtap="hideHeroModal">×</view>
     </view>
-    <view class="hero-list">
-      <view 
-        class="hero-item" 
-        wx:for="{{heroList}}" 
-        wx:key="id"
-        bindtap="selectHero"
-        data-hero="{{item}}"
-      >
-        <image class="hero-avatar" src="{{item.avatar}}" />
-        <text class="hero-name">{{item.name}}</text>
+    <scroll-view scroll-y class="hero-scroll">
+      <view class="hero-grid">
+        <view 
+          class="hero-item-card {{currentHero.id === item.id ? 'selected' : ''}}" 
+          wx:for="{{heroList}}" 
+          wx:key="id"
+          bindtap="selectHero"
+          data-hero="{{item}}"
+        >
+          <view class="hero-avatar-wrapper">
+            <image class="hero-avatar" src="{{item.avatar}}" mode="aspectFill" />
+            <view class="selected-mark" wx:if="{{currentHero.id === item.id}}">✓</view>
+          </view>
+          <text class="hero-name">{{item.name}}</text>
+        </view>
       </view>
-    </view>
+    </scroll-view>
   </view>
 </view>
