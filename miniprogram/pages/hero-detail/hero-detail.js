@@ -33,8 +33,9 @@ Page({
   // 与英雄对话
   onChatWithHero() {
     const hero = this.data.hero;
+    // 修正：传递 heroId 而不是 heroName，匹配 ai-chat/index.js 的逻辑
     wx.navigateTo({
-      url: `/pages/ai-chat/index?mode=hero&heroName=${hero.name}`
+      url: `/pages/ai-chat/index?mode=hero&heroId=${hero.id}`
     });
   },
 
