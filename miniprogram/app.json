@@ -6,7 +6,9 @@
     "pages/card-learning/index",
     "pages/hero-gallery/hero-gallery",
     "pages/hero-detail/hero-detail",
-    "pages/profile/profile"
+    "pages/profile/profile",
+    "pages/mystery-box/mystery-box",
+    "pages/museum/museum"
   ],
   "window": {
     "backgroundTextStyle": "light",
