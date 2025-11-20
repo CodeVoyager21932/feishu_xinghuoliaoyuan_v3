@@ -10,11 +10,10 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F7F8FA",
+    "navigationBarBackgroundColor": "#D32F2F",
     "navigationBarTitleText": "星火",
-    "navigationBarTextStyle": "black",
-    "backgroundColor": "#F7F8FA",
-    "navigationStyle": "custom"
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F7F8FA"
   },
   "cloud": true,
   "style": "v2",

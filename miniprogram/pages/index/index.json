@@ -3,5 +3,6 @@
     "navigation-bar": "/components/navigation-bar/navigation-bar",
     "daily-sign-modal": "/components/daily-sign-modal/daily-sign-modal"
   },
-  "navigationBarTitleText": "星火"
+  "navigationBarTitleText": "星火",
+  "navigationStyle": "custom"
 }
