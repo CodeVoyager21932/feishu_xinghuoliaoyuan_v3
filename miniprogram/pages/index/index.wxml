@@ -134,7 +134,7 @@
     <view class="stats-card card-hover">
       <view class="stats-header">
         <text class="font-serif title-medium">学习成就</text>
-        <view class="level-badge">Lv.{{userLevel || 1}} 星火燎原</view>
+        <view class="level-badge" bindtap="showBadgeDetail">Lv.{{userLevel || 1}} 星火燎原</view>
       </view>
       <view class="stats-row">
         <view class="stat-item">
@@ -157,9 +157,19 @@
 </view>
 
 <!-- 日签弹窗 -->
-<daily-sign-modal 
+<!-- 日签弹窗 (时空来信) -->
+<daily-letter 
   visible="{{showDailySign}}" 
-  todayQuote="{{todayQuote}}"
+  content="{{todayQuote.content}}"
+  quote="{{todayQuote.quote}}"
+  author="{{todayQuote.author}}"
   bind:close="onCloseDailySign"
   bind:checkin="onDailyCheckIn"
-></daily-sign-modal>
+></daily-letter>
+
+<!-- 徽章详情弹窗 -->
+<badge-modal
+  visible="{{showBadgeModal}}"
+  badge="{{currentBadge}}"
+  bind:close="onCloseBadgeModal"
+></badge-modal>

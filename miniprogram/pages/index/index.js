@@ -23,7 +23,9 @@ Page({
     heroCardTransform: '',
     heroCardGlare: '',
     isHeroCardTouching: false,
-    showDailySign: false
+    showDailySign: false,
+    showBadgeModal: false,
+    currentBadge: null
   },
 
   onLoad() {
@@ -49,7 +51,7 @@ Page({
   setDynamicGreeting() {
     const hour = new Date().getHours();
     let greeting = '';
-    
+
     if (hour >= 5 && hour < 9) {
       greeting = '早安，传承星火';
     } else if (hour >= 9 && hour < 12) {
@@ -63,7 +65,7 @@ Page({
     } else {
       greeting = '夜深了，重温历史';
     }
-    
+
     this.setData({ greeting });
   },
 
@@ -187,7 +189,7 @@ Page({
 
     const today = this.formatDate(new Date());
     let checkInRecords = wx.getStorageSync('checkInRecords') || [];
-    
+
     // 确保是数组
     if (!Array.isArray(checkInRecords)) {
       checkInRecords = [];
@@ -396,7 +398,7 @@ Page({
   onOpenDailySign() {
     console.log('点击日签按钮');
     console.log('todayQuote:', this.data.todayQuote);
-    
+
     if (!this.data.todayQuote || !this.data.todayQuote.quote_content) {
       wx.showToast({
         title: '数据加载中...',
@@ -406,7 +408,7 @@ Page({
       this.loadTodayQuote();
       return;
     }
-    
+
     this.setData({ showDailySign: true });
     console.log('弹窗已打开，showDailySign:', this.data.showDailySign);
   },
@@ -420,14 +422,32 @@ Page({
   onDailyCheckIn(e) {
     const { date } = e.detail;
     this.setData({ hasCheckedIn: true });
-    
+
     // 刷新统计数据
     this.loadUserStats();
     this.calculateLevel();
-    
+
     wx.showToast({
       title: '打卡成功！',
       icon: 'success'
     });
+  },
+
+  // 显示徽章详情
+  showBadgeDetail() {
+    this.setData({
+      showBadgeModal: true,
+      currentBadge: {
+        name: '星火燎原 Lv.1',
+        desc: '初入革命征程，点燃理想之火。',
+        icon: '🔥',
+        date: '2023.11.21'
+      }
+    });
+    wx.vibrateShort({ type: 'medium' });
+  },
+
+  onCloseBadgeModal() {
+    this.setData({ showBadgeModal: false });
   }
 });
