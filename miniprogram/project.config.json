@@ -47,8 +47,8 @@
     "disableSWC": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.19.4",
-  "appid": "wx1273a11c7be2bc9b",
+  "libVersion": "3.11.2",
+  "appid": "touristappid",
   "projectname": "xinhuo-miniprogram",
   "condition": {},
   "editorSetting": {
