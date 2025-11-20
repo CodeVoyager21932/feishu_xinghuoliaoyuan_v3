@@ -1,0 +1,120 @@
+<!--pages/pk-battle/pk-battle.wxml-->
+<view class="pk-battle-page">
+  <!-- 答题模式 -->
+  <view class="quiz-mode" wx:if="{{mode === 'quiz'}}">
+    <!-- 顶部信息 -->
+    <view class="quiz-header">
+      <view class="timer {{timeLeft <= 10 ? 'warning' : ''}}">
+        <text class="timer-icon">⏱️</text>
+        <text class="timer-value">{{timeLeft}}s</text>
+      </view>
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{(currentIndex + 1) / questions.length * 100}}%;"></view>
+      </view>
+      <text class="progress-text">{{currentIndex + 1}}/{{questions.length}}</text>
+    </view>
+
+    <!-- 题目卡片 -->
+    <view class="question-card">
+      <text class="question-text">{{currentQuestion.question}}</text>
+      
+      <!-- 选项列表 -->
+      <view class="options-list">
+        <view 
+          class="option-item {{selectedIndex === index ? 'selected' : ''}} {{answered && index === currentQuestion.correctIndex ? 'correct' : ''}} {{answered && selectedIndex === index && index !== currentQuestion.correctIndex ? 'wrong' : ''}}"
+          wx:for="{{currentQuestion.options}}"
+          wx:key="index"
+          bindtap="onSelectOption"
+          data-index="{{index}}"
+        >
+          <view class="option-label">{{['A', 'B', 'C', 'D'][index]}}</view>
+          <text class="option-text">{{item}}</text>
+          <view class="option-icon" wx:if="{{answered}}">
+            <text wx:if="{{index === currentQuestion.correctIndex}}">✓</text>
+            <text wx:elif="{{selectedIndex === index}}">✗</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 解析 -->
+      <view class="explanation" wx:if="{{answered}}">
+        <text class="explanation-label">💡 解析</text>
+        <text class="explanation-text">{{currentQuestion.explanation}}</text>
+      </view>
+    </view>
+
+    <!-- 底部按钮 -->
+    <view class="quiz-actions">
+      <button class="btn-next" bindtap="onNextQuestion" wx:if="{{answered}}">
+        {{currentIndex < questions.length - 1 ? '下一题' : '查看结果'}}
+      </button>
+    </view>
+  </view>
+
+  <!-- 结算页面 -->
+  <view class="result-mode" wx:if="{{mode === 'result'}}">
+    <!-- 胜负标题 -->
+    <view class="result-header {{isWin ? 'win' : 'lose'}}">
+      <text class="result-title">{{isWin ? '🎉 胜利！' : '💪 惜败'}}</text>
+      <text class="result-subtitle">{{isWin ? '你是金牌讲解员！' : '继续加油学习！'}}</text>
+    </view>
+
+    <!-- 分数对比 -->
+    <view class="score-comparison">
+      <view class="player-score my-score">
+        <image class="player-avatar" src="{{myInfo.avatarUrl}}" mode="aspectFill"></image>
+        <text class="player-name">{{myInfo.nickName}}</text>
+        <text class="score-value">{{myScore}}</text>
+        <text class="score-label">分</text>
+      </view>
+
+      <view class="vs-divider">
+        <text class="vs-text">VS</text>
+        <view class="score-bars">
+          <view class="score-bar my-bar" style="width: {{myScore / 100 * 100}}%;"></view>
+          <view class="score-bar opponent-bar" style="width: {{opponentScore / 100 * 100}}%;"></view>
+        </view>
+      </view>
+
+      <view class="player-score opponent-score">
+        <image class="player-avatar" src="{{opponentInfo.avatarUrl}}" mode="aspectFill"></image>
+        <text class="player-name">{{opponentInfo.nickName}}</text>
+        <text class="score-value">{{opponentScore}}</text>
+        <text class="score-label">分</text>
+      </view>
+    </view>
+
+    <!-- 勋章 -->
+    <view class="medal-section" wx:if="{{isWin}}">
+      <view class="medal-icon">🏅</view>
+      <text class="medal-text">金牌讲解员</text>
+    </view>
+
+    <!-- 答题详情 -->
+    <view class="answer-details">
+      <view class="detail-item">
+        <text class="detail-label">正确率</text>
+        <text class="detail-value">{{correctRate}}%</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">用时</text>
+        <text class="detail-value">{{usedTime}}s</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">答对</text>
+        <text class="detail-value">{{correctCount}}/{{questions.length}}</text>
+      </view>
+    </view>
+
+    <!-- 底部按钮 -->
+    <view class="result-actions">
+      <button class="btn-primary" bindtap="onChallenge">
+        <text class="btn-icon">⚔️</text>
+        <text>不服？向TA发起反击</text>
+      </button>
+      <button class="btn-secondary" bindtap="onBackHome">
+        返回首页
+      </button>
+    </view>
+  </view>
+</view>

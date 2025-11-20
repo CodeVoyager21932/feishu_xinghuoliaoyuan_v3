@@ -292,6 +292,13 @@ Page({
     });
   },
 
+  // 跳转到PK对战
+  goToPKBattle() {
+    wx.navigateTo({
+      url: '/pages/pk-battle/pk-battle'
+    });
+  },
+
   // --- 3D Card Tilt Effect ---
   onReady() {
     this.updateHeroCardRect();
