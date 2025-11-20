@@ -1,91 +1,113 @@
 <!-- 个人中心页面 -->
 <view class="profile-page">
-  <!-- 顶部用户信息卡片 -->
-  <view class="user-card">
-    <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
-    <view class="user-info">
-      <text class="user-name">{{userInfo.nickName}}</text>
-      <text class="user-id">学号：{{userInfo.studentId || '未设置'}}</text>
-    </view>
-  </view>
+  <!-- 背景装饰 -->
+  <view class="bg-decoration"></view>
 
-  <!-- 学习统计 -->
-  <view class="stats-section">
-    <view class="section-title">
-      <text>📊 学习统计</text>
+  <!-- 顶部用户信息卡片 (Glassmorphism) -->
+  <view class="user-card-glass animate-slide-up">
+    <view class="user-info-row">
+      <view class="avatar-wrapper">
+        <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
+        <view class="level-badge">Lv.{{userLevel || 1}}</view>
+      </view>
+      <view class="user-text">
+        <text class="user-name font-serif">{{userInfo.nickName}}</text>
+        <text class="user-id">ID: {{userInfo.studentId || '未设置'}}</text>
+      </view>
+      <view class="edit-btn">
+        <text class="icon-edit">✎</text>
+      </view>
     </view>
-    <view class="stats-grid">
-      <view class="stat-item">
-        <text class="stat-value">{{stats.continuous_days}}</text>
-        <text class="stat-label">连续打卡</text>
+    
+    <!-- 核心数据概览 -->
+    <view class="stats-overview">
+      <view class="overview-item">
+        <text class="overview-num">{{stats.continuous_days}}</text>
+        <text class="overview-label">连续打卡</text>
       </view>
-      <view class="stat-item">
-        <text class="stat-value">{{stats.total_days}}</text>
-        <text class="stat-label">累计天数</text>
+      <view class="divider-vertical"></view>
+      <view class="overview-item">
+        <text class="overview-num">{{stats.mastered_cards}}</text>
+        <text class="overview-label">掌握卡片</text>
       </view>
-      <view class="stat-item">
-        <text class="stat-value">{{stats.mastered_cards}}</text>
-        <text class="stat-label">掌握卡片</text>
-      </view>
-      <view class="stat-item">
-        <text class="stat-value">{{stats.ai_chat_count}}</text>
-        <text class="stat-label">AI问答</text>
+      <view class="divider-vertical"></view>
+      <view class="overview-item">
+        <text class="overview-num">{{stats.ai_chat_count}}</text>
+        <text class="overview-label">AI互动</text>
       </view>
     </view>
   </view>
 
   <!-- 成就徽章 -->
-  <view class="achievements-section">
-    <view class="section-title">
-      <text>🏆 成就徽章</text>
-      <text class="achievement-count">{{unlockedCount}}/{{totalCount}}</text>
+  <view class="section-container animate-slide-up" style="animation-delay: 0.1s;">
+    <view class="section-header">
+      <text class="section-title font-serif">成就徽章</text>
+      <view class="section-action">
+        <text class="achievement-count">{{unlockedCount}}/{{totalCount}}</text>
+        <text class="icon-arrow">→</text>
+      </view>
     </view>
-    <view class="achievements-grid">
+    <scroll-view class="achievements-scroll" scroll-x enable-flex>
       <view 
-        class="achievement-item {{item.unlocked ? 'unlocked' : 'locked'}}"
+        class="achievement-card {{item.unlocked ? 'unlocked' : 'locked'}}"
         wx:for="{{achievements}}"
         wx:key="id"
         bindtap="onAchievementClick"
         data-achievement="{{item}}"
       >
-        <view class="achievement-icon">{{item.icon}}</view>
+        <view class="achievement-icon-wrapper">
+          <text class="achievement-icon">{{item.icon}}</text>
+        </view>
         <text class="achievement-name">{{item.name}}</text>
-        <view class="achievement-progress" wx:if="{{!item.unlocked}}">
-          <text>{{item.progress}}/{{item.target}}</text>
+        <view class="progress-bar-mini" wx:if="{{!item.unlocked}}">
+          <view class="progress-fill" style="width: {{(item.progress / item.target) * 100}}%"></view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 打卡日历 -->
+  <view class="section-container animate-slide-up" style="animation-delay: 0.2s;">
+    <view class="section-header">
+      <text class="section-title font-serif">学习足迹</text>
+    </view>
+    <view class="calendar-grid">
+      <view class="calendar-header-row">
+        <text wx:for="{{['日','一','二','三','四','五','六']}}" wx:key="*this">{{item}}</text>
+      </view>
+      <view class="calendar-days-grid">
+        <view 
+          class="calendar-day {{item.checked ? 'checked' : ''}}"
+          wx:for="{{calendarDays}}"
+          wx:key="date"
+        >
+          <text class="day-number">{{item.day}}</text>
+          <view class="check-dot" wx:if="{{item.checked}}"></view>
         </view>
       </view>
     </view>
   </view>
 
-  <!-- 学习记录 -->
-  <view class="records-section">
-    <view class="section-title">
-      <text>📅 打卡日历</text>
-    </view>
-    <view class="calendar-grid">
-      <view 
-        class="calendar-day {{item.checked ? 'checked' : ''}}"
-        wx:for="{{calendarDays}}"
-        wx:key="date"
-      >
-        <text class="day-number">{{item.day}}</text>
-        <view class="check-mark" wx:if="{{item.checked}}">✓</view>
-      </view>
-    </view>
-  </view>
-
   <!-- 设置选项 -->
-  <view class="settings-section">
-    <view class="section-title">
-      <text>⚙️ 设置</text>
-    </view>
+  <view class="settings-list animate-slide-up" style="animation-delay: 0.3s;">
     <view class="setting-item" bindtap="onClearCache">
-      <text>清除缓存</text>
-      <text class="arrow">›</text>
+      <view class="setting-left">
+        <text class="setting-icon">🗑️</text>
+        <text class="setting-label">清除缓存</text>
+      </view>
+      <text class="icon-arrow">›</text>
     </view>
     <view class="setting-item" bindtap="onAbout">
-      <text>关于我们</text>
-      <text class="arrow">›</text>
+      <view class="setting-left">
+        <text class="setting-icon">ℹ️</text>
+        <text class="setting-label">关于我们</text>
+      </view>
+      <text class="icon-arrow">›</text>
     </view>
+  </view>
+  
+  <!-- 底部版本号 -->
+  <view class="version-info">
+    <text>Version 1.0.0 • 星火燎原</text>
   </view>
 </view>
