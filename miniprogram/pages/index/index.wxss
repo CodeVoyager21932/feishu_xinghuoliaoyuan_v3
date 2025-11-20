@@ -452,3 +452,7 @@
 /* PK对战入口样式 */
 .gradient-pink { background: linear-gradient(135deg, #F093FB 0%, #F5576C 100%); }
 .grid-item:nth-child(7) .icon-wrapper { background: linear-gradient(135deg, #FFE5F1 0%, #FFD6E8 100%); }
+
+/* 红色电台入口样式 */
+.gradient-brown { background: linear-gradient(135deg, #D4A574 0%, #8B4513 100%); }
+.grid-item:nth-child(8) .icon-wrapper { background: linear-gradient(135deg, #F5E6D3 0%, #E8D4B8 100%); }

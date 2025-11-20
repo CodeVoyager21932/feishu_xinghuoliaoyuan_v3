@@ -1,0 +1,68 @@
+<!--pages/radio/radio.wxml-->
+<view class="radio-page">
+  <!-- 复古收音机头部 -->
+  <view class="radio-header">
+    <view class="radio-frame">
+      <view class="frequency-dial">
+        <view class="dial-marks">
+          <view class="mark" wx:for="{{10}}" wx:key="index"></view>
+        </view>
+        <view class="dial-pointer"></view>
+        <text class="frequency-text">FM 100.0</text>
+      </view>
+      <text class="radio-title">红色电台</text>
+      <text class="radio-subtitle">Red FM - 传承红色基因</text>
+    </view>
+  </view>
+
+  <!-- 当前播放 -->
+  <view class="now-playing" wx:if="{{currentAudio}}">
+    <view class="playing-card">
+      <image class="playing-cover" src="{{currentAudio.coverUrl}}" mode="aspectFill"></image>
+      <view class="playing-info">
+        <text class="playing-title">{{currentAudio.title}}</text>
+        <text class="playing-artist">{{currentAudio.artist}}</text>
+        <text class="playing-desc">{{currentAudio.description}}</text>
+      </view>
+      <view class="playing-controls">
+        <button class="control-btn" bindtap="onPrev">⏮️</button>
+        <button class="control-btn main" bindtap="onTogglePlay">
+          {{isPlaying ? '⏸️' : '▶️'}}
+        </button>
+        <button class="control-btn" bindtap="onNext">⏭️</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 播放列表 -->
+  <view class="playlist-section">
+    <text class="section-title">📻 节目单</text>
+    
+    <view class="playlist">
+      <view 
+        class="playlist-item {{currentAudio && currentAudio.id === item.id ? 'active' : ''}}"
+        wx:for="{{playlist}}"
+        wx:key="id"
+        bindtap="onPlayAudio"
+        data-index="{{index}}"
+      >
+        <image class="item-cover" src="{{item.coverUrl}}" mode="aspectFill"></image>
+        <view class="item-info">
+          <text class="item-title">{{item.title}}</text>
+          <text class="item-artist">{{item.artist}}</text>
+          <view class="item-meta">
+            <text class="item-category">{{item.category}}</text>
+            <text class="item-duration">{{item.duration}}s</text>
+          </view>
+        </view>
+        <view class="item-status" wx:if="{{currentAudio && currentAudio.id === item.id}}">
+          <view class="playing-icon {{isPlaying ? 'animating' : ''}}">
+            <view class="bar"></view>
+            <view class="bar"></view>
+            <view class="bar"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

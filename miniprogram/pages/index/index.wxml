@@ -114,7 +114,17 @@
       <text class="grid-label">PK对战</text>
       <text class="grid-desc">答题挑战</text>
     </view>
+    <view class="grid-item card-hover" bindtap="goToRadio">
+      <view class="icon-wrapper gradient-brown">
+        <text class="icon-emoji">📻</text>
+      </view>
+      <text class="grid-label">红色电台</text>
+      <text class="grid-desc">党史故事</text>
+    </view>
   </view>
+
+  <!-- 全局音频播放器 -->
+  <audio-player></audio-player>
 
   <!-- 学习统计 (Dashboard Widget) -->
   <view class="stats-section animate-fade-in" style="animation-delay: 0.4s;">

@@ -299,6 +299,13 @@ Page({
     });
   },
 
+  // 跳转到红色电台
+  goToRadio() {
+    wx.navigateTo({
+      url: '/pages/radio/radio'
+    });
+  },
+
   // --- 3D Card Tilt Effect ---
   onReady() {
     this.updateHeroCardRect();

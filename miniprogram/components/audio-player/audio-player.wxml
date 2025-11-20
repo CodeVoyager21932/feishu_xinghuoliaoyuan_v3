@@ -1,0 +1,40 @@
+<!--components/audio-player/audio-player.wxml-->
+<view class="audio-player-float" wx:if="{{currentAudio}}">
+  <!-- 悬浮球 -->
+  <view class="float-ball {{isPlaying ? 'playing' : ''}}" bindtap="onTogglePanel">
+    <view class="vinyl-disc {{isPlaying ? 'rotating' : ''}}">
+      <image class="disc-cover" src="{{currentAudio.coverUrl}}" mode="aspectFill"></image>
+      <view class="disc-center"></view>
+    </view>
+  </view>
+
+  <!-- 展开的控制面板 -->
+  <view class="control-panel {{showPanel ? 'show' : ''}}" catchtap="onPanelTap">
+    <view class="panel-content">
+      <!-- 音频信息 -->
+      <view class="audio-info">
+        <image class="audio-cover" src="{{currentAudio.coverUrl}}" mode="aspectFill"></image>
+        <view class="audio-text">
+          <text class="audio-title">{{currentAudio.title}}</text>
+          <text class="audio-artist">{{currentAudio.artist}}</text>
+        </view>
+      </view>
+
+      <!-- 控制按钮 -->
+      <view class="control-buttons">
+        <view class="control-btn" bindtap="onPrev">
+          <text class="btn-icon">⏮️</text>
+        </view>
+        <view class="control-btn main-btn" bindtap="onTogglePlay">
+          <text class="btn-icon">{{isPlaying ? '⏸️' : '▶️'}}</text>
+        </view>
+        <view class="control-btn" bindtap="onNext">
+          <text class="btn-icon">⏭️</text>
+        </view>
+        <view class="control-btn" bindtap="onOpenRadio">
+          <text class="btn-icon">📻</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
