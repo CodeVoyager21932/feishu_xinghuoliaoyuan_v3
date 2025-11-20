@@ -1,4 +1,5 @@
 <!-- 知识图谱页面 -->
+<navigation-bar title="知识图谱" showBack="{{true}}"></navigation-bar>
 <view class="graph-page">
   <!-- 背景装饰 -->
   <view class="bg-decoration"></view>

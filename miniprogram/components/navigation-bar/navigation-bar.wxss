@@ -1,111 +1,80 @@
-/* 导航栏容器 */
+/* components/navigation-bar/navigation-bar.wxss */
+.nav-placeholder {
+  width: 100%;
+  background: transparent;
+}
+
 .nav-bar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 9999;
-  box-sizing: border-box;
-  transition: background 0.3s;
+  transition: background 0.3s ease;
 }
 
-/* 玻璃拟态效果（高端机型） */
-.nav-bar.glass {
-  background: rgba(255, 255, 255, 0.6) !important;
+.glass-effect {
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1rpx solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1rpx solid rgba(0, 0, 0, 0.05);
 }
 
-/* 降级方案：不支持backdrop-filter的机型 */
-@supports not (backdrop-filter: blur(20px)) {
-  .nav-bar.glass {
-    background: rgba(255, 255, 255, 0.9) !important;
-  }
-}
-
-/* 透明背景 */
-.nav-bar.transparent {
-  background: transparent !important;
-}
-
-/* 导航栏内容区 */
-.nav-bar-content {
+.nav-content {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
 }
 
-/* 自定义胶囊（左侧） */
 .nav-capsule {
   position: absolute;
+  left: 24rpx;
   display: flex;
   align-items: center;
   background: rgba(255, 255, 255, 0.6);
   border: 1rpx solid rgba(0, 0, 0, 0.1);
-  border-radius: 999px;
+  border-radius: 32rpx;
   padding: 0 12rpx;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   box-sizing: border-box;
 }
 
-/* 降级方案 */
-@supports not (backdrop-filter: blur(10px)) {
-  .nav-capsule {
-    background: rgba(255, 255, 255, 0.85);
-  }
-}
-
-/* 返回/主页按钮 */
-.back-btn,
-.home-btn {
+.capsule-btn {
   width: 64rpx;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32rpx;
-  color: #000000;
-  transition: opacity 0.2s;
 }
 
-.back-btn:active,
-.home-btn:active {
+.capsule-btn:active {
   opacity: 0.6;
 }
 
-/* 分隔线 */
-.divider {
+.capsule-divider {
   width: 1rpx;
-  height: 50%;
+  height: 24rpx;
   background: rgba(0, 0, 0, 0.2);
-  margin: 0 4rpx;
+  margin: 0 8rpx;
 }
 
-/* 标题 */
+.icon-back, .icon-home {
+  width: 40rpx;
+  height: 40rpx;
+}
+
 .nav-title {
-  font-size: 32rpx;
-  font-weight: 600;
   text-align: center;
-  max-width: 400rpx;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: var(--text-primary, #1F1F1F);
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-.title-text {
-  display: inline-block;
-}
-
-.font-serif {
-  font-family: "Songti SC", serif;
-}
-
-/* 占位元素 */
-.nav-placeholder {
-  width: 100%;
+  /* 确保标题不被胶囊遮挡，虽然有width限制，但居中需要绝对定位或flex调整 */
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  pointer-events: none; /* 让点击穿透标题 */
 }

@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<navigation-bar title="星火" backgroundClass="transparent" fixed="{{true}}"></navigation-bar>
+<navigation-bar title="星火" background="transparent" showBack="{{false}}"></navigation-bar>
 <view class="home-page">
   <!-- 顶部背景装饰 -->
   <view class="bg-decoration"></view>
@@ -25,13 +25,15 @@
     <text class="date-badge">{{todayDate}}</text>
   </view>
   
-  <view class="today-hero-card card-hover animate-fade-in {{isHeroCardTouching ? 'touching' : ''}}" 
-        style="animation-delay: 0.2s; {{heroCardTransform}}" 
+<wxs module="gesture" src="./card-gesture.wxs"></wxs>
+
+  <view class="today-hero-card card-hover animate-fade-in" 
+        style="animation-delay: 0.2s;" 
         bindtap="goToHeroDetail"
-        bindtouchstart="onHeroCardTouchStart"
-        bindtouchmove="onHeroCardTouchMove"
-        bindtouchend="onHeroCardTouchEnd"
-        bindtouchcancel="onHeroCardTouchEnd"
+        bindtouchstart="{{gesture.touchStart}}"
+        bindtouchmove="{{gesture.touchMove}}"
+        bindtouchend="{{gesture.touchEnd}}"
+        bindtouchcancel="{{gesture.touchEnd}}"
   >
     <view class="card-glare" style="{{heroCardGlare}}"></view>
     <view class="hero-bg-gradient"></view>

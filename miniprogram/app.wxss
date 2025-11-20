@@ -27,21 +27,25 @@ page {
   --text-hint: #999999;
   --white: #FFFFFF;
   
-  /* 阴影：弥散红韵 */
-  --shadow-red: 0 12rpx 36rpx rgba(211, 47, 47, 0.15);
-  --shadow-card: 0 8rpx 24rpx rgba(0, 0, 0, 0.04);
+  /* 阴影：弥散红韵 (Soft & Floating) */
+  --shadow-red: 0 24rpx 48rpx rgba(211, 47, 47, 0.12);
+  --shadow-card: 0 12rpx 32rpx rgba(0, 0, 0, 0.03);
+  --glass-shadow: 0 16rpx 40rpx rgba(0, 0, 0, 0.06);
   
   /* 玻璃拟态 */
   --glass-bg: rgba(255, 255, 255, 0.85);
   --glass-border: rgba(255, 255, 255, 0.6);
+
+  /* 间距系统 */
+  --spacing-standard: 32rpx;
+  --spacing-loose: 48rpx;
 }
 
 /* 字体系统 */
 .font-serif {
-  /* 优先使用系统衬线体，Android端降级为无衬线 */
-  font-family: 'Songti SC', 'Noto Serif SC', 'STSong', 'SimSun', 
-               -apple-system, 'PingFang SC', 'Hiragino Sans GB', 
-               'Microsoft YaHei', sans-serif;
+  /* 优先使用系统衬线体，Android端适配 Noto Serif/Source Han Serif */
+  font-family: 'Songti SC', 'Noto Serif SC', 'Source Han Serif CN', 'STSong', 'SimSun', serif;
+  font-weight: 600; /* 增加字重以确保在移动端清晰 */
 }
 
 /* 通用卡片样式 (Glassmorphism + Floating) */

@@ -14,10 +14,14 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#D32F2F",
+    "navigationBarBackgroundColor": "#F7F8FA",
     "navigationBarTitleText": "星火",
-    "navigationBarTextStyle": "white",
-    "backgroundColor": "#F7F8FA"
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F7F8FA",
+    "navigationStyle": "custom"
+  },
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
   },
   "cloud": true,
   "style": "v2",

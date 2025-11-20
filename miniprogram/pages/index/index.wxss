@@ -136,13 +136,15 @@
   position: relative;
   overflow: hidden;
   box-shadow: 
-    0 20rpx 50rpx -12rpx rgba(0, 0, 0, 0.15),
+    var(--shadow-card),
     0 0 0 2rpx rgba(255, 255, 255, 0.5) inset; /* 内发光 */
   background: #FFFFFF;
   background: #FFFFFF;
   transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   transform-style: preserve-3d;
   will-change: transform;
+  /* 默认透视 */
+  transform: perspective(1000px);
 }
 
 .today-hero-card.touching {
@@ -253,8 +255,8 @@
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 12rpx;
-  /* 保留衬线字体用于标题强调 */
-  font-family: 'Songti SC', 'STSong', 'SimSun', -apple-system, 'PingFang SC', sans-serif;
+  /* 使用全局衬线体类 */
+  font-family: 'Songti SC', 'Noto Serif SC', 'Source Han Serif CN', 'STSong', 'SimSun', serif;
 }
 
 .hero-title {
