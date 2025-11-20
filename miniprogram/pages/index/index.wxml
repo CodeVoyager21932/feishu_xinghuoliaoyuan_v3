@@ -25,7 +25,15 @@
     <text class="date-badge">{{todayDate}}</text>
   </view>
   
-  <view class="today-hero-card card-hover animate-fade-in" style="animation-delay: 0.2s;" bindtap="goToHeroDetail">
+  <view class="today-hero-card card-hover animate-fade-in {{isHeroCardTouching ? 'touching' : ''}}" 
+        style="animation-delay: 0.2s; {{heroCardTransform}}" 
+        bindtap="goToHeroDetail"
+        bindtouchstart="onHeroCardTouchStart"
+        bindtouchmove="onHeroCardTouchMove"
+        bindtouchend="onHeroCardTouchEnd"
+        bindtouchcancel="onHeroCardTouchEnd"
+  >
+    <view class="card-glare" style="{{heroCardGlare}}"></view>
     <view class="hero-bg-gradient"></view>
     <view class="hero-content">
       <view class="hero-badge">

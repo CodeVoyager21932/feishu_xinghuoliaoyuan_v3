@@ -16,7 +16,10 @@ Page({
       continuous_days: 7,
       mastered_cards: 25,
       ai_chat_count: 50
-    }
+    },
+    heroCardTransform: '',
+    heroCardGlare: '',
+    isHeroCardTouching: false
   },
 
   onLoad() {
@@ -261,6 +264,62 @@ Page({
   goToHeroes() {
     wx.navigateTo({
       url: '/pages/hero-gallery/hero-gallery'
+    });
+  },
+
+  // --- 3D Card Tilt Effect ---
+  onReady() {
+    this.updateHeroCardRect();
+  },
+
+  updateHeroCardRect() {
+    const query = wx.createSelectorQuery();
+    query.select('.today-hero-card').boundingClientRect(rect => {
+      if (rect) {
+        this.heroCardRect = rect;
+      }
+    }).exec();
+  },
+
+  onHeroCardTouchStart(e) {
+    this.setData({ isHeroCardTouching: true });
+  },
+
+  onHeroCardTouchMove(e) {
+    if (!this.heroCardRect) return;
+
+    const touch = e.touches[0];
+    const rect = this.heroCardRect;
+
+    // Calculate center relative to viewport
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    // Calculate distance from center
+    const percentX = (touch.clientX - centerX) / (rect.width / 2);
+    const percentY = (touch.clientY - centerY) / (rect.height / 2);
+
+    // Limit tilt range
+    const maxTilt = 8; // degrees
+    const rotateX = -percentY * maxTilt; // Tilt up/down (inverted Y)
+    const rotateY = percentX * maxTilt;  // Tilt left/right
+
+    // Glare effect
+    const glareX = 50 + (percentX * 50);
+    const glareY = 50 + (percentY * 50);
+    const glareOpacity = Math.min(0.6, Math.sqrt(percentX * percentX + percentY * percentY) * 0.5);
+
+    this.setData({
+      heroCardTransform: `transform: perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(0.98, 0.98, 0.98);`,
+      heroCardGlare: `background: radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 80%); opacity: ${glareOpacity};`
+    });
+  },
+
+  onHeroCardTouchEnd(e) {
+    this.setData({
+      isHeroCardTouching: false,
+      heroCardTransform: '', // Reset to default
+      heroCardGlare: 'opacity: 0;'
     });
   }
 });
