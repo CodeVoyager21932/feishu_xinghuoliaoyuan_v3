@@ -53,7 +53,7 @@
   font-family: 'Songti SC', serif; /* 强调 */
 }
 
-.check-in-btn {
+.daily-sign-btn {
   background: var(--gradient-primary);
   color: #FFFFFF;
   border-radius: 40rpx;
@@ -67,17 +67,11 @@
   transition: all 0.2s;
 }
 
-.check-in-btn:active {
+.daily-sign-btn:active {
   transform: scale(0.95);
 }
 
-.check-in-btn.checked {
-  background: #E0E0E0;
-  color: #9E9E9E;
-  box-shadow: none;
-}
-
-.icon-check {
+.icon-calendar {
   margin-right: 8rpx;
   font-size: 24rpx;
 }

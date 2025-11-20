@@ -1,0 +1,58 @@
+<!--components/daily-sign-modal/daily-sign-modal.wxml-->
+<view class="modal-container" wx:if="{{visible}}">
+  <!-- 遮罩层 -->
+  <view class="modal-mask" bindtap="onClose"></view>
+  
+  <!-- 内容区 -->
+  <view class="modal-content">
+    <!-- 关闭按钮 -->
+    <view class="close-btn" bindtap="onClose">
+      <text class="icon-close">✕</text>
+    </view>
+
+    <!-- 海报预览区 -->
+    <view class="poster-preview">
+      <canvas 
+        type="2d" 
+        id="posterCanvas" 
+        class="poster-canvas"
+        style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;"
+      ></canvas>
+      
+      <!-- 生成后显示的图片 -->
+      <image 
+        wx:if="{{posterPath}}" 
+        src="{{posterPath}}" 
+        class="poster-image"
+        mode="aspectFit"
+      ></image>
+    </view>
+
+    <!-- 今日宜忌 -->
+    <view class="lucky-tips" wx:if="{{todayQuote.lucky_tips}}">
+      <text class="tips-label">今日宜：</text>
+      <text class="tips-content">{{todayQuote.lucky_tips}}</text>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button 
+        class="btn-primary" 
+        bindtap="onSaveToAlbum"
+        disabled="{{isGenerating}}"
+      >
+        <text class="btn-icon">💾</text>
+        <text>保存到相册</text>
+      </button>
+      
+      <button 
+        class="btn-secondary" 
+        bindtap="onShareToFriend"
+        disabled="{{isGenerating}}"
+      >
+        <text class="btn-icon">📤</text>
+        <text>分享给好友</text>
+      </button>
+    </view>
+  </view>
+</view>

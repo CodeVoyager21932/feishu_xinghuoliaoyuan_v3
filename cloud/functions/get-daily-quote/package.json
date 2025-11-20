@@ -1,0 +1,9 @@
+{
+  "name": "get-daily-quote",
+  "version": "1.0.0",
+  "description": "获取每日名言",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

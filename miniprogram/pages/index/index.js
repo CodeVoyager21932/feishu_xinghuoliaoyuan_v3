@@ -1,6 +1,7 @@
 // pages/index/index.js
 const app = getApp();
 const heroesData = require('../../data/heroes.js');
+const dailyQuotesData = require('../../data/daily-quotes.js');
 
 Page({
   data: {
@@ -10,6 +11,7 @@ Page({
     },
     hasCheckedIn: false,
     todayHero: {},
+    todayQuote: {},
     todayDate: '',
     userLevel: 1,
     stats: {
@@ -19,12 +21,14 @@ Page({
     },
     heroCardTransform: '',
     heroCardGlare: '',
-    isHeroCardTouching: false
+    isHeroCardTouching: false,
+    showDailySign: false
   },
 
   onLoad() {
     this.checkLoginStatus();
     this.loadTodayHero();
+    this.loadTodayQuote();
     this.loadUserStats();
     this.checkTodayCheckIn();
     this.setTodayDate();
@@ -100,6 +104,13 @@ Page({
     todayHero.avatarLoaded = false;
 
     this.setData({ todayHero });
+  },
+
+  // 加载今日名言
+  loadTodayQuote() {
+    const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+    const todayQuote = dailyQuotesData[dayOfYear % dailyQuotesData.length];
+    this.setData({ todayQuote });
   },
 
   // 图片加载错误处理
@@ -320,6 +331,31 @@ Page({
       isHeroCardTouching: false,
       heroCardTransform: '', // Reset to default
       heroCardGlare: 'opacity: 0;'
+    });
+  },
+
+  // 打开日签弹窗
+  onOpenDailySign() {
+    this.setData({ showDailySign: true });
+  },
+
+  // 关闭日签弹窗
+  onCloseDailySign() {
+    this.setData({ showDailySign: false });
+  },
+
+  // 日签打卡回调
+  onDailyCheckIn(e) {
+    const { date } = e.detail;
+    this.setData({ hasCheckedIn: true });
+    
+    // 刷新统计数据
+    this.loadUserStats();
+    this.calculateLevel();
+    
+    wx.showToast({
+      title: '打卡成功！',
+      icon: 'success'
     });
   }
 });

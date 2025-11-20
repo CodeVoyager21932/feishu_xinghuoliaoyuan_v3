@@ -12,9 +12,9 @@
         <text class="greeting">早安，同志</text>
         <text class="nickname">{{userInfo.nickName || '未登录'}}</text>
       </view>
-      <button class="check-in-btn {{hasCheckedIn ? 'checked' : ''}}" bindtap="onCheckIn" disabled="{{hasCheckedIn}}">
-        <text class="icon-check">✓</text>
-        <text>{{hasCheckedIn ? '已打卡' : '签到'}}</text>
+      <button class="daily-sign-btn" bindtap="onOpenDailySign">
+        <text class="icon-calendar">📅</text>
+        <text>日签</text>
       </button>
     </view>
   </view>
@@ -121,3 +121,11 @@
     </view>
   </view>
 </view>
+
+<!-- 日签弹窗 -->
+<daily-sign-modal 
+  visible="{{showDailySign}}" 
+  todayQuote="{{todayQuote}}"
+  bind:close="onCloseDailySign"
+  bind:checkin="onDailyCheckIn"
+></daily-sign-modal>
