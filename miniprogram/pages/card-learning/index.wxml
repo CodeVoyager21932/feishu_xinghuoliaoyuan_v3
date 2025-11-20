@@ -1,10 +1,16 @@
 <!-- 卡片学习页面 -->
 <view class="card-learning-page">
-  <!-- 顶部进度 -->
-  <view class="progress-bar">
+  <!-- 背景装饰 -->
+  <view class="bg-decoration"></view>
+
+  <!-- 顶部进度 (Glassmorphism) -->
+  <view class="progress-bar-glass animate-fade-in">
     <view class="progress-info">
-      <text class="progress-text">今日学习：{{todayCount}}/{{totalCount}}</text>
-      <text class="progress-percent">{{progressPercent}}%</text>
+      <view class="progress-label">
+        <text class="icon-fire">🔥</text>
+        <text class="progress-text">今日挑战</text>
+      </view>
+      <text class="progress-percent">{{todayCount}}/{{totalCount}}</text>
     </view>
     <view class="progress-track">
       <view class="progress-fill" style="width: {{progressPercent}}%"></view>
@@ -26,37 +32,49 @@
       >
         <!-- 正面 -->
         <view class="card-front">
-          <view class="card-badge">{{currentCard.category}}</view>
           <image class="card-image" src="{{currentCard.front_image}}" mode="aspectFill" />
-          <view class="card-title">{{currentCard.front_title}}</view>
-          <view class="flip-hint">
-            <text>👆 点击翻转查看详情</text>
+          <view class="card-overlay"></view>
+          <view class="card-content-front">
+            <view class="card-badge">{{currentCard.category}}</view>
+            <view class="card-title-wrapper">
+              <text class="card-title font-serif">{{currentCard.front_title}}</text>
+              <text class="tap-hint">点击翻转</text>
+            </view>
           </view>
         </view>
 
         <!-- 背面 -->
         <view class="card-back">
-          <view class="card-content">
-            <text class="content-text">{{currentCard.back_content}}</text>
-          </view>
-          <view class="card-keywords">
-            <view class="keyword" wx:for="{{currentCard.back_keywords}}" wx:key="index">
-              <text>{{item}}</text>
+          <view class="card-header-back">
+            <text class="card-title-small font-serif">{{currentCard.front_title}}</text>
+            <view class="ai-btn" catchtap="askAI">
+              <text class="icon-ai">🤖</text>
+              <text>AI详解</text>
             </view>
           </view>
-          <button class="ai-detail-btn" bindtap="askAI" catchtap="stopPropagation">
-            <text>🤖 AI详解</text>
-          </button>
+          
+          <scroll-view scroll-y class="card-scroll-content" catchtap="stopPropagation">
+            <text class="content-text">{{currentCard.back_content}}</text>
+            <view class="card-keywords">
+              <view class="keyword" wx:for="{{currentCard.back_keywords}}" wx:key="index">
+                <text># {{item}}</text>
+              </view>
+            </view>
+          </scroll-view>
         </view>
 
-        <!-- 滑动提示 -->
-        <view class="swipe-hint left {{swipeDirection === 'left' ? 'show' : ''}}">
-          <text>❌</text>
-          <text>待复习</text>
+        <!-- 滑动提示 (Overlay) -->
+        <view class="swipe-overlay left {{swipeDirection === 'left' ? 'show' : ''}}">
+          <view class="swipe-icon-wrapper review">
+            <text class="swipe-icon">↺</text>
+            <text class="swipe-text">待复习</text>
+          </view>
         </view>
-        <view class="swipe-hint right {{swipeDirection === 'right' ? 'show' : ''}}">
-          <text>✅</text>
-          <text>已掌握</text>
+        <view class="swipe-overlay right {{swipeDirection === 'right' ? 'show' : ''}}">
+          <view class="swipe-icon-wrapper master">
+            <text class="swipe-icon">✓</text>
+            <text class="swipe-text">已掌握</text>
+          </view>
         </view>
       </view>
 
@@ -64,57 +82,51 @@
       <view class="card next-card" wx:if="{{nextCard}}">
         <view class="card-front">
           <image class="card-image" src="{{nextCard.front_image}}" mode="aspectFill" />
-          <view class="card-title">{{nextCard.front_title}}</view>
+          <view class="card-overlay"></view>
+          <view class="card-content-front">
+            <view class="card-title-wrapper">
+              <text class="card-title font-serif">{{nextCard.front_title}}</text>
+            </view>
+          </view>
         </view>
       </view>
     </view>
 
     <!-- 空状态 -->
-    <view class="empty-state" wx:if="{{!currentCard && !isLoading}}">
-      <text class="empty-icon">🎉</text>
-      <text class="empty-title">今日学习完成！</text>
-      <text class="empty-desc">你已经完成了今天的学习任务</text>
-      <button class="review-btn" bindtap="startReview">
-        <text>开始复习</text>
-      </button>
+    <view class="empty-state animate-fade-in" wx:if="{{!currentCard && !isLoading}}">
+      <view class="empty-content">
+        <text class="empty-emoji">🎉</text>
+        <text class="empty-title font-serif">今日任务完成！</text>
+        <text class="empty-desc">星火燎原，积少成多</text>
+        <button class="review-btn" bindtap="startReview">
+          <text>再来一组</text>
+        </button>
+      </view>
     </view>
   </view>
 
-  <!-- 底部操作按钮 -->
-  <view class="action-buttons" wx:if="{{currentCard}}">
-    <view class="action-btn review-btn-bottom" bindtap="markAsReview">
-      <text class="btn-icon">❌</text>
-      <text class="btn-text">待复习</text>
+  <!-- 底部操作按钮 (Floating) -->
+  <view class="action-bar animate-slide-up" wx:if="{{currentCard}}">
+    <view class="action-btn review" bindtap="markAsReview">
+      <text class="icon-action">↺</text>
     </view>
-    <view class="action-btn flip-btn" bindtap="toggleFlip">
-      <text class="btn-icon">🔄</text>
-      <text class="btn-text">翻转</text>
+    <view class="action-btn flip" bindtap="toggleFlip">
+      <text class="icon-action">⇄</text>
     </view>
-    <view class="action-btn master-btn" bindtap="markAsMastered">
-      <text class="btn-icon">✅</text>
-      <text class="btn-text">已掌握</text>
+    <view class="action-btn master" bindtap="markAsMastered">
+      <text class="icon-action">✓</text>
     </view>
   </view>
 
-  <!-- 统计信息 -->
-  <view class="stats-panel">
-    <view class="stat-item">
-      <text class="stat-value">{{stats.mastered}}</text>
+  <!-- 统计面板 (Mini Dashboard) -->
+  <view class="stats-mini animate-fade-in">
+    <view class="stat-pill">
       <text class="stat-label">已掌握</text>
+      <text class="stat-num master-color">{{stats.mastered}}</text>
     </view>
-    <view class="stat-item">
-      <text class="stat-value">{{stats.reviewing}}</text>
+    <view class="stat-pill">
       <text class="stat-label">待复习</text>
+      <text class="stat-num review-color">{{stats.reviewing}}</text>
     </view>
-    <view class="stat-item">
-      <text class="stat-value">{{stats.remaining}}</text>
-      <text class="stat-label">未学习</text>
-    </view>
-  </view>
-
-  <!-- 加载提示 -->
-  <view class="loading" wx:if="{{isLoading}}">
-    <view class="loading-spinner"></view>
-    <text>加载中...</text>
   </view>
 </view>
