@@ -1,2 +1,51 @@
 <!--pages/museum/museum.wxml-->
-<text>pages/museum/museum.wxml</text>
+<view class="museum-page">
+  <!-- 顶部统计 -->
+  <view class="museum-header">
+    <text class="museum-title">红色珍藏馆</text>
+    <view class="collection-stats">
+      <view class="stat-item">
+        <text class="stat-value">{{collectedCount}}</text>
+        <text class="stat-label">已收集</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-value">{{totalCount}}</text>
+        <text class="stat-label">总计</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-value">{{collectionRate}}%</text>
+        <text class="stat-label">收集率</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 信物列表 -->
+  <view class="relics-list">
+    <view 
+      class="relic-card {{item.owned ? 'owned' : 'locked'}}"
+      wx:for="{{displayRelics}}"
+      wx:key="id"
+    >
+      <view class="relic-icon">{{item.owned ? '📜' : '🔒'}}</view>
+      <text class="relic-name">{{item.owned ? item.name : '???'}}</text>
+      <view class="relic-rarity {{item.rarity}}" wx:if="{{item.owned}}">
+        {{item.rarityName}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{displayRelics.length === 0}}">
+    <text class="empty-icon">📦</text>
+    <text class="empty-text">暂无信物</text>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="bottom-actions">
+    <button class="btn-primary" bindtap="goToMysteryBox">
+      🔓 开启机密档案
+    </button>
+  </view>
+</view>

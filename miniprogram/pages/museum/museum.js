@@ -1,66 +1,38 @@
 // pages/museum/museum.js
+const { relics, rarityConfig } = require('../../data/relics.js');
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    allRelics: [],
+    displayRelics: [],
+    collectedCount: 0,
+    totalCount: 0,
+    collectionRate: 0
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-
+  onLoad() {
+    this.loadAllRelics();
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
+  loadAllRelics() {
+    const allRelics = relics.map(relic => ({
+      ...relic,
+      rarityName: rarityConfig[relic.rarity].name,
+      owned: false
+    }));
 
+    this.setData({
+      allRelics,
+      displayRelics: allRelics,
+      totalCount: allRelics.length,
+      collectedCount: 0,
+      collectionRate: 0
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+  goToMysteryBox() {
+    wx.navigateTo({
+      url: '/pages/mystery-box/mystery-box'
+    });
   }
-})
+});

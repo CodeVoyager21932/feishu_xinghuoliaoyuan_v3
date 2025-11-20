@@ -5,26 +5,8 @@
   padding-bottom: 140rpx;
 }
 
-/* 顶部统计 */
 .museum-header {
-  position: relative;
   padding: 60rpx 32rpx 40rpx;
-  overflow: hidden;
-}
-
-.header-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 107, 107, 0.1) 100%);
-  opacity: 0.3;
-}
-
-.header-content {
-  position: relative;
-  z-index: 1;
 }
 
 .museum-title {
@@ -34,7 +16,6 @@
   color: #FFFFFF;
   text-align: center;
   margin-bottom: 32rpx;
-  font-family: 'Songti SC', serif;
 }
 
 .collection-stats {
@@ -43,7 +24,6 @@
   align-items: center;
   gap: 32rpx;
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20rpx);
   border-radius: 32rpx;
   padding: 24rpx;
   border: 1rpx solid rgba(255, 255, 255, 0.2);
@@ -59,7 +39,6 @@
   font-size: 40rpx;
   font-weight: 700;
   color: #FFD700;
-  font-family: 'DIN Alternate', sans-serif;
 }
 
 .stat-label {
@@ -74,151 +53,59 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* 稀有度筛选 */
-.rarity-filter {
-  padding: 0 32rpx 32rpx;
-}
-
-.filter-scroll {
-  white-space: nowrap;
-}
-
-.filter-item {
-  display: inline-block;
-  padding: 12rpx 32rpx;
-  margin-right: 16rpx;
-  border-radius: 24rpx;
-  border: 2rpx solid rgba(255, 255, 255, 0.3);
-  font-size: 26rpx;
-  color: rgba(255, 255, 255, 0.7);
-  transition: all 0.2s;
-}
-
-.filter-item.active {
-  background: rgba(255, 255, 255, 0.2);
-  color: #FFFFFF;
-  border-color: #FFFFFF;
-}
-
-/* 信物展厅 */
-.museum-gallery {
-  white-space: nowrap;
+.relics-list {
   padding: 0 32rpx;
-}
-
-.gallery-container {
-  display: inline-flex;
-  gap: 32rpx;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24rpx;
 }
 
 .relic-card {
-  display: inline-block;
-  width: 320rpx;
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20rpx);
-  border-radius: 32rpx;
-  overflow: hidden;
+  border-radius: 24rpx;
+  padding: 32rpx 24rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
   border: 2rpx solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s;
 }
 
 .relic-card.owned {
   border-color: rgba(255, 215, 0, 0.3);
 }
 
-.relic-card:active {
-  transform: scale(0.95);
-}
-
-.relic-image-wrapper {
-  position: relative;
-  width: 100%;
-  height: 320rpx;
-  background: rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.relic-image {
-  width: 100%;
-  height: 100%;
-}
-
-.locked-mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(10rpx);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16rpx;
-}
-
-.lock-icon {
-  font-size: 64rpx;
-}
-
-.lock-text {
-  font-size: 28rpx;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.rarity-tag {
-  position: absolute;
-  top: 16rpx;
-  right: 16rpx;
-  padding: 6rpx 16rpx;
-  border-radius: 16rpx;
-  font-size: 22rpx;
-  color: #FFFFFF;
-  font-weight: 600;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.3);
-}
-
-.relic-info {
-  padding: 24rpx;
-  display: flex;
-  flex-direction: column;
-  gap: 8rpx;
+.relic-icon {
+  font-size: 80rpx;
 }
 
 .relic-name {
   font-size: 28rpx;
   font-weight: 700;
   color: #FFFFFF;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  text-align: center;
 }
 
-.relic-year {
-  font-size: 24rpx;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.fragments-count {
-  display: flex;
-  align-items: center;
-  gap: 8rpx;
-  margin-top: 8rpx;
-  padding: 8rpx 16rpx;
-  background: rgba(255, 215, 0, 0.1);
+.relic-rarity {
+  padding: 6rpx 16rpx;
   border-radius: 16rpx;
   font-size: 22rpx;
-  color: #FFD700;
+  color: #FFFFFF;
+  font-weight: 600;
 }
 
-.icon-fragment {
-  font-size: 20rpx;
+.relic-rarity.SSR {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
 }
 
-/* 空状态 */
+.relic-rarity.SR {
+  background: linear-gradient(135deg, #A78BFA 0%, #EC4899 100%);
+}
+
+.relic-rarity.R {
+  background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+}
+
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -239,12 +126,6 @@
   font-weight: 600;
 }
 
-.empty-hint {
-  font-size: 26rpx;
-  color: rgba(255, 255, 255, 0.3);
-}
-
-/* 底部按钮 */
 .bottom-actions {
   position: fixed;
   bottom: 0;
@@ -253,7 +134,6 @@
   padding: 24rpx 32rpx;
   padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
   background: linear-gradient(180deg, transparent 0%, rgba(15, 32, 39, 0.95) 20%);
-  backdrop-filter: blur(20rpx);
 }
 
 .bottom-actions button {
@@ -262,10 +142,9 @@
   border-radius: 44rpx;
   font-size: 28rpx;
   font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border: none;
+  background: linear-gradient(135deg, #FF4D4F 0%, #D32F2F 100%);
+  color: #FFFFFF;
 }
 
 .bottom-actions button::after {
@@ -275,10 +154,4 @@
 .btn-primary {
   background: linear-gradient(135deg, #FF4D4F 0%, #D32F2F 100%);
   color: #FFFFFF;
-  box-shadow: 0 8rpx 20rpx rgba(211, 47, 47, 0.3);
-}
-
-.btn-icon {
-  margin-right: 12rpx;
-  font-size: 32rpx;
 }

@@ -1,66 +1,90 @@
 // pages/mystery-box/mystery-box.js
+const { relics, rarityConfig } = require('../../data/relics.js');
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    userPoints: 500,
+    drawCost: 100,
+    isDrawing: false,
+    showResult: false,
+    resultRelic: {},
+    resultIsNew: false
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-
+  onLoad() {
+    this.loadUserPoints();
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
+  loadUserPoints() {
+    const userStats = wx.getStorageSync('userStats') || {};
+    const points = userStats.points || 500;
+    this.setData({ userPoints: points });
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
+  // 抽取信物（本地模拟）
+  onDrawRelic() {
+    if (this.data.isDrawing) return;
 
+    if (this.data.userPoints < this.data.drawCost) {
+      wx.showModal({
+        title: '积分不足',
+        content: '需要 100 积分才能开启机密档案',
+        showCancel: false
+      });
+      return;
+    }
+
+    this.setData({ isDrawing: true });
+    wx.vibrateShort();
+
+    // 模拟抽奖
+    setTimeout(() => {
+      const drawnRelic = this.performDraw();
+      const rarityInfo = rarityConfig[drawnRelic.rarity];
+
+      this.setData({
+        isDrawing: false,
+        showResult: true,
+        resultRelic: {
+          ...drawnRelic,
+          rarityName: rarityInfo.name
+        },
+        resultIsNew: true,
+        userPoints: this.data.userPoints - this.data.drawCost
+      });
+
+      // 保存积分
+      const userStats = wx.getStorageSync('userStats') || {};
+      userStats.points = this.data.userPoints;
+      wx.setStorageSync('userStats', userStats);
+
+      wx.vibrateShort();
+    }, 2000);
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
+  // 权重随机抽取
+  performDraw() {
+    const random = Math.random() * 100;
+    let rarity = 'R';
+    
+    if (random < 5) {
+      rarity = 'SSR';
+    } else if (random < 30) {
+      rarity = 'SR';
+    }
 
+    const relicsInRarity = relics.filter(r => r.rarity === rarity);
+    const randomIndex = Math.floor(Math.random() * relicsInRarity.length);
+    return relicsInRarity[randomIndex];
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
+  closeResult() {
+    this.setData({ showResult: false });
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+  goToMuseum() {
+    wx.navigateTo({
+      url: '/pages/museum/museum'
+    });
   }
-})
+});
