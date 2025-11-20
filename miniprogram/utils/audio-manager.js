@@ -87,7 +87,7 @@ class AudioManager {
     this.currentIndex = (this.currentIndex + 1) % this.playlist.length;
     const nextAudio = this.playlist[this.currentIndex];
     this.play(nextAudio, this.currentIndex);
-  },
+  }
 
   // 上一首
   prev() {
