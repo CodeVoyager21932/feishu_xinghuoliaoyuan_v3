@@ -111,8 +111,8 @@
 }
 
 .content-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
   border-radius: 32rpx;
   padding: 40rpx;
   margin-bottom: 32rpx;
@@ -137,7 +137,7 @@
   color: var(--text-primary);
 }
 
-/* 生平事迹 */
+/* 生平事迹 (排版优化) */
 .text-justified-container {
   text-align: justify;
   text-justify: inter-ideograph;
@@ -161,11 +161,11 @@
 .deed-medal {
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+  background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); /* 浅红色渐变 */
   padding: 16rpx 24rpx;
   border-radius: 16rpx;
-  border: 1rpx solid rgba(255, 193, 7, 0.3);
-  box-shadow: 0 4rpx 12rpx rgba(255, 193, 7, 0.15);
+  border: 1rpx solid rgba(211, 47, 47, 0.1);
+  box-shadow: 0 4rpx 12rpx rgba(211, 47, 47, 0.1);
   transition: transform 0.2s;
 }
 
@@ -181,11 +181,11 @@
 
 .medal-text {
   font-size: 28rpx;
-  color: #8D6E63;
+  color: #B71C1C; /* 深红色文字 */
   font-weight: 600;
 }
 
-/* 名言警句 (杂志风格) */
+/* 名言警句 (杂志引用风格) */
 .quotes-container {
   display: flex;
   flex-direction: column;
@@ -194,38 +194,41 @@
 
 .quote-magazine-style {
   position: relative;
-  padding: 40rpx 20rpx;
+  padding: 60rpx 40rpx;
   text-align: center;
-  border-top: 1rpx solid rgba(0,0,0,0.05);
-  border-bottom: 1rpx solid rgba(0,0,0,0.05);
+  background: linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%); /* 深红色渐变背景 */
+  border-radius: 24rpx;
+  box-shadow: 0 12rpx 32rpx rgba(183, 28, 28, 0.3);
+  overflow: hidden;
 }
 
 .quote-content {
-  font-size: 36rpx;
+  font-size: 34rpx;
   line-height: 1.6;
-  color: var(--text-primary);
+  color: #FFFFFF; /* 白色文字 */
   font-style: italic;
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  font-weight: 500;
 }
 
 .quote-symbol-large {
   position: absolute;
-  font-size: 120rpx;
-  color: rgba(211, 47, 47, 0.08);
+  font-size: 200rpx;
+  color: rgba(255, 255, 255, 0.1); /* 极低透明度白色 */
   font-family: serif;
   line-height: 1;
-  z-index: 0;
+  z-index: 1;
 }
 
 .quote-symbol-large.left {
-  top: -20rpx;
-  left: 0;
+  top: -40rpx;
+  left: 20rpx;
 }
 
 .quote-symbol-large.right {
-  bottom: -60rpx;
-  right: 0;
+  bottom: -80rpx;
+  right: 20rpx;
 }
 
 /* 底部安全区 */
@@ -248,6 +251,8 @@
   box-shadow: var(--glass-shadow);
   border: 1rpx solid var(--glass-border);
   z-index: 100;
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom)); /* 适配底部安全区 */
+  margin-bottom: env(safe-area-inset-bottom);
 }
 
 .action-btn {
