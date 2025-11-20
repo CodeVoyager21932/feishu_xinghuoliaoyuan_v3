@@ -94,7 +94,7 @@
 .hero-avatar {
   width: 100%;
   height: 100%;
-  background: #E0E0E0;
+  background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%);
   transition: transform 0.5s;
 }
 

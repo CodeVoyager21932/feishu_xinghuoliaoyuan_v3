@@ -49,7 +49,7 @@
   box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.2);
   margin-right: 32rpx;
   flex-shrink: 0;
-  background: #E0E0E0;
+  background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%);
 }
 
 .hero-avatar {

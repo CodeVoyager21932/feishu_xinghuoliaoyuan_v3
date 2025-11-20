@@ -138,9 +138,7 @@
 }
 
 .message-welcome {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(10px);
-  border: 1rpx solid rgba(255, 215, 0, 0.3);
+  background: #FFFFFF;
   padding: 32rpx;
   margin-bottom: 40rpx;
   border-radius: 24rpx;
@@ -148,7 +146,7 @@
   color: var(--text-secondary);
   line-height: 1.6;
   text-align: center;
-  box-shadow: 0 8rpx 24rpx rgba(255, 215, 0, 0.1);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
 }
 
 .message-item {
@@ -262,13 +260,12 @@
 .input-glass {
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(20px);
+  background: #FFFFFF;
   border-radius: 48rpx;
   padding: 12rpx;
   padding-left: 32rpx;
-  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.08);
-  border: 1rpx solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.05);
+  border: 1rpx solid rgba(0, 0, 0, 0.02);
 }
 
 .input {

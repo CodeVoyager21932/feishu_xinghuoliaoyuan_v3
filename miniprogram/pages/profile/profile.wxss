@@ -49,6 +49,7 @@
   border-radius: 50%;
   border: 6rpx solid #FFFFFF;
   box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%);
 }
 
 .level-badge {

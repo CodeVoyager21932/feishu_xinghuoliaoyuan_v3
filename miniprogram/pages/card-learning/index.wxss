@@ -146,6 +146,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%);
 }
 
 .card-overlay {

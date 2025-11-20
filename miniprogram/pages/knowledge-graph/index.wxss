@@ -175,8 +175,8 @@
 
 .node-year {
   font-size: 32rpx;
-  font-weight: 700;
-  color: var(--primary-red);
+  font-weight: 600;
+  color: #C62828;
   font-family: 'DIN Alternate', sans-serif;
 }
 
