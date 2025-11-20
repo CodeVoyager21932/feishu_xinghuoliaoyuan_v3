@@ -2,35 +2,38 @@
 /* 全局样式 */
 
 page {
-  /* 极淡的暖色调纹理背景 */
-  background-color: #FDFBF7; 
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(255, 215, 0, 0.05) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(211, 47, 47, 0.05) 0px, transparent 50%);
+  /* 全局底色：云峰白 + 噪点纹理 */
+  background-color: #F7F8FA; 
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 
                'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --safe-area-inset-bottom: env(safe-area-inset-bottom);
+  color: var(--text-primary);
 }
 
-/* 色彩系统 (Design Language: Spark & Sunrise) */
-:root {
-  /* 主色调：流体渐变 */
-  --gradient-primary: linear-gradient(135deg, #FF512F 0%, #DD2476 100%); /* 热烈红 -> 深紫红 */
-  --gradient-gold: linear-gradient(135deg, #F09819 0%, #EDDE5D 100%); /* 流光金 */
-  --gradient-ocean: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%); /* 科技蓝 (用于图谱) */
+/* 色彩系统 (Design Language: Neo-Chinese Style) */
+page {
+  /* 主色：丹朱渐变 */
+  --gradient-primary: linear-gradient(135deg, #FF4D4F 0%, #D32F2F 100%);
+  /* 辅色：赤金 */
+  --accent-gold: #C5A065;
+  /* 背景：云峰白 */
+  --bg-color: #F7F8FA;
   
   /* 单色 */
   --primary-red: #D32F2F;
-  --primary-gold: #FFD700;
-  --text-primary: #1A1A1A; /* 接近纯黑但更柔和 */
-  --text-secondary: #585858;
-  --text-hint: #9E9E9E;
+  --text-primary: #1F1F1F; /* 墨黑 */
+  --text-secondary: #666666; /* 雅灰 */
+  --text-hint: #999999;
   --white: #FFFFFF;
   
-  /* 玻璃拟态背景 */
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.5);
-  --glass-shadow: 0 8rpx 32rpx 0 rgba(31, 38, 135, 0.07);
+  /* 阴影：弥散红韵 */
+  --shadow-red: 0 12rpx 36rpx rgba(211, 47, 47, 0.15);
+  --shadow-card: 0 8rpx 24rpx rgba(0, 0, 0, 0.04);
+  
+  /* 玻璃拟态 */
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.6);
 }
 
 /* 字体系统 */

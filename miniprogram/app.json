@@ -10,12 +10,11 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#D32F2F",
+    "navigationBarBackgroundColor": "#F7F8FA",
     "navigationBarTitleText": "星火",
-    "navigationBarTextStyle": "white",
-    "backgroundColor": "#FAFAFA"
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F7F8FA"
   },
-
   "cloud": true,
   "style": "v2",
   "sitemapLocation": "sitemap.json"
