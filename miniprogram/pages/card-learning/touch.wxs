@@ -1,0 +1,112 @@
+/**
+ * 卡片滑动触摸逻辑 (WXS)
+ * 在视图层直接处理触摸事件，实现 60fps 流畅交互
+ */
+
+// 触摸状态（每个实例独立）
+var instances = {};
+
+// 滑动阈值
+var SWIPE_THRESHOLD = 100; // 触发翻页的最小滑动距离（rpx）
+var ROTATION_FACTOR = 0.08; // 旋转系数
+
+/**
+ * 获取或创建实例状态
+ */
+function getState(instance) {
+  var id = instance.getDataset().cardId || 'default';
+  if (!instances[id]) {
+    instances[id] = {
+      startX: 0,
+      startY: 0,
+      isSwiping: false
+    };
+  }
+  return instances[id];
+}
+
+/**
+ * 触摸开始
+ */
+function touchStart(event, ownerInstance) {
+  var touch = event.touches[0];
+  var state = getState(ownerInstance);
+  
+  state.startX = touch.pageX;
+  state.startY = touch.pageY;
+  state.isSwiping = false;
+  
+  return event;
+}
+
+/**
+ * 触摸移动
+ */
+function touchMove(event, ownerInstance) {
+  var touch = event.touches[0];
+  var state = getState(ownerInstance);
+  
+  var deltaX = touch.pageX - state.startX;
+  var deltaY = touch.pageY - state.startY;
+  
+  // 判断是否为水平滑动
+  if (Math.abs(deltaX) > 10 && Math.abs(deltaX) > Math.abs(deltaY)) {
+    state.isSwiping = true;
+    
+    // 计算旋转角度
+    var rotate = deltaX * ROTATION_FACTOR;
+    if (rotate > 30) rotate = 30;
+    if (rotate < -30) rotate = -30;
+    
+    // 构建 transform 样式
+    var transform = 'translateX(' + deltaX + 'rpx) rotate(' + rotate + 'deg)';
+    
+    // 返回样式对象，让 WXML 中的 change:prop 监听器应用
+    ownerInstance.callMethod('updateCardTransform', {
+      transform: transform,
+      deltaX: deltaX
+    });
+  }
+  
+  return event;
+}
+
+/**
+ * 触摸结束
+ */
+function touchEnd(event, ownerInstance) {
+  var state = getState(ownerInstance);
+  
+  if (!state.isSwiping) {
+    // 不是滑动，允许点击事件
+    return event;
+  }
+  
+  var touch = event.changedTouches[0];
+  var deltaX = touch.pageX - state.startX;
+  
+  if (deltaX < -SWIPE_THRESHOLD) {
+    // 左滑：待复习
+    ownerInstance.callMethod('handleSwipeLeft');
+  } else if (deltaX > SWIPE_THRESHOLD) {
+    // 右滑：已掌握
+    ownerInstance.callMethod('handleSwipeRight');
+  } else {
+    // 回弹
+    ownerInstance.callMethod('handleSwipeCancel');
+  }
+  
+  // 重置状态
+  state.isSwiping = false;
+  
+  return event;
+}
+
+/**
+ * 导出模块
+ */
+module.exports = {
+  touchStart: touchStart,
+  touchMove: touchMove,
+  touchEnd: touchEnd
+};

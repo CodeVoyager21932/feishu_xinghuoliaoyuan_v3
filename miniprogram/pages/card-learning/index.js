@@ -17,11 +17,12 @@ Page({
     
     // 状态
     flipped: false,
-    swiping: false,
-    swipeX: 0,
-    swipeRotate: 0,
-    swipeDirection: '',
     isLoading: true,
+    
+    // 滑动状态
+    cardTransform: '',
+    cardTransition: '',
+    swipeDirection: '',
     
     // 进度
     todayCount: 0,
@@ -150,68 +151,66 @@ Page({
     }
   },
 
-  // 触摸开始
-  onTouchStart(e) {
-    this.startX = e.touches[0].clientX;
-    this.startY = e.touches[0].clientY;
-    this.setData({ swiping: true });
+  // WXS 回调：更新卡片变换
+  updateCardTransform(e) {
+    const { transform, deltaX } = e;
+    
+    // 更新卡片样式
+    this.setData({
+      cardTransform: transform,
+      swipeDirection: deltaX < -50 ? 'left' : deltaX > 50 ? 'right' : ''
+    });
   },
 
-  // 触摸移动
-  onTouchMove(e) {
-    const deltaX = e.touches[0].clientX - this.startX;
-    const deltaY = e.touches[0].clientY - this.startY;
+  // WXS 回调：处理左滑
+  handleSwipeLeft() {
+    const { currentCard } = this.data;
+    if (!currentCard) return;
     
-    // 只响应水平滑动
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      const rotate = deltaX / 10;
-      let direction = '';
-      
-      if (deltaX < -50) {
-        direction = 'left';
-      } else if (deltaX > 50) {
-        direction = 'right';
-      }
-      
-      this.setData({
-        swipeX: deltaX,
-        swipeRotate: rotate,
-        swipeDirection: direction
-      });
-    }
+    // 设置飞出动画
+    this.setData({
+      cardTransform: 'translateX(-750rpx) rotate(-30deg)',
+      cardTransition: 'transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)'
+    });
+    
+    // 延迟执行，等待动画完成
+    setTimeout(() => {
+      this.saveReviewRecord(currentCard);
+      this.nextCard();
+    }, 300);
   },
 
-  // 触摸结束
-  onTouchEnd(e) {
-    const deltaX = e.changedTouches[0].clientX - this.startX;
-    const threshold = 100;
+  // WXS 回调：处理右滑
+  handleSwipeRight() {
+    const { currentCard } = this.data;
+    if (!currentCard) return;
     
-    if (deltaX < -threshold) {
-      // 左滑：待复习
-      this.animateCardOut('left', () => {
-        this.saveReviewRecord(this.data.currentCard);
-      });
-    } else if (deltaX > threshold) {
-      // 右滑：已掌握
-      this.animateCardOut('right', () => {
-        this.saveMasteredRecord(this.data.currentCard);
-      });
-    } else {
-      // 回弹
-      this.setData({
-        swipeX: 0,
-        swipeRotate: 0,
-        swipeDirection: '',
-        swiping: false
-      });
-    }
+    // 设置飞出动画
+    this.setData({
+      cardTransform: 'translateX(750rpx) rotate(30deg)',
+      cardTransition: 'transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)'
+    });
+    
+    // 延迟执行，等待动画完成
+    setTimeout(() => {
+      this.saveMasteredRecord(currentCard);
+      this.nextCard();
+    }, 300);
+  },
+
+  // WXS 回调：处理取消滑动
+  handleSwipeCancel() {
+    // 回弹动画
+    this.setData({
+      cardTransform: 'translateX(0) rotate(0)',
+      cardTransition: 'transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
+      swipeDirection: ''
+    });
   },
 
   // 卡片点击（翻转）
   onCardTap() {
-    if (!this.data.swiping) {
-      this.toggleFlip();
-    }
+    this.toggleFlip();
   },
 
   // 翻转卡片
@@ -219,22 +218,6 @@ Page({
     this.setData({
       flipped: !this.data.flipped
     });
-  },
-
-  // 卡片飞出动画
-  animateCardOut(direction, callback) {
-    const distance = direction === 'left' ? -500 : 500;
-    
-    this.setData({
-      swipeX: distance,
-      swipeRotate: direction === 'left' ? -30 : 30,
-      swiping: true
-    });
-    
-    setTimeout(() => {
-      callback && callback();
-      this.nextCard();
-    }, 300);
   },
 
   // 下一张卡片
@@ -247,10 +230,9 @@ Page({
       currentCard: newQueue[0] || null,
       nextCard: newQueue[1] || null,
       flipped: false,
-      swipeX: 0,
-      swipeRotate: 0,
+      cardTransform: '',
+      cardTransition: '',
       swipeDirection: '',
-      swiping: false,
       totalCount: newQueue.length || this.data.totalCount
     });
     
@@ -263,10 +245,8 @@ Page({
     const { currentCard } = this.data;
     if (!currentCard) return;
     
-    // 先执行动画
-    this.animateCardOut('left', () => {
-      this.saveReviewRecord(currentCard);
-    });
+    this.saveReviewRecord(currentCard);
+    this.nextCard();
   },
 
   // 保存待复习记录
@@ -316,10 +296,8 @@ Page({
     const { currentCard } = this.data;
     if (!currentCard) return;
     
-    // 先执行动画
-    this.animateCardOut('right', () => {
-      this.saveMasteredRecord(currentCard);
-    });
+    this.saveMasteredRecord(currentCard);
+    this.nextCard();
   },
 
   // 保存已掌握记录

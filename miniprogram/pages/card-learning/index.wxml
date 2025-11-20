@@ -1,4 +1,5 @@
 <!-- 卡片学习页面 -->
+<wxs module="touch" src="./touch.wxs"></wxs>
 <view class="card-learning-page">
   <!-- 背景装饰 -->
   <view class="bg-decoration"></view>
@@ -22,12 +23,13 @@
     <view class="card-stack">
       <!-- 当前卡片 -->
       <view 
-        class="card {{flipped ? 'flipped' : ''}} {{swiping ? 'swiping' : ''}}"
-        style="transform: translateX({{swipeX}}px) rotate({{swipeRotate}}deg)"
+        class="card {{flipped ? 'flipped' : ''}}"
+        style="transform: {{cardTransform}}; transition: {{cardTransition}};"
         wx:if="{{currentCard}}"
-        bindtouchstart="onTouchStart"
-        bindtouchmove="onTouchMove"
-        bindtouchend="onTouchEnd"
+        data-card-id="{{currentCard.id}}"
+        bindtouchstart="{{touch.touchStart}}"
+        bindtouchmove="{{touch.touchMove}}"
+        bindtouchend="{{touch.touchEnd}}"
         bindtap="onCardTap"
       >
         <!-- 正面 -->
