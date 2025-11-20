@@ -16,20 +16,6 @@ page {
   /* 主色：丹朱渐变 */
   --gradient-primary: linear-gradient(135deg, #FF4D4F 0%, #D32F2F 100%);
   /* 辅色：赤金 */
-  --accent-gold: #C5A065;
-  /* 背景：云峰白 */
-  --bg-color: #F7F8FA;
-  
-  /* 单色 */
-  --primary-red: #D32F2F;
-  --text-primary: #1F1F1F; /* 墨黑 */
-  --text-secondary: #666666; /* 雅灰 */
-  --text-hint: #999999;
-  --white: #FFFFFF;
-  
-  /* 阴影：弥散红韵 (Soft & Floating) */
-  --shadow-red: 0 24rpx 48rpx rgba(211, 47, 47, 0.12);
-  --shadow-card: 0 12rpx 32rpx rgba(0, 0, 0, 0.03);
   --glass-shadow: 0 16rpx 40rpx rgba(0, 0, 0, 0.06);
   
   /* 玻璃拟态 */

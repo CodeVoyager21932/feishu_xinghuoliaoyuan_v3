@@ -21,7 +21,8 @@
     "navigationStyle": "custom"
   },
   "usingComponents": {
-    "navigation-bar": "/components/navigation-bar/navigation-bar"
+    "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "loading-star": "/components/loading-star/loading-star"
   },
   "cloud": true,
   "style": "v2",
