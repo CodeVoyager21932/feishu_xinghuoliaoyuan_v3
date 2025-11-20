@@ -182,7 +182,7 @@ const TOOLS = [
 
 // 主函数
 exports.main = async (event, context) => {
-  const { question, history = [], mode = 'default', heroId } = event;
+  const { question, history = [], mode = 'default', heroId, stream = false } = event;
   
   try {
     // 1. 构建System Prompt
@@ -200,15 +200,31 @@ exports.main = async (event, context) => {
       { role: 'user', content: question }
     ];
     
-    // 3. 调用讯飞星火API
+    // 3. 流式输出模式（预留接口）
+    if (stream) {
+      // TODO: 实现流式输出
+      // 需要使用 WebSocket 或 Server-Sent Events (SSE)
+      // 小程序云函数暂不直接支持流式响应，需要通过以下方案：
+      // 方案1: 使用云函数定时触发 + 云数据库实时推送
+      // 方案2: 使用 HTTP API 云函数 + SSE
+      // 方案3: 分段返回（伪流式）
+      
+      return {
+        stream: true,
+        message: '流式输出功能开发中，敬请期待',
+        answer: await getStreamingResponse(messages, TOOLS, context.OPENID)
+      };
+    }
+    
+    // 4. 调用讯飞星火API（非流式）
     const response = await callSparkAPI(messages, TOOLS);
     
-    // 4. 处理Function Call
+    // 5. 处理Function Call
     if (response.tool_calls && response.tool_calls.length > 0) {
       const toolCall = response.tool_calls[0];
       const functionResult = await executeFunctionCall(toolCall);
       
-      // 5. 二次调用生成最终回答
+      // 6. 二次调用生成最终回答
       const finalMessages = [
         ...messages,
         { 
@@ -225,7 +241,7 @@ exports.main = async (event, context) => {
       
       const finalResponse = await callSparkAPI(finalMessages);
       
-      // 6. 保存对话历史到数据库
+      // 7. 保存对话历史到数据库
       await saveChatHistory(context.OPENID, {
         question,
         answer: finalResponse.content,
@@ -256,6 +272,18 @@ exports.main = async (event, context) => {
     };
   }
 };
+
+// 流式响应（预留接口）
+async function getStreamingResponse(messages, tools, userId) {
+  // TODO: 实现真正的流式输出
+  // 当前返回完整响应，未来可以改造为：
+  // 1. 调用支持 stream=true 的 API
+  // 2. 将响应分段写入云数据库
+  // 3. 小程序端监听数据库变化实时更新UI
+  
+  const response = await callSparkAPI(messages, tools);
+  return response.content;
+}
 
 // 调用讯飞星火API
 async function callSparkAPI(messages, tools = null) {

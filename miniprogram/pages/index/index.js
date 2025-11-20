@@ -9,6 +9,7 @@ Page({
       nickName: '星火学习者',
       avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
     },
+    greeting: '早安，传承星火',
     hasCheckedIn: false,
     todayHero: {},
     todayQuote: {},
@@ -27,6 +28,7 @@ Page({
 
   onLoad() {
     this.checkLoginStatus();
+    this.setDynamicGreeting();
     this.loadTodayHero();
     this.loadTodayQuote();
     this.loadUserStats();
@@ -36,10 +38,33 @@ Page({
   },
 
   onShow() {
-    // 每次显示页面时刷新统计数据
+    // 每次显示页面时刷新统计数据和问候语
+    this.setDynamicGreeting();
     if (app.globalData.userInfo) {
       this.loadUserStats();
     }
+  },
+
+  // 设置动态问候语
+  setDynamicGreeting() {
+    const hour = new Date().getHours();
+    let greeting = '';
+    
+    if (hour >= 5 && hour < 9) {
+      greeting = '早安，传承星火';
+    } else if (hour >= 9 && hour < 12) {
+      greeting = '上午好，学习进行时';
+    } else if (hour >= 12 && hour < 14) {
+      greeting = '午安，稍作休息';
+    } else if (hour >= 14 && hour < 18) {
+      greeting = '下午好，继续前进';
+    } else if (hour >= 18 && hour < 22) {
+      greeting = '晚上好，温故知新';
+    } else {
+      greeting = '夜深了，重温历史';
+    }
+    
+    this.setData({ greeting });
   },
 
   // 检查登录状态

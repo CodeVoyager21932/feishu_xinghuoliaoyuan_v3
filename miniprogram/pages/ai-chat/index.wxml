@@ -56,10 +56,15 @@
       
       <!-- 加载中提示 -->
       <view class="loading-wrapper" wx:if="{{isLoading}}">
-        <view class="loading-bubble">
-          <view class="dot"></view>
-          <view class="dot"></view>
-          <view class="dot"></view>
+        <view class="loading-content">
+          <view class="loading-bubble">
+            <view class="dot"></view>
+            <view class="dot"></view>
+            <view class="dot"></view>
+          </view>
+          <view class="loading-tip animate-fade-in">
+            <text>{{currentTip}}</text>
+          </view>
         </view>
       </view>
       

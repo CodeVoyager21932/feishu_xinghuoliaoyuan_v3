@@ -9,7 +9,7 @@
     <view class="user-info-glass">
       <image class="avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" />
       <view class="user-text">
-        <text class="greeting">早安，同志</text>
+        <text class="greeting">{{greeting}}</text>
         <text class="nickname">{{userInfo.nickName || '未登录'}}</text>
       </view>
       <button class="daily-sign-btn" bindtap="onOpenDailySign">

@@ -23,6 +23,27 @@ Page({
     isLoading: false,
     scrollToId: '',
     
+    // 加载提示
+    loadingTips: [
+      '🔥 星火正在燎原...',
+      '📚 正在查阅延安时期的档案...',
+      '🎖️ 翻阅革命先烈的英雄事迹...',
+      '🚩 追溯红军长征的足迹...',
+      '⭐ 回顾井冈山的星星之火...',
+      '📖 研读遵义会议的历史文献...',
+      '🏛️ 探寻西柏坡的红色记忆...',
+      '🎯 分析三大战役的战略部署...',
+      '💡 思考"为人民服务"的深刻内涵...',
+      '🌟 学习"两弹一星"精神...',
+      '🔍 考证党史中的重要细节...',
+      '📜 整理建党百年的光辉历程...',
+      '🎓 温习毛泽东思想的精髓...',
+      '🏅 缅怀革命先烈的丰功伟绩...',
+      '🌾 回忆土地革命的峥嵘岁月...'
+    ],
+    currentTip: '',
+    currentTipIndex: 0,
+    
     // 英雄选择
     showHeroModal: false,
     heroList: [
@@ -34,6 +55,9 @@ Page({
       { id: 'qiujiahe', name: '邱少云', avatar: '/images/heroes/qiujiahe.png' }
     ]
   },
+
+  // 定时器
+  tipTimer: null,
 
   onLoad(options) {
     // 获取用户信息
@@ -50,8 +74,24 @@ Page({
       }
     }
     
+    // 如果有预设问题，自动发送
+    if (options.question) {
+      this.setData({
+        inputText: decodeURIComponent(options.question)
+      });
+      // 延迟发送，等待页面渲染完成
+      setTimeout(() => {
+        this.onSend();
+      }, 500);
+    }
+    
     // 加载历史对话
     this.loadChatHistory();
+  },
+
+  onUnload() {
+    // 清理定时器
+    this.stopLoadingTips();
   },
 
   // 加载对话历史
@@ -95,6 +135,9 @@ Page({
     
     this.scrollToBottom();
     
+    // 开始加载提示轮播
+    this.startLoadingTips();
+    
     try {
       // 调用云函数
       const res = await wx.cloud.callFunction({
@@ -106,6 +149,9 @@ Page({
           heroId: this.data.currentHero?.id
         }
       });
+      
+      // 停止加载提示
+      this.stopLoadingTips();
       
       // 添加AI回复
       const aiMessage = {
@@ -130,6 +176,9 @@ Page({
     } catch (error) {
       console.error('AI对话失败', error);
       
+      // 停止加载提示
+      this.stopLoadingTips();
+      
       // 如果云函数调用失败，使用模拟回复（用于测试）
       const mockReply = this.getMockReply(userMessage.content);
       const aiMessage = {
@@ -152,6 +201,36 @@ Page({
         icon: 'none',
         duration: 2000
       });
+    }
+  },
+
+  // 开始加载提示轮播
+  startLoadingTips() {
+    const { loadingTips } = this.data;
+    
+    // 随机选择一个起始提示
+    const randomIndex = Math.floor(Math.random() * loadingTips.length);
+    
+    this.setData({
+      currentTip: loadingTips[randomIndex],
+      currentTipIndex: randomIndex
+    });
+    
+    // 每2秒切换一次提示
+    this.tipTimer = setInterval(() => {
+      const nextIndex = (this.data.currentTipIndex + 1) % loadingTips.length;
+      this.setData({
+        currentTip: loadingTips[nextIndex],
+        currentTipIndex: nextIndex
+      });
+    }, 2000);
+  },
+
+  // 停止加载提示轮播
+  stopLoadingTips() {
+    if (this.tipTimer) {
+      clearInterval(this.tipTimer);
+      this.tipTimer = null;
     }
   },
 

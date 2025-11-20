@@ -38,14 +38,15 @@ page {
 
 /* 字体系统 */
 .font-serif {
-  font-family: 'Songti SC', 'Noto Serif SC', serif; /* 衬线体，体现历史厚重感 */
+  /* 优先使用系统衬线体，Android端降级为无衬线 */
+  font-family: 'Songti SC', 'Noto Serif SC', 'STSong', 'SimSun', 
+               -apple-system, 'PingFang SC', 'Hiragino Sans GB', 
+               'Microsoft YaHei', sans-serif;
 }
 
 /* 通用卡片样式 (Glassmorphism + Floating) */
 .card {
   background: var(--glass-bg);
-  backdrop-filter: blur(20px); /* 毛玻璃效果 */
-  -webkit-backdrop-filter: blur(20px);
   border: 1rpx solid var(--glass-border);
   border-radius: 32rpx; /* 超椭圆大圆角 */
   box-shadow: var(--glass-shadow);
@@ -53,6 +54,21 @@ page {
   margin: 24rpx;
   position: relative;
   overflow: hidden;
+}
+
+/* 毛玻璃效果（带降级方案） */
+@supports (backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px)) {
+  .card {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+}
+
+/* 不支持毛玻璃时的降级方案 */
+@supports not ((backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px))) {
+  .card {
+    background: rgba(255, 255, 255, 0.95); /* 提高不透明度 */
+  }
 }
 
 /* 悬浮效果 (Z-axis) */
