@@ -47,11 +47,39 @@ App({
     const systemInfo = wx.getSystemInfoSync();
     const menuButtonInfo = wx.getMenuButtonBoundingClientRect();
 
-    this.globalData.statusBarHeight = systemInfo.statusBarHeight;
-    this.globalData.menuRight = systemInfo.screenWidth - menuButtonInfo.right;
-    this.globalData.menuBottom = menuButtonInfo.top - systemInfo.statusBarHeight;
-    this.globalData.menuHeight = menuButtonInfo.height;
-    // 导航栏高度 = 状态栏高度 + (胶囊顶部 - 状态栏高度) * 2 + 胶囊高度
-    this.globalData.navBarHeight = (menuButtonInfo.top - systemInfo.statusBarHeight) * 2 + menuButtonInfo.height + systemInfo.statusBarHeight;
+    // 状态栏高度
+    const statusBarHeight = systemInfo.statusBarHeight;
+    
+    // 胶囊按钮信息
+    const menuButton = {
+      top: menuButtonInfo.top,
+      right: menuButtonInfo.right,
+      bottom: menuButtonInfo.bottom,
+      left: menuButtonInfo.left,
+      width: menuButtonInfo.width,
+      height: menuButtonInfo.height
+    };
+
+    // 胶囊与状态栏的间距
+    const menuGap = menuButton.top - statusBarHeight;
+    
+    // 导航栏总高度 = 状态栏高度 + 胶囊与状态栏间距 + 胶囊高度 + 胶囊与状态栏间距
+    const navBarHeight = statusBarHeight + menuGap + menuButton.height + menuGap;
+    
+    // 自定义胶囊的位置（与原生胶囊对齐）
+    const customCapsule = {
+      top: menuGap, // 相对于导航栏内容区的top
+      height: menuButton.height,
+      left: 24, // 左侧边距（rpx转px后约12px）
+      right: systemInfo.screenWidth - menuButton.left + 12 // 确保不超过原生胶囊
+    };
+
+    this.globalData.statusBarHeight = statusBarHeight;
+    this.globalData.navBarHeight = navBarHeight;
+    this.globalData.menuButton = menuButton;
+    this.globalData.customCapsule = customCapsule;
+    this.globalData.menuHeight = menuButton.height;
+    this.globalData.menuGap = menuGap;
+    this.globalData.screenWidth = systemInfo.screenWidth;
   }
 });

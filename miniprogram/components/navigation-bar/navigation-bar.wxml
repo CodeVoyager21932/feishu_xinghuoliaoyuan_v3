@@ -1,6 +1,11 @@
 <view class="nav-bar {{backgroundClass}}" style="height:{{navBarHeight}}px; padding-top:{{statusBarHeight}}px; background: {{backgroundColor}};">
-  <view class="nav-bar-content" style="height:{{menuHeight}}px; top:{{menuTop}}px;">
-    <view class="nav-capsule" style="height:{{menuHeight}}px;" wx:if="{{showBack || showHome}}">
+  <view class="nav-bar-content" style="height:{{capsuleHeight}}px; margin-top:{{capsuleTop}}px;">
+    <!-- 自定义胶囊（左侧） -->
+    <view 
+      class="nav-capsule" 
+      style="height:{{capsuleHeight}}px; left:{{capsuleLeft}}px; max-width:{{capsuleMaxWidth}}px;" 
+      wx:if="{{showBack || showHome}}"
+    >
       <view class="back-btn" bindtap="onBack" wx:if="{{showBack}}">
         <text class="icon-back">←</text>
       </view>
@@ -9,9 +14,13 @@
         <text class="icon-home">⌂</text>
       </view>
     </view>
-    <view class="nav-title" style="line-height:{{menuHeight}}px; color:{{color}};">
+    
+    <!-- 标题（居中） -->
+    <view class="nav-title" style="line-height:{{capsuleHeight}}px; color:{{color}};">
       <text class="title-text font-serif">{{title}}</text>
     </view>
   </view>
 </view>
+
+<!-- 占位元素（fixed模式下使用） -->
 <view class="nav-placeholder" style="height:{{navBarHeight}}px;" wx:if="{{fixed}}"></view>
