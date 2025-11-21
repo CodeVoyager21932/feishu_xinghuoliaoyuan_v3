@@ -37,6 +37,12 @@ Page({
     setTimeout(() => {
       const hero = heroesData.find(h => h.id === heroId);
       if (hero) {
+        // Process biography for Drop Cap
+        if (hero.biography) {
+          hero.biography_first_char = hero.biography.charAt(0);
+          hero.biography_rest = hero.biography.slice(1);
+        }
+
         this.setData({
           hero,
           loading: false

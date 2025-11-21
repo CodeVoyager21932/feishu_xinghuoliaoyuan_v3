@@ -27,18 +27,26 @@
       <!-- 生平事迹 -->
       <view class="content-card animate-slide-up" style="animation-delay: 0.1s;">
         <view class="section-header">
-          <text class="section-icon">📖</text>
+          <image class="section-icon-img" src="/images/icons/biography.png" mode="aspectFit" />
           <text class="section-title font-serif">生平事迹</text>
         </view>
         <view class="text-justified-container">
-          <text class="biography-text">{{hero.biography}}</text>
+          <!-- Drop Cap Implementation -->
+          <view class="biography-content">
+            <text class="drop-cap font-serif">{{hero.biography_first_char}}</text>
+            <text class="biography-text">{{hero.biography_rest}}</text>
+          </view>
+        </view>
+        <!-- SVG Divider -->
+        <view class="section-divider">
+          <image class="divider-img" src="/images/decorations/ink-stroke.svg" mode="widthFix" />
         </view>
       </view>
 
       <!-- 主要贡献 -->
       <view class="content-card animate-slide-up" style="animation-delay: 0.2s;">
         <view class="section-header">
-          <text class="section-icon">⭐</text>
+          <image class="section-icon-img" src="/images/icons/medal.png" mode="aspectFit" />
           <text class="section-title font-serif">主要贡献</text>
         </view>
         <view class="deeds-grid">
@@ -58,7 +66,7 @@
       <!-- 名言警句 -->
       <view class="content-card animate-slide-up" style="animation-delay: 0.3s;" wx:if="{{hero.famous_quotes && hero.famous_quotes.length > 0}}">
         <view class="section-header">
-          <text class="section-icon">💬</text>
+          <image class="section-icon-img" src="/images/icons/quote.png" mode="aspectFit" />
           <text class="section-title font-serif">名言警句</text>
         </view>
         <view class="quotes-container">

@@ -126,8 +126,9 @@
   margin-bottom: 32rpx;
 }
 
-.section-icon {
-  font-size: 36rpx;
+.section-icon-img {
+  width: 48rpx;
+  height: 48rpx;
   margin-right: 16rpx;
 }
 
@@ -143,12 +144,39 @@
   text-justify: inter-ideograph;
 }
 
+.biography-content {
+  position: relative;
+}
+
+.drop-cap {
+  float: left;
+  font-size: 88rpx;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--red-primary);
+  margin-right: 12rpx;
+  margin-top: -8rpx;
+  font-family: 'Songti SC', serif;
+}
+
 .biography-text {
   font-size: 30rpx;
   line-height: 1.8;
   color: var(--text-primary);
-  text-indent: 2em;
-  display: block;
+  display: inline;
+}
+
+/* SVG Divider */
+.section-divider {
+  margin-top: 40rpx;
+  display: flex;
+  justify-content: center;
+  opacity: 0.6;
+}
+
+.divider-img {
+  width: 120rpx;
+  height: auto;
 }
 
 /* 主要贡献 (勋章样式) */
