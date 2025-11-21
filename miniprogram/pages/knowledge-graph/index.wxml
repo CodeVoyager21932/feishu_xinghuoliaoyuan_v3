@@ -1,5 +1,5 @@
 <!--pages/knowledge-graph/index.wxml-->
-<navigation-bar title="历史长河" showBack="{{true}}" background="transparent"></navigation-bar>
+<navigation-bar title="历史长河" showBack="{{true}}" showHome="{{true}}" background="transparent"></navigation-bar>
 
 <view class="graph-page">
   <!-- 顶部控制栏 (Glassmorphism) -->

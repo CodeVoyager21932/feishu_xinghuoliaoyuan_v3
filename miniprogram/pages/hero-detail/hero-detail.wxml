@@ -1,5 +1,5 @@
 <!-- 英雄详情页面 -->
-<navigation-bar title="英雄详情" showBack="{{true}}" background="transparent"></navigation-bar>
+<navigation-bar title="英雄详情" showBack="{{true}}" showHome="{{true}}" background="transparent"></navigation-bar>
 <view class="hero-detail-page">
   <!-- 骨架屏包裹 -->
   <skeleton loading="{{loading}}">

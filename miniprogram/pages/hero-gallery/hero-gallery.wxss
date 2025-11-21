@@ -19,6 +19,7 @@
   left: 0;
   width: 100%;
   z-index: 10;
+}
 
 .filter-item:last-child {
   margin-right: 0;
@@ -28,6 +29,8 @@
   background: var(--gradient-primary);
   color: #FFFFFF;
   font-weight: 600;
+}
+
 .hero-card {
   display: flex;
   background: rgba(255, 255, 255, 0.8);

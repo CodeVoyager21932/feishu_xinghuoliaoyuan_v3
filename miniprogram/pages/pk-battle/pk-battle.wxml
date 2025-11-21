@@ -1,4 +1,5 @@
 <!--pages/pk-battle/pk-battle.wxml-->
+<navigation-bar title="知识对战" showBack="{{true}}" showHome="{{true}}" background="transparent"></navigation-bar>
 <view class="pk-battle-page">
   <!-- 答题模式 -->
   <view class="quiz-mode" wx:if="{{mode === 'quiz'}}">

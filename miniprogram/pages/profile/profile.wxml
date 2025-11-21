@@ -1,4 +1,5 @@
 <!-- 个人中心页面 -->
+<navigation-bar title="个人中心" showBack="{{true}}" showHome="{{true}}" background="transparent"></navigation-bar>
 <view class="profile-page">
   <!-- 背景装饰 -->
   <view class="bg-decoration"></view>

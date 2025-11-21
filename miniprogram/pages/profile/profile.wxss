@@ -5,6 +5,8 @@
   padding-bottom: 60rpx;
   position: relative;
   overflow-x: hidden;
+  padding-top: 180rpx; /* Space for navigation bar */
+  box-sizing: border-box;
 }
 
 /* 背景装饰 */

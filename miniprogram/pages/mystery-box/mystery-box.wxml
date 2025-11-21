@@ -1,4 +1,5 @@
 <!--pages/mystery-box/mystery-box.wxml-->
+<navigation-bar title="机密档案" showBack="{{true}}" showHome="{{true}}" background="transparent"></navigation-bar>
 <view class="mystery-box-page">
   <!-- 顶部积分 -->
   <view class="points-header">

@@ -2,7 +2,7 @@
 .radio-page {
   min-height: 100vh;
   background: linear-gradient(180deg, #2C3E50 0%, #34495E 100%);
-  padding: 40rpx 32rpx 120rpx;
+  padding: 180rpx 32rpx 120rpx;
 }
 
 /* 复古收音机头部 */

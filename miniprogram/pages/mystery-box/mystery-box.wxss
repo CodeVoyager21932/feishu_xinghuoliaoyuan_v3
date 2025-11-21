@@ -2,7 +2,7 @@
 .mystery-box-page {
   min-height: 100vh;
   background: linear-gradient(180deg, #1A1A2E 0%, #16213E 100%);
-  padding: 40rpx 32rpx 120rpx;
+  padding: 180rpx 32rpx 120rpx;
 }
 
 .points-header {

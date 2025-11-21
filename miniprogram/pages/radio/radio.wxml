@@ -1,4 +1,5 @@
 <!--pages/radio/radio.wxml-->
+<navigation-bar title="红色电台" showBack="{{true}}" showHome="{{true}}" background="transparent"></navigation-bar>
 <view class="radio-page">
   <!-- 复古收音机头部 -->
   <view class="radio-header">

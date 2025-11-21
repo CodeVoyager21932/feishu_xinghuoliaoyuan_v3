@@ -1,4 +1,5 @@
 <!--pages/museum/museum.wxml-->
+<navigation-bar title="珍藏馆" showBack="{{true}}" showHome="{{true}}" background="transparent"></navigation-bar>
 <view class="museum-page">
   <!-- 顶部统计 -->
   <view class="museum-header">
