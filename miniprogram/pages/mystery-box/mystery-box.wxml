@@ -12,11 +12,22 @@
 
   <!-- 补给箱 -->
   <view class="box-container">
-    <view class="box-wrapper {{isDrawing ? 'shaking' : ''}}" bindtap="onDrawRelic">
+    <view class="box-wrapper {{isDrawing ? 'shaking' : ''}}" bindtap="onDrawRelic" hover-class="btn-hover">
       <view class="box-icon">📦</view>
-      <text class="box-hint">{{isDrawing ? '解密中...' : '点击开启机密档案'}}</text>
+      <view class="box-hint-container">
+        <text class="box-hint" wx:if="{{!isDrawing}}">点击开启机密档案</text>
+        <view class="typing-indicator" wx:else>
+          <text>解</text><text>密</text><text>中</text>
+          <view class="dots">
+            <view class="dot"></view><view class="dot"></view><view class="dot"></view>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
+  
+  <!-- Confetti Canvas -->
+  <canvas type="2d" id="confetti" class="confetti-canvas" style="pointer-events: none;"></canvas>
 
   <!-- 稀有度说明 -->
   <view class="rarity-info">
