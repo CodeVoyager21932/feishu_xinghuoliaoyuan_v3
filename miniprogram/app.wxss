@@ -1,126 +1,109 @@
 /**app.wxss**/
-/* 全局样式 */
+
+/* ==========================================================================
+   Design System: New Guochao (Modern Chinese Trendy Style)
+   ========================================================================== */
 
 page {
-  /* 全局底色：云峰白 + 噪点纹理 */
-  background-color: #F7F8FA; 
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 
-               'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --safe-area-inset-bottom: env(safe-area-inset-bottom);
-  color: var(--text-primary);
-}
+  /* --- Color Palette --- */
+  /* Primary: DAJIAN Red */
+  --red-primary: #D32F2F;
+  /* Secondary: Misty Gold */
+  --gold-accent: #F7E8AA;
+  /* Background: Cloud White */
+  --bg-cloud: #F7F8FA;
+  /* Text Colors */
+  --text-main: #1F1F1F;
+  --text-body: #333333;
+  --text-muted: #999999;
 
-/* 色彩系统 (Design Language: Neo-Chinese Style) */
-page {
-  /* 主色：丹朱渐变 */
-  --gradient-primary: linear-gradient(135deg, #FF4D4F 0%, #D32F2F 100%);
-  /* 辅色：赤金 */
-  --glass-shadow: 0 16rpx 40rpx rgba(0, 0, 0, 0.06);
-  
-  /* 玻璃拟态 */
-  --glass-bg: rgba(255, 255, 255, 0.85);
-  --glass-border: rgba(255, 255, 255, 0.6);
+  /* --- Shadows (Colored & Diffused) --- */
+  --shadow-card-rest: 0 20rpx 40rpx -10rpx rgba(211, 47, 47, 0.15);
+  --shadow-card-hover: 0 30rpx 60rpx -12rpx rgba(211, 47, 47, 0.25);
 
-  /* 间距系统 */
+  /* --- Spacing --- */
   --spacing-standard: 32rpx;
   --spacing-loose: 48rpx;
+  --spacing-tight: 16rpx;
+
+  /* --- Safe Area --- */
+  --safe-area-bottom: env(safe-area-inset-bottom);
+
+  /* --- Global Reset & Base Styles --- */
+  background-color: var(--bg-cloud);
+  /* Subtle Noise Texture */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+  
+  color: var(--text-body);
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+  font-size: 28rpx;
+  line-height: 1.6;
+  box-sizing: border-box;
 }
 
-/* 字体系统 */
+/* ==========================================================================
+   Typography Utilities
+   ========================================================================== */
+
+/* Serif Font for Headings (Songti/Historical Feel) */
 .font-serif {
-  /* 优先使用系统衬线体，Android端适配 Noto Serif/Source Han Serif */
-  font-family: 'Songti SC', 'Noto Serif SC', 'Source Han Serif CN', 'STSong', 'SimSun', serif;
-  font-weight: 600; /* 增加字重以确保在移动端清晰 */
+  font-family: 'Songti SC', 'Noto Serif SC', 'Source Han Serif CN', 'STSong', 'AR PL New Sung', 'AR PL SungtiL GB', serif;
+  font-weight: 600;
 }
 
-/* 通用卡片样式 (Glassmorphism + Floating) */
-.card {
-  background: var(--glass-bg);
-  border: 1rpx solid var(--glass-border);
-  border-radius: 32rpx; /* 超椭圆大圆角 */
-  box-shadow: var(--glass-shadow);
-  padding: 32rpx;
-  margin: 24rpx;
-  position: relative;
-  overflow: hidden;
+/* Body Text Justification */
+.text-justified {
+  text-align: justify;
 }
 
-/* 毛玻璃效果（带降级方案） */
-@supports (backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px)) {
-  .card {
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+/* Text Colors */
+.text-main { color: var(--text-main); }
+.text-primary { color: var(--red-primary); }
+.text-accent { color: #C19D58; /* Gold-ish for text */ }
+
+/* ==========================================================================
+   Glassmorphism Utilities
+   ========================================================================== */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: var(--shadow-card-rest);
+  border-radius: 32rpx;
+}
+
+/* Fallback for devices that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(20px)) {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.95);
   }
 }
 
-/* 不支持毛玻璃时的降级方案 */
-@supports not ((backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px))) {
-  .card {
-    background: rgba(255, 255, 255, 0.95); /* 提高不透明度 */
-  }
-}
+/* ==========================================================================
+   Layout Utilities
+   ========================================================================== */
 
-/* 悬浮效果 (Z-axis) */
-.card-hover {
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-.card-hover:active {
-  transform: scale(0.98);
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
-}
-
-/* 按钮样式 */
-.btn-primary {
-  background: var(--gradient-primary);
-  color: #FFFFFF;
-  border-radius: 48rpx;
-  padding: 24rpx 48rpx;
-  font-size: 28rpx;
-  font-weight: 600;
-  border: none;
-  box-shadow: 0 8rpx 20rpx rgba(221, 36, 118, 0.3); /* 红色投影 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.8);
-  color: #DD2476;
-  border: 2rpx solid rgba(221, 36, 118, 0.2);
-  border-radius: 48rpx;
-  padding: 24rpx 48rpx;
-  font-size: 28rpx;
-  font-weight: 600;
-}
-
-/* 标题样式 */
-.title-large {
-  font-size: 40rpx;
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: 1rpx;
-}
-
-.title-medium {
-  font-size: 34rpx;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-/* Flex布局工具类 */
 .flex-row { display: flex; flex-direction: row; align-items: center; }
 .flex-col { display: flex; flex-direction: column; }
 .flex-center { display: flex; justify-content: center; align-items: center; }
 .flex-between { display: flex; justify-content: space-between; align-items: center; }
 
-/* 动画 */
+.container {
+  padding: 0 var(--spacing-standard);
+  padding-bottom: calc(var(--spacing-standard) + var(--safe-area-bottom));
+}
+
+/* ==========================================================================
+   Animation Utilities
+   ========================================================================== */
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20rpx); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.6s ease-out forwards;
+  animation: fadeIn 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
 }
