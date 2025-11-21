@@ -136,7 +136,7 @@
   border: 4rpx solid #8E0000;
 }
 
-.wax-seal text {
+.wax-seal .seal-text {
   color: #FFCDD2;
   font-family: 'Songti SC', serif;
   font-size: 40rpx;

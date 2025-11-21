@@ -5,7 +5,7 @@ const radioPlaylist = [
     title: '雷锋原声：为人民服务',
     artist: '雷锋',
     duration: 180,
-    coverUrl: '/images/radio/leifeng.png',
+    coverUrl: '/images/heroes/leifeng.png',
     audioUrl: 'https://example.com/audio/leifeng.mp3', // 替换为实际音频URL
     description: '雷锋同志生前的珍贵录音，讲述为人民服务的故事。',
     category: '英雄原声'
@@ -15,7 +15,7 @@ const radioPlaylist = [
     title: '开国大典实况',
     artist: '历史录音',
     duration: 300,
-    coverUrl: '/images/radio/founding.png',
+    coverUrl: '/images/icons/radio.png',
     audioUrl: 'https://example.com/audio/founding.mp3',
     description: '1949年10月1日，毛主席在天安门城楼宣告新中国成立的历史时刻。',
     category: '历史实况'
@@ -25,7 +25,7 @@ const radioPlaylist = [
     title: '党史故事：南湖红船',
     artist: '党史讲解员',
     duration: 240,
-    coverUrl: '/images/radio/red-boat.png',
+    coverUrl: '/images/icons/biography.png',
     audioUrl: 'https://example.com/audio/red-boat.mp3',
     description: '讲述中国共产党诞生的故事，红船精神的由来。',
     category: '党史故事'
@@ -35,7 +35,7 @@ const radioPlaylist = [
     title: '长征路上的故事',
     artist: '党史讲解员',
     duration: 360,
-    coverUrl: '/images/radio/long-march.png',
+    coverUrl: '/images/icons/hero_gallery.png',
     audioUrl: 'https://example.com/audio/long-march.mp3',
     description: '红军长征途中的感人故事，展现革命先辈的坚定信念。',
     category: '党史故事'
@@ -45,7 +45,7 @@ const radioPlaylist = [
     title: '焦裕禄的故事',
     artist: '党史讲解员',
     duration: 280,
-    coverUrl: '/images/radio/jiaoyulu.png',
+    coverUrl: '/images/heroes/jiaoyulu.png',
     audioUrl: 'https://example.com/audio/jiaoyulu.mp3',
     description: '焦裕禄同志在兰考带领群众治理"三害"的感人事迹。',
     category: '英雄故事'
@@ -55,7 +55,7 @@ const radioPlaylist = [
     title: '八女投江',
     artist: '党史讲解员',
     duration: 220,
-    coverUrl: '/images/radio/eight-women.png',
+    coverUrl: '/images/heroes/zhaoyiman.png',
     audioUrl: 'https://example.com/audio/eight-women.mp3',
     description: '东北抗联八名女战士英勇就义的悲壮故事。',
     category: '英雄故事'

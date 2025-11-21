@@ -27,9 +27,14 @@ Page({
 
   onEventTap(e) {
     const id = e.currentTarget.dataset.id;
-    wx.navigateTo({
-      url: `/pages/hero-detail/hero-detail?id=${id}` // 暂时跳转到详情页
-    });
+    const event = this.data.timelineData.find(item => item.id === id);
+    if (event) {
+      wx.showModal({
+        title: event.title,
+        content: event.description,
+        showCancel: false
+      });
+    }
   },
 
   // Canvas 触摸事件占位

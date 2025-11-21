@@ -17,7 +17,7 @@
         <text class="name">未来的接班人</text>
       </view>
       <view class="wax-seal">
-        <text>星火</text>
+        <text class="seal-text">星火</text>
       </view>
       <view class="tap-hint">点击开启时空来信</view>
     </view>

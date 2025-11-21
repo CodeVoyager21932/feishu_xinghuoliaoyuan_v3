@@ -15,51 +15,7 @@
     </view>
   </view>
 
-  <!-- 今日英雄卡片 (Premium Card) -->
-  <view class="section-title animate-fade-in" style="animation-delay: 0.1s;">
-    <text class="font-serif">今日英雄</text>
-    <text class="date-badge">{{todayDate}}</text>
-  </view>
-  
-  <wxs module="gesture" src="./card-gesture.wxs"></wxs>
 
-  <view class="today-hero-card card-hover animate-fade-in" 
-        style="animation-delay: 0.2s;" 
-        bindtap="goToHeroDetail"
-        bindtouchstart="{{gesture.touchStart}}"
-        bindtouchmove="{{gesture.touchMove}}"
-        bindtouchend="{{gesture.touchEnd}}"
-        bindtouchcancel="{{gesture.touchEnd}}"
-  >
-    <view class="card-glare" style="{{heroCardGlare}}"></view>
-    <view class="hero-bg-gradient"></view>
-    <view class="hero-content">
-      <view class="hero-badge">
-        <text>⭐ 每日推荐</text>
-      </view>
-      <view class="hero-main">
-        <view class="hero-avatar-wrapper">
-          <image 
-            class="hero-avatar" 
-            src="{{todayHero.avatar}}" 
-            mode="aspectFill"
-            binderror="onImageError"
-          />
-          <view class="hero-placeholder" wx:if="{{!todayHero.avatarLoaded}}">
-            <text class="placeholder-text">{{todayHero.name[0]}}</text>
-          </view>
-        </view>
-        <view class="hero-text-group">
-          <text class="hero-name font-serif">{{todayHero.name}}</text>
-          <text class="hero-title">{{todayHero.title || '革命英雄'}}</text>
-          <text class="hero-desc">{{todayHero.brief}}</text>
-        </view>
-      </view>
-      <view class="hero-footer">
-        <text class="tap-hint">点击查看生平 ></text>
-      </view>
-    </view>
-  </view>
 
   <!-- 功能入口 (Floating Grid) -->
   <view class="function-grid animate-fade-in" style="animation-delay: 0.3s;">
@@ -67,57 +23,51 @@
       <view class="icon-wrapper gradient-red">
         <image class="menu-icon" src="/images/icons/ai_chat.png" mode="aspectFit" />
       </view>
-      <text class="grid-label">AI讲解员</text>
+      <text class="grid-label">先辈回响</text>
       <text class="grid-desc">跨时空对话</text>
     </view>
     <view class="grid-item card-hover" bindtap="goToGraph">
       <view class="icon-wrapper gradient-blue">
         <image class="menu-icon" src="/images/icons/knowledge_graph.png" mode="aspectFit" />
       </view>
-      <text class="grid-label">知识图谱</text>
-      <text class="grid-desc">历史脉络</text>
+      <text class="grid-label">星火燎原</text>
+      <text class="grid-desc">历史演讲脉络</text>
     </view>
     <view class="grid-item card-hover" bindtap="goToCards">
       <view class="icon-wrapper gradient-gold">
         <image class="menu-icon" src="/images/icons/flashcards.png" mode="aspectFit" />
       </view>
-      <text class="grid-label">卡片学习</text>
-      <text class="grid-desc">记忆碎片</text>
+      <text class="grid-label">拾光碎片</text>
+      <text class="grid-desc">每日党史微课</text>
     </view>
-    <view class="grid-item card-hover" bindtap="goToHeroes">
-      <view class="icon-wrapper gradient-purple">
-        <image class="menu-icon" src="/images/icons/hero_gallery.png" mode="aspectFit" />
-      </view>
-      <text class="grid-label">英雄长廊</text>
-      <text class="grid-desc">群英荟萃</text>
-    </view>
+
     <view class="grid-item card-hover" bindtap="goToMysteryBox">
       <view class="icon-wrapper gradient-orange">
         <image class="menu-icon" src="/images/icons/mystery_box.png" mode="aspectFit" />
       </view>
-      <text class="grid-label">机密档案</text>
-      <text class="grid-desc">信物收集</text>
+      <text class="grid-label">尘封档案</text>
+      <text class="grid-desc">解密历史信物</text>
     </view>
     <view class="grid-item card-hover" bindtap="goToMuseum">
       <view class="icon-wrapper gradient-cyan">
         <image class="menu-icon" src="/images/icons/museum.png" mode="aspectFit" />
       </view>
-      <text class="grid-label">珍藏馆</text>
-      <text class="grid-desc">我的收藏</text>
+      <text class="grid-label">初心印记</text>
+      <text class="grid-desc">我的收藏/成就</text>
     </view>
     <view class="grid-item card-hover" bindtap="goToPKBattle">
       <view class="icon-wrapper gradient-pink">
         <image class="menu-icon" src="/images/icons/pk_battle.png" mode="aspectFit" />
       </view>
-      <text class="grid-label">PK对战</text>
-      <text class="grid-desc">答题挑战</text>
+      <text class="grid-label">上下求索</text>
+      <text class="grid-desc">浸浸征途</text>
     </view>
     <view class="grid-item card-hover" bindtap="goToRadio">
       <view class="icon-wrapper gradient-brown">
         <image class="menu-icon" src="/images/icons/radio.png" mode="aspectFit" />
       </view>
-      <text class="grid-label">红色电台</text>
-      <text class="grid-desc">党史故事</text>
+      <text class="grid-label">永不消逝</text>
+      <text class="grid-desc">跨时空电波</text>
     </view>
   </view>
 

@@ -8,7 +8,7 @@
   <view class="chat-header-glass animate-fade-in">
     <view class="header-content">
       <view class="ai-info">
-        <view class="avatar-ring {{mode === 'hero' ? 'hero-ring' : ''}}">
+        <view class="avatar-ring">
           <image class="ai-avatar" src="{{aiAvatar}}" mode="aspectFill" />
         </view>
         <view class="header-text">
@@ -19,10 +19,6 @@
           </view>
         </view>
       </view>
-      <button class="switch-mode-btn {{mode === 'hero' ? 'active' : ''}}" bindtap="showHeroSelect">
-        <text class="icon-switch">⇄</text>
-        <text>{{mode === 'default' ? '切换英雄' : '退出扮演'}}</text>
-      </button>
     </view>
   </view>
   
@@ -98,29 +94,4 @@
   </view>
 </view>
 
-<!-- 英雄选择弹窗 (Bottom Sheet) -->
-<view class="hero-modal {{showHeroModal ? 'show' : ''}}" bindtap="hideHeroModal">
-  <view class="modal-content" catchtap="stopPropagation">
-    <view class="modal-header">
-      <text class="modal-title font-serif">选择对话英雄</text>
-      <view class="modal-close" bindtap="hideHeroModal">×</view>
-    </view>
-    <scroll-view scroll-y class="hero-scroll">
-      <view class="hero-grid">
-        <view 
-          class="hero-item-card {{currentHero.id === item.id ? 'selected' : ''}}" 
-          wx:for="{{heroList}}" 
-          wx:key="id"
-          bindtap="selectHero"
-          data-hero="{{item}}"
-        >
-          <view class="hero-avatar-wrapper">
-            <image class="hero-avatar" src="{{item.avatar}}" mode="aspectFill" />
-            <view class="selected-mark" wx:if="{{currentHero.id === item.id}}">✓</view>
-          </view>
-          <text class="hero-name">{{item.name}}</text>
-        </view>
-      </view>
-    </scroll-view>
-  </view>
-</view>
+

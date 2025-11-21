@@ -1,6 +1,5 @@
 // pages/index/index.js
 const app = getApp();
-const heroesData = require('../../data/heroes.js');
 const dailyQuotesData = require('../../data/daily-quotes.js');
 
 Page({
@@ -11,8 +10,11 @@ Page({
     },
     greeting: '早安，传承星火',
     hasCheckedIn: false,
-    todayHero: {},
-    todayQuote: {},
+    todayQuote: {
+      content: '星星之火，可以燎原。',
+      quote: '世界是你们的，也是我们的，但是归根结底是你们的。',
+      author: '一位老兵'
+    },
     todayDate: '',
     userLevel: 1,
     stats: {
@@ -31,7 +33,6 @@ Page({
   onLoad() {
     this.checkLoginStatus();
     this.setDynamicGreeting();
-    this.loadTodayHero();
     this.loadTodayQuote();
     this.loadUserStats();
     this.checkTodayCheckIn();
@@ -121,17 +122,7 @@ Page({
     });
   },
 
-  // 加载今日英雄
-  loadTodayHero() {
-    // 根据日期选择英雄（每天不同）
-    const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-    const todayHero = heroesData[dayOfYear % heroesData.length];
 
-    // 默认图片未加载
-    todayHero.avatarLoaded = false;
-
-    this.setData({ todayHero });
-  },
 
   // 加载今日名言
   loadTodayQuote() {
@@ -140,14 +131,7 @@ Page({
     this.setData({ todayQuote });
   },
 
-  // 图片加载错误处理
-  onImageError(e) {
-    console.log('图片加载失败', e);
-    // 图片加载失败，显示占位符
-    this.setData({
-      'todayHero.avatarLoaded': false
-    });
-  },
+
 
   // 加载用户统计数据
   loadUserStats() {
@@ -272,15 +256,7 @@ Page({
     this.setData({ userLevel: level });
   },
 
-  // 跳转到英雄详情
-  goToHeroDetail() {
-    const heroId = this.data.todayHero.id;
-    if (heroId) {
-      wx.navigateTo({
-        url: `/pages/hero-detail/hero-detail?heroId=${heroId}`
-      });
-    }
-  },
+
 
   // 跳转到AI对话
   goToAIChat() {
@@ -303,12 +279,7 @@ Page({
     });
   },
 
-  // 跳转到英雄长廊
-  goToHeroes() {
-    wx.navigateTo({
-      url: '/pages/hero-gallery/hero-gallery'
-    });
-  },
+
 
   // 跳转到机密档案
   goToMysteryBox() {
