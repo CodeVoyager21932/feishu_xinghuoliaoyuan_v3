@@ -6,10 +6,25 @@
   overflow-x: hidden;
 }
 
+/* 顶部背景装饰 (Curtain Effect) */
+.header-curtain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 500rpx;
+  background: linear-gradient(180deg, #D32F2F 0%, #F7F8FA 100%);
+  border-radius: 0 0 40rpx 40rpx;
+  z-index: 0;
+  opacity: 0.08;
+}
+
 /* 顶部用户信息 */
 .header {
   padding: 24rpx 32rpx;
   margin-bottom: 20rpx;
+  position: relative;
+  z-index: 1;
 }
 
 .header-row {
@@ -25,33 +40,8 @@
   background: rgba(255, 255, 255, 0.65);
   border: 1rpx solid rgba(255, 255, 255, 0.8);
   border-radius: 100rpx;
-  padding: 20rpx 32rpx; /* 增加内边距 */
+  padding: 24rpx 40rpx; /* 增加内边距 */
   box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.05);
-  margin-right: 24rpx; /* 与日签按钮的间距 */
-}
-
-/* 独立的日签胶囊 */
-.daily-sign-capsule {
-  background: var(--gradient-primary);
-  color: #FFFFFF;
-  border-radius: 100rpx;
-  padding: 20rpx 32rpx;
-  font-size: 26rpx;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  box-shadow: 0 8rpx 20rpx rgba(211, 47, 47, 0.25);
-  transition: all 0.2s;
-  height: 100%; /* 与用户信息条等高 */
-}
-
-.daily-sign-capsule:active {
-  transform: scale(0.95);
-}
-
-.icon-calendar {
-  margin-right: 8rpx;
-  font-size: 28rpx;
 }
 
 /* Section Title */
@@ -328,12 +318,10 @@
 .grid-item:nth-child(3) .icon-wrapper { background: linear-gradient(135deg, #FFF8E1 0%, #FFE082 100%); } /* 卡片: 浅金 */
 .grid-item:nth-child(4) .icon-wrapper { background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); } /* 长廊: 浅紫 */
 
-.icon-placeholder {
-  width: 48rpx;
-  height: 48rpx;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  border: 2rpx dashed rgba(255, 255, 255, 0.8);
+.menu-icon {
+  width: 64rpx;
+  height: 64rpx;
+  display: block;
 }
 
 /* 
@@ -459,3 +447,36 @@
 /* 红色电台入口样式 */
 .gradient-brown { background: linear-gradient(135deg, #D4A574 0%, #8B4513 100%); }
 .grid-item:nth-child(8) .icon-wrapper { background: linear-gradient(135deg, #F5E6D3 0%, #E8D4B8 100%); }
+
+/* Floating Action Button (FAB) */
+.fab-daily-sign {
+  position: fixed;
+  bottom: 160rpx; /* Above tab bar */
+  right: 32rpx;
+  background: var(--gradient-primary);
+  color: #FFFFFF;
+  border-radius: 100rpx;
+  padding: 24rpx 40rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 12rpx 32rpx rgba(211, 47, 47, 0.4);
+  z-index: 100;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 2rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.fab-daily-sign:active {
+  transform: scale(0.95);
+  box-shadow: 0 6rpx 16rpx rgba(211, 47, 47, 0.3);
+}
+
+.fab-icon {
+  font-size: 32rpx;
+  margin-right: 12rpx;
+}
+
+.fab-text {
+  font-size: 28rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+}

@@ -1,8 +1,8 @@
 <!--index.wxml-->
 <navigation-bar title="星火" background="transparent" showBack="{{false}}"></navigation-bar>
 <view class="home-page">
-  <!-- 顶部背景装饰 -->
-  <view class="bg-decoration"></view>
+  <!-- 顶部背景装饰 (Curtain Effect) -->
+  <view class="header-curtain"></view>
 
   <!-- 顶部用户信息 (Glassmorphism) -->
   <view class="header animate-fade-in">
@@ -11,11 +11,6 @@
       <view class="user-text">
         <text class="greeting">{{greeting}}</text>
         <text class="nickname">{{userInfo.nickName || '未登录'}}</text>
-      </view>
-      <!-- 独立的日签胶囊 -->
-      <view class="daily-sign-capsule" bindtap="onOpenDailySign">
-        <text class="icon-calendar">📅</text>
-        <text>日签</text>
       </view>
     </view>
   </view>
@@ -70,56 +65,56 @@
   <view class="function-grid animate-fade-in" style="animation-delay: 0.3s;">
     <view class="grid-item card-hover" bindtap="goToAIChat">
       <view class="icon-wrapper gradient-red">
-        <view class="icon-placeholder"></view>
+        <image class="menu-icon" src="/images/icons/ai_chat.png" mode="aspectFit" />
       </view>
       <text class="grid-label">AI讲解员</text>
       <text class="grid-desc">跨时空对话</text>
     </view>
     <view class="grid-item card-hover" bindtap="goToGraph">
       <view class="icon-wrapper gradient-blue">
-        <view class="icon-placeholder"></view>
+        <image class="menu-icon" src="/images/icons/knowledge_graph.png" mode="aspectFit" />
       </view>
       <text class="grid-label">知识图谱</text>
       <text class="grid-desc">历史脉络</text>
     </view>
     <view class="grid-item card-hover" bindtap="goToCards">
       <view class="icon-wrapper gradient-gold">
-        <view class="icon-placeholder"></view>
+        <image class="menu-icon" src="/images/icons/flashcards.png" mode="aspectFit" />
       </view>
       <text class="grid-label">卡片学习</text>
       <text class="grid-desc">记忆碎片</text>
     </view>
     <view class="grid-item card-hover" bindtap="goToHeroes">
       <view class="icon-wrapper gradient-purple">
-        <view class="icon-placeholder"></view>
+        <image class="menu-icon" src="/images/icons/hero_gallery.png" mode="aspectFit" />
       </view>
       <text class="grid-label">英雄长廊</text>
       <text class="grid-desc">群英荟萃</text>
     </view>
     <view class="grid-item card-hover" bindtap="goToMysteryBox">
       <view class="icon-wrapper gradient-orange">
-        <view class="icon-placeholder"></view>
+        <image class="menu-icon" src="/images/icons/mystery_box.png" mode="aspectFit" />
       </view>
       <text class="grid-label">机密档案</text>
       <text class="grid-desc">信物收集</text>
     </view>
     <view class="grid-item card-hover" bindtap="goToMuseum">
       <view class="icon-wrapper gradient-cyan">
-        <view class="icon-placeholder"></view>
+        <image class="menu-icon" src="/images/icons/museum.png" mode="aspectFit" />
       </view>
       <text class="grid-label">珍藏馆</text>
       <text class="grid-desc">我的收藏</text>
     </view>
     <view class="grid-item card-hover" bindtap="goToPKBattle">
       <view class="icon-wrapper gradient-pink">
-        <view class="icon-placeholder"></view>
+        <image class="menu-icon" src="/images/icons/pk_battle.png" mode="aspectFit" />
       </view>
       <text class="grid-label">PK对战</text>
       <text class="grid-desc">答题挑战</text>
     </view>
     <view class="grid-item card-hover" bindtap="goToRadio">
       <view class="icon-wrapper gradient-brown">
-        <view class="icon-placeholder"></view>
+        <image class="menu-icon" src="/images/icons/radio.png" mode="aspectFit" />
       </view>
       <text class="grid-label">红色电台</text>
       <text class="grid-desc">党史故事</text>
@@ -153,6 +148,12 @@
         </view>
       </view>
     </view>
+  </view>
+
+  <!-- Floating Action Button (FAB) for Daily Sign -->
+  <view class="fab-daily-sign animate-fade-in" bindtap="onOpenDailySign">
+    <text class="fab-icon">📅</text>
+    <text class="fab-text">日签</text>
   </view>
 </view>
 
