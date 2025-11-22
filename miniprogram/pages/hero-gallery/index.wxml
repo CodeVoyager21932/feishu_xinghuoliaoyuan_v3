@@ -1,0 +1,37 @@
+<view class="container">
+  <!-- 时期筛选 -->
+  <view class="era-filter">
+    <view 
+      wx:for="{{eraList}}" 
+      wx:key="key"
+      class="era-item {{currentEra === item.key ? 'active' : ''}}"
+      data-era="{{item.key}}"
+      bindtap="onEraChange"
+    >
+      {{item.name}}
+    </view>
+  </view>
+
+  <!-- 英雄列表 -->
+  <view class="hero-list">
+    <view 
+      wx:for="{{filteredHeroes}}" 
+      wx:key="id"
+      class="hero-card"
+      data-id="{{item.id}}"
+      bindtap="goToDetail"
+    >
+      <image class="hero-avatar" src="{{item.avatar}}" mode="aspectFill" />
+      <view class="hero-info">
+        <view class="hero-name">{{item.name}}</view>
+        <view class="hero-title">{{item.title}}</view>
+        <view class="hero-era">{{item.era_name}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{filteredHeroes.length === 0}}" class="empty-state">
+    <text>暂无英雄数据</text>
+  </view>
+</view>

@@ -335,7 +335,12 @@ Page({
     });
   },
 
-
+  // 跳转到民族脊梁
+  goToHeroes() {
+    wx.navigateTo({
+      url: '/pages/hero-gallery/index'
+    });
+  },
 
   // 跳转到机密档案
   goToMysteryBox() {

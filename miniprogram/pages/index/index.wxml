@@ -62,6 +62,13 @@
       <text class="grid-label">上下求索</text>
       <text class="grid-desc">浸浸征途</text>
     </view>
+    <view class="grid-item card-hover" bindtap="goToHeroes">
+      <view class="icon-wrapper gradient-purple">
+        <image class="menu-icon" src="/images/icons/heroes.png" mode="aspectFit" />
+      </view>
+      <text class="grid-label">民族脊梁</text>
+      <text class="grid-desc">英雄人物传</text>
+    </view>
     <view class="grid-item card-hover" bindtap="goToRadio">
       <view class="icon-wrapper gradient-brown">
         <image class="menu-icon" src="/images/icons/radio.png" mode="aspectFit" />
