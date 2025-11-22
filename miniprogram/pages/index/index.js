@@ -1,6 +1,7 @@
 // pages/index/index.js
 const app = getApp();
-const dailyQuotesData = require('../../data/daily-quotes.js');
+const DBService = require('../../services/db.js');
+const { resolveImage } = require('../../utils/image-loader.js');
 
 Page({
   data: {
@@ -15,6 +16,7 @@ Page({
       quote: '世界是你们的，也是我们的，但是归根结底是你们的。',
       author: '一位老兵'
     },
+    todayHero: null, // 今日推荐英雄
     todayDate: '',
     userLevel: 1,
     stats: {
@@ -27,17 +29,26 @@ Page({
     isHeroCardTouching: false,
     showDailySign: false,
     showBadgeModal: false,
-    currentBadge: null
+    currentBadge: null,
+    isLoading: true, // 数据加载状态
+    loadError: false // 数据加载错误状态
   },
 
-  onLoad() {
+  async onLoad() {
     this.checkLoginStatus();
     this.setDynamicGreeting();
-    this.loadTodayQuote();
-    this.loadUserStats();
-    this.checkTodayCheckIn();
     this.setTodayDate();
+    this.checkTodayCheckIn();
+    
+    // 并行加载数据
+    await Promise.all([
+      this.loadTodayQuote(),
+      this.loadTodayHero(),
+      this.loadUserStats()
+    ]);
+    
     this.calculateLevel();
+    this.setData({ isLoading: false });
   },
 
   onShow() {
@@ -124,11 +135,56 @@ Page({
 
 
 
-  // 加载今日名言
-  loadTodayQuote() {
-    const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-    const todayQuote = dailyQuotesData[dayOfYear % dailyQuotesData.length];
-    this.setData({ todayQuote });
+  // 加载今日名言（从云数据库）
+  async loadTodayQuote() {
+    try {
+      const result = await DBService.getDailyQuote();
+      
+      if (result.success && result.data) {
+        this.setData({
+          todayQuote: {
+            content: result.data.content,
+            quote: result.data.content, // 兼容旧字段
+            author: result.data.author
+          }
+        });
+        
+        // 如果使用了兜底数据，在控制台提示
+        if (result.fromFallback) {
+          console.warn('[首页] 使用兜底名言，数据库可能为空');
+        }
+      }
+    } catch (error) {
+      console.error('[首页] 加载今日名言失败:', error);
+      // 保持默认值，不影响页面渲染
+    }
+  },
+
+  // 加载今日推荐英雄（从云数据库）
+  async loadTodayHero() {
+    try {
+      const result = await DBService.getTodayHero();
+      
+      if (result.success && result.data) {
+        const hero = result.data;
+        
+        // 处理头像路径
+        const heroAvatar = resolveImage(hero.avatar_path || '', 'hero');
+        
+        this.setData({
+          todayHero: {
+            ...hero,
+            avatar: heroAvatar
+          }
+        });
+      } else {
+        console.warn('[首页] 获取今日英雄失败:', result.error);
+        this.setData({ loadError: true });
+      }
+    } catch (error) {
+      console.error('[首页] 加载今日英雄异常:', error);
+      this.setData({ loadError: true });
+    }
   },
 
 

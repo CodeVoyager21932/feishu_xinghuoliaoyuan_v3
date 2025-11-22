@@ -1,0 +1,205 @@
+{
+  "collections": [
+    {
+      "name": "heroes",
+      "description": "英雄人物数据表",
+      "fields": [
+        {
+          "name": "_id",
+          "type": "string",
+          "description": "唯一标识符（自动生成）",
+          "required": true
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "英雄姓名",
+          "required": true,
+          "index": true
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "description": "英雄称号/职务",
+          "required": true
+        },
+        {
+          "name": "avatar_path",
+          "type": "string",
+          "description": "云存储头像相对路径（如: heroes/leifeng.jpg）",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "era",
+          "type": "string",
+          "description": "所属时期（revolution/construction/reform/newera）",
+          "required": true,
+          "index": true
+        },
+        {
+          "name": "tags",
+          "type": "array",
+          "description": "标签数组（如: ['模范', '战士']）",
+          "required": false,
+          "default": []
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "description": "英雄事迹简介",
+          "required": true
+        },
+        {
+          "name": "birth_year",
+          "type": "number",
+          "description": "出生年份",
+          "required": false
+        },
+        {
+          "name": "death_year",
+          "type": "number",
+          "description": "逝世年份",
+          "required": false
+        },
+        {
+          "name": "quote",
+          "type": "string",
+          "description": "代表性名言",
+          "required": false
+        },
+        {
+          "name": "sort_order",
+          "type": "number",
+          "description": "排序权重（数字越小越靠前）",
+          "required": false,
+          "default": 999
+        },
+        {
+          "name": "created_at",
+          "type": "date",
+          "description": "创建时间",
+          "required": false
+        }
+      ],
+      "indexes": [
+        { "field": "name", "unique": false },
+        { "field": "era", "unique": false },
+        { "field": "sort_order", "unique": false }
+      ]
+    },
+    {
+      "name": "events",
+      "description": "历史事件数据表",
+      "fields": [
+        {
+          "name": "_id",
+          "type": "string",
+          "description": "唯一标识符（自动生成）",
+          "required": true
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "description": "事件标题",
+          "required": true,
+          "index": true
+        },
+        {
+          "name": "date",
+          "type": "string",
+          "description": "事件日期（格式: YYYY-MM-DD）",
+          "required": true,
+          "index": true
+        },
+        {
+          "name": "year",
+          "type": "number",
+          "description": "事件年份（用于时间轴排序）",
+          "required": true,
+          "index": true
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "description": "事件地点",
+          "required": false
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "description": "事件摘要",
+          "required": true
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "description": "事件分类（revolution/construction/reform）",
+          "required": true,
+          "index": true
+        },
+        {
+          "name": "importance",
+          "type": "number",
+          "description": "重要程度（1-5，5最重要）",
+          "required": false,
+          "default": 3
+        },
+        {
+          "name": "related_heroes",
+          "type": "array",
+          "description": "相关英雄ID数组",
+          "required": false,
+          "default": []
+        },
+        {
+          "name": "created_at",
+          "type": "date",
+          "description": "创建时间",
+          "required": false
+        }
+      ],
+      "indexes": [
+        { "field": "year", "unique": false },
+        { "field": "category", "unique": false },
+        { "field": "importance", "unique": false }
+      ]
+    },
+    {
+      "name": "quotes",
+      "description": "每日名言数据表",
+      "fields": [
+        {
+          "name": "_id",
+          "type": "string",
+          "description": "唯一标识符（自动生成）",
+          "required": true
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "description": "名言内容",
+          "required": true
+        },
+        {
+          "name": "author",
+          "type": "string",
+          "description": "作者",
+          "required": true
+        },
+        {
+          "name": "hero_id",
+          "type": "string",
+          "description": "关联的英雄ID",
+          "required": false
+        },
+        {
+          "name": "created_at",
+          "type": "date",
+          "description": "创建时间",
+          "required": false
+        }
+      ]
+    }
+  ]
+}
