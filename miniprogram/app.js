@@ -27,7 +27,9 @@ App({
       menuBottom: 0,
       menuRight: 0,
       menuHeight: 0,
-      openid: null
+      openid: null,
+      // 云存储图片基础路径（需替换为真实环境ID）
+      cloudImageBase: 'cloud://cloud1-0g84030j58680666.636c-cloud1-0g84030j58680666-1330048123/assets/'
     };
 
     // 获取用户信息
