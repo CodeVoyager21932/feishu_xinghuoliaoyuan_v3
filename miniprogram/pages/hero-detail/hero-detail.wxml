@@ -1,0 +1,6 @@
+<view class="container">
+  <view class="notice">
+    <text>此页面已废弃</text>
+    <text>正在返回...</text>
+  </view>
+</view>
